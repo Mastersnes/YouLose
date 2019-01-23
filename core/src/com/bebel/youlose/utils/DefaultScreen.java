@@ -1,27 +1,21 @@
-package com.bebel.youlose.components;
+package com.bebel.youlose.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.bebel.youlose.LaunchGame;
 
 /**
  * Template de scene
  */
 public class DefaultScreen implements Screen {
-    protected final Stage stage;
-    protected final AbstractGroup main;
+    protected final AbstractStage stage;
 
-    public DefaultScreen(final LaunchGame parent, final AbstractGroup main) {
-        stage = new Stage(new StretchViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), parent.batch);
-        this.main = main;
-        stage.addActor(main);
+    public DefaultScreen(final AbstractStage stage) {
+        this.stage = stage;
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(main);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.bebel.youlose.manager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bebel.youlose.LaunchGame;
-import com.bebel.youlose.components.AbstractGroup;
-import com.bebel.youlose.components.DefaultScreen;
+import com.bebel.youlose.utils.AbstractStage;
+import com.bebel.youlose.utils.DefaultScreen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class ScreensManager {
     private static ScreensManager instance;
     private LaunchGame parent;
-    private Map<Class<? extends AbstractGroup>, DefaultScreen> screens = new HashMap<>();
+    private Map<Class<? extends AbstractStage>, DefaultScreen> screens = new HashMap<>();
 
     private ScreensManager() {
     }
@@ -33,11 +34,12 @@ public class ScreensManager {
      *
      * @param screenType
      */
-    public void switchTo(final Class<? extends AbstractGroup> screenType) {
+    public void switchTo(final Class<? extends AbstractStage> screenType) {
         DefaultScreen screen = screens.get(screenType);
         if (screen == null) {
             try {
-                screen = new DefaultScreen(parent, screenType.newInstance());
+                final AbstractStage stage = screenType.getDeclaredConstructor(LaunchGame.class).newInstance(parent);
+                screen = new DefaultScreen(stage);
                 screens.put(screenType, screen);
             } catch (final Exception e) {
                 Gdx.app.error("ScreensManager", "Impossible d'instancier le screen : " + screenType, e);
