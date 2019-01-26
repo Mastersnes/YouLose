@@ -20,6 +20,7 @@ public class AssetsManager extends AssetManager {
     public void loadMenu() {
         context = "menu";
         loadTextures();
+        finishLoading();
     }
 
     /**

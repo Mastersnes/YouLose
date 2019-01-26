@@ -18,6 +18,7 @@ public class LaunchGame extends Game {
 		Gdx.app.setLogLevel(Logger.DEBUG);
 		batch = new SpriteBatch();
 		manager = new AssetsManager();
+		Gdx.graphics.setContinuousRendering(false);
 		ScreensManager.init(this);
 		ScreensManager.getInstance().switchTo(MenuScreen.class);
 	}

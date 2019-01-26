@@ -1,15 +1,17 @@
 package com.bebel.youlose.desktop;
 
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.bebel.youlose.LaunchGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		final LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		final Graphics.DisplayMode displayMode = LwjglApplicationConfiguration.getDesktopDisplayMode();
+		config.setFromDisplayMode(displayMode);
 		config.title = "YouLose";
-		config.width = 800;
-		config.height = 600;
+		config.vSyncEnabled = true;
 		new LwjglApplication(new LaunchGame(), config);
 	}
 }

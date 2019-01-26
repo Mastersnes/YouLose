@@ -1,16 +1,16 @@
 package com.bebel.youlose.menu;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.bebel.youlose.LaunchGame;
-import com.bebel.youlose.components.ButtonActor;
 import com.bebel.youlose.utils.AbstractStage;
 
-import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 public class MenuScreen extends AbstractStage {
     private MenuBackground background;
-    private ButtonActor play;
-    private ButtonActor options;
-    private ButtonActor credits;
+    private MenuOptions options;
+    private MenuButtons buttons;
 
     public MenuScreen(final LaunchGame parent) {
         super(parent);
@@ -19,22 +19,42 @@ public class MenuScreen extends AbstractStage {
     @Override
     public void create() {
         manager.loadMenu();
-        manager.finishLoading();
+
+        options = new MenuOptions(manager);
+        addActor(options);
 
         background = new MenuBackground(manager);
         addActor(background);
 
-        play = new ButtonActor("play.png", "play_hover.png", manager);
-        play.setPosition(0, 490);
-        addActor(play);
+        buttons = new MenuButtons(manager);
+        addActor(buttons);
 
-        options = new ButtonActor("options.png", "options_hover.png", manager);
-        options.setPosition(WORLD_WIDTH - options.getWidth(), 200);
-        addActor(options);
+        /**
+         * Click sur Play
+         */
+        buttons.getPlay().addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return buttons.addActions(buttons.disappair(),background.open(), background.close(), buttons.appair());
+            }
+        });
 
-        credits = new ButtonActor("credits.png", "credits_hover.png", manager);
-        credits.setPosition(0, 20);
-        addActor(credits);
+        /**
+         * Click sur option
+         */
+        buttons.getOptions().addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+
+        buttons.getCredits().addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.bebel.youlose.components;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.bebel.youlose.components.abstrait.AbstractGroup;
-import com.bebel.youlose.components.abstrait.SpriteActor;
+import com.bebel.youlose.components.abstrait.actors.AbstractGroup;
+import com.bebel.youlose.components.abstrait.actors.SpriteActor;
 import com.bebel.youlose.manager.AssetsManager;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
@@ -38,5 +41,17 @@ public class ButtonActor extends AbstractGroup {
                 hover.addAction(fadeOut(1));
             }
         });
+    }
+
+    /**
+     * Ajoute une action durant laquel l'interaction est interdite
+     * @param action
+     */
+    public void addActionBloc(final Action action) {
+        final ButtonActor that = this;
+        this.setTouchable(Touchable.disabled);
+        final SequenceAction sequence = new SequenceAction(action);
+        sequence.addAction(Actions.run(() -> that.setTouchable(Touchable.enabled)));
+        super.addAction(sequence);
     }
 }
