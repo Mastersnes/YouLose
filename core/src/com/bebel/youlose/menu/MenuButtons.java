@@ -1,5 +1,7 @@
 package com.bebel.youlose.menu;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.bebel.youlose.components.ButtonActor;
 import com.bebel.youlose.components.abstrait.actions.Actions;
 import com.bebel.youlose.components.abstrait.actions.FinishRunnable;
@@ -20,8 +22,9 @@ public class MenuButtons extends AbstractGroup {
     private float move_duration = 3;
 
     public MenuButtons(final AssetsManager manager) {
+        manager.setContext("menu");
         play = new ButtonActor("play.png", "play_hover.png", manager);
-        play.move(-play.getWidth(), 55, top | left);
+        play.move(-play.getWidth(), 55);
         addActor(play);
 
         options = new ButtonActor("options.png", "options_hover.png", manager);
@@ -64,15 +67,26 @@ public class MenuButtons extends AbstractGroup {
         });
     }
 
-    public ButtonActor getPlay() {
-        return play;
-    }
+    public void makeEvents(final MenuScreen parent) {
+        play.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return parent.switchTo("play");
+            }
+        });
 
-    public ButtonActor getOptions() {
-        return options;
-    }
+        options.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return parent.switchTo("options");
+            }
+        });
 
-    public ButtonActor getCredits() {
-        return credits;
+        credits.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return parent.switchTo("credits");
+            }
+        });
     }
 }

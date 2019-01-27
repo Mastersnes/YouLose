@@ -18,13 +18,11 @@ public class MenuBackground extends AbstractGroup {
     private SpriteActor bas;
 
     public MenuBackground(final AssetsManager manager) {
-//        addActor(new SpriteActor("ref.png", manager));
-        addActor(new SpriteActor("fond.bmp", manager));
+        manager.setContext("menu");
+        bas = putActor(new SpriteActor("porte_bas.png", manager));
 
-        bas = addActor(new SpriteActor("porte_bas.png", manager));
-
-        haut = addActor(new SpriteActor("porte_haut.png", manager));
-        haut.move(0, 0, top | left);
+        haut = putActor(new SpriteActor("porte_haut.png", manager));
+        haut.move(0, 0);
 
     }
 

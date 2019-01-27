@@ -1,7 +1,6 @@
 package com.bebel.youlose.components.abstrait.actors;
 
-import static com.badlogic.gdx.utils.Align.right;
-import static com.badlogic.gdx.utils.Align.top;
+import static com.badlogic.gdx.utils.Align.*;
 import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 
@@ -13,8 +12,10 @@ public interface Movable {
      * Permet de placer un element relativement à l'espace
      * @param x
      * @param y
-     * @param alignment
      */
+    default void move(float x, float y) {
+        move(x, y, top | left);
+    }
     default void move(float x, float y, int alignment) {
         float x2 = x; float y2 = y;
 

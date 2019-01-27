@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.setFromDisplayMode(displayMode);
 		config.title = "YouLose";
 		config.vSyncEnabled = true;
+		config.fullscreen = false;
 		new LwjglApplication(new LaunchGame(), config);
 	}
 }

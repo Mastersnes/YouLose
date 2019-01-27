@@ -23,24 +23,28 @@ public class ButtonActor extends AbstractGroup {
 
     public ButtonActor(final String image, final String hoverImage, final AssetsManager manager) {
         final ButtonActor that = this;
-        simple = addActor(new SpriteActor(image, manager));
-        hover = addActor(new SpriteActor(hoverImage, manager));
+        simple = putActor(new SpriteActor(image, manager));
         setBounds(0, 0, simple.getWidth(), simple.getHeight());
-        hover.setTouchable(Touchable.disabled);
-        hover.setAlpha(0);
 
-        simple.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                if (pointer != -1) return;
-                hover.addAction(fadeIn(1));
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                if (pointer != -1) return;
-                hover.addAction(fadeOut(1));
-            }
-        });
+        if (hoverImage != null) {
+            hover = putActor(new SpriteActor(hoverImage, manager));
+            hover.setTouchable(Touchable.disabled);
+            hover.setAlpha(0);
+
+            simple.addListener(new ClickListener() {
+                @Override
+                public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                    if (pointer != -1) return;
+                    hover.addAction(fadeIn(1));
+                }
+
+                @Override
+                public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    if (pointer != -1) return;
+                    hover.addAction(fadeOut(1));
+                }
+            });
+        }
     }
 
     /**

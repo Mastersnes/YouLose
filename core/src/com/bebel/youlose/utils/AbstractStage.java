@@ -1,6 +1,7 @@
 package com.bebel.youlose.utils;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bebel.youlose.LaunchGame;
@@ -20,9 +21,14 @@ public abstract class AbstractStage extends Stage {
         super(new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, new OrthographicCamera()), parent.batch);
         this.manager = parent.manager;
         this.parent = parent;
+        createStage();
+    }
+    public void createStage() {
         create();
+        makeEvents();
     }
     public abstract void create();
+    public abstract void makeEvents();
 
     @Override
     public void draw() {
@@ -41,4 +47,9 @@ public abstract class AbstractStage extends Stage {
     }
     public void beforeAct(final float delta){}
     public abstract void afterAct(final float delta);
+
+    public <ACTOR extends Actor> ACTOR putActor(final ACTOR actor) {
+        super.addActor(actor);
+        return actor;
+    }
 }
