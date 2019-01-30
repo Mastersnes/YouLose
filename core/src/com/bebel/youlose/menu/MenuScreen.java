@@ -1,15 +1,11 @@
 package com.bebel.youlose.menu;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.LaunchGame;
-import com.bebel.youlose.components.abstrait.actions.Actionnable;
-import com.bebel.youlose.components.abstrait.actors.SpriteActor;
+import com.bebel.youlose.components.actions.Actions;
+import com.bebel.youlose.components.actors.SpriteActor;
+import com.bebel.youlose.components.interfaces.Actionnable;
 import com.bebel.youlose.utils.AbstractStage;
-import com.bebel.youlose.utils.FontParameter;
-
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 public class MenuScreen extends AbstractStage implements Actionnable {
     private MenuBackground background;
@@ -22,14 +18,11 @@ public class MenuScreen extends AbstractStage implements Actionnable {
 
     @Override
     public void create() {
-        manager.load("menu/options");
         manager.load("menu");
         addActor(new SpriteActor("fond.bmp", manager));
-        options = putActor(new MenuOptions(manager));
+        options = putActor(new MenuOptions(this, manager));
         background = putActor(new MenuBackground(manager));
         buttons = putActor(new MenuButtons(manager));
-
-        addActions(buttons.disappair(), background.open());
     }
 
     @Override
@@ -42,28 +35,41 @@ public class MenuScreen extends AbstractStage implements Actionnable {
     public void afterAct(float delta) {
     }
 
+    @Override
+    public boolean refresh() {
+        options.refresh();
+        buttons.refresh();
+        return true;
+    }
+
     /**
      * Change l'ecran de fond
      * @param subscreen
      */
-    public boolean switchTo(final String subscreen) {
-        boolean open = true;
+    public boolean switchTo(final Screens subscreen) {
+        buttons.setTouchable(Touchable.disabled);
+        options.setVisible(false);
+
         switch (subscreen) {
-            case "play":
-                options.setVisible(false);
+            case MENU:
+                buttons.refresh();
+                addActions(background.close(), buttons.appair());
                 break;
-            case "options":
+            case PLAY:
+                break;
+            case OPTIONS:
                 options.setVisible(true);
+                options.setTouchable(Touchable.disabled);
+                addActions(buttons.disappair(),background.open(), Actions.run(() -> options.setTouchable(Touchable.childrenOnly)));
                 break;
-            case "credits":
-                options.setVisible(false);
+            case CREDITS:
                 break;
             default:
-                open = false;
         }
-        if (open)
-            return addActions(buttons.disappair(),background.open());
-        else
-            return addActions(background.close(), buttons.appair());
+            return true;
+    }
+
+    public enum Screens {
+        MENU, PLAY, OPTIONS, CREDITS
     }
 }

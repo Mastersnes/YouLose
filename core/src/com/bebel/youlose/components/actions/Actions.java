@@ -1,4 +1,4 @@
-package com.bebel.youlose.components.abstrait.actions;
+package com.bebel.youlose.components.actions;
 
 /**
  * Extention des actions badlogic

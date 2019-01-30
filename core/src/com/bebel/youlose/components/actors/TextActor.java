@@ -1,12 +1,9 @@
-package com.bebel.youlose.components.abstrait.actors;
+package com.bebel.youlose.components.actors;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.I18NBundle;
-import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.components.interfaces.Movable;
 
 /**
  * Specification de l'acteur Label
@@ -17,14 +14,16 @@ public class TextActor extends Label implements Movable {
     public TextActor(final String key, final BitmapFont font) {
         super(key, new LabelStyle(font, null));
         this.key = key;
+//        setDebug(true);
     }
 
     /**
      * Permet de raffraichir le texte
-     * @param i18n
+     * @param group
      */
-    public void refreshText(final I18NBundle i18n) {
-        Gdx.app.debug("REFRESH", "new texte : " + i18n.getLocale().getLanguage());
+    public void refresh(final AbstractGroup group) {
+        final I18NBundle i18n = group.getManager().getI18n();
         setText(i18n.get(key));
+        setSize(getPrefWidth(), getPrefHeight());
     }
 }

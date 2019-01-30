@@ -1,4 +1,4 @@
-package com.bebel.youlose.components.abstrait.actions;
+package com.bebel.youlose.components.actions;
 
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 

@@ -3,12 +3,23 @@ package com.bebel.youlose.utils;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import static com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.DEFAULT_CHARS;
+
 /**
  * Extention de FreeTypeFontParameter
  */
 public class FontParameter extends FreeTypeFontGenerator.FreeTypeFontParameter {
-    public FontParameter(){}
+    public FontParameter(){
+        final StringBuilder allChars = new StringBuilder(DEFAULT_CHARS);
+        allChars.append("ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØŒŠþÙÚÛÜÝŸ");
+        allChars.append("àáâãäåæçèéêëìíîïðñòóôõöøœšÞùúûüýÿ");
+        allChars.append("¢ß¥£™©®ª×÷±²³¼½¾µ¿¶·¸º°¯§…¤¦≠¬ˆ¨‰");
+        allChars.append("$€@%£¤");
+        allChars.append("ĴĵĜĝŜŝĤĥŬŭĈĉû");
+        characters = allChars.toString();
+    }
     public FontParameter(final int size, final Color color) {
+        this();
         this.size = size;
         if (color == null) this.color = Color.BLACK;
         else this.color = color;

@@ -47,6 +47,7 @@ public abstract class AbstractStage extends Stage {
     }
     public void beforeAct(final float delta){}
     public abstract void afterAct(final float delta);
+    public abstract boolean refresh();
 
     public <ACTOR extends Actor> ACTOR putActor(final ACTOR actor) {
         super.addActor(actor);

@@ -1,4 +1,4 @@
-package com.bebel.youlose.components.abstrait.actions;
+package com.bebel.youlose.components.actions;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.utils.Pool;
