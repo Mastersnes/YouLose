@@ -35,6 +35,7 @@ public class MenuOptionsLangues extends AbstractGroup implements Actionnable {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 manager.setLanguage("fr", true);
+                parent.switchTo(MenuScreen.Screens.MENU);
                 return parent.refresh();
             }
         });
@@ -42,6 +43,7 @@ public class MenuOptionsLangues extends AbstractGroup implements Actionnable {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 manager.setLanguage("en", true);
+                parent.switchTo(MenuScreen.Screens.MENU);
                 return parent.refresh();
             }
         });
@@ -49,6 +51,7 @@ public class MenuOptionsLangues extends AbstractGroup implements Actionnable {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 manager.setLanguage("esperanto", true);
+                parent.switchTo(MenuScreen.Screens.MENU);
                 return parent.refresh();
             }
         });

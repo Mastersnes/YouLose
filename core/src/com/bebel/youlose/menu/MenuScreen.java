@@ -48,12 +48,12 @@ public class MenuScreen extends AbstractStage implements Actionnable {
      */
     public boolean switchTo(final Screens subscreen) {
         buttons.setTouchable(Touchable.disabled);
-        options.setVisible(false);
+        options.setTouchable(Touchable.disabled);
 
         switch (subscreen) {
             case MENU:
                 buttons.refresh();
-                addActions(background.close(), buttons.appair());
+                addActions(background.close(), buttons.appair(), Actions.run(() -> options.setVisible(false)));
                 break;
             case PLAY:
                 break;
