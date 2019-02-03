@@ -1,18 +1,21 @@
-package com.bebel.youlose.menu;
+package com.bebel.youlose.menu.options;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.bebel.youlose.components.actors.AbstractGroup;
-import com.bebel.youlose.components.actors.SpriteActor;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.bebel.youlose.components.refound.AbstractGroup;
 import com.bebel.youlose.components.interfaces.Actionnable;
+import com.bebel.youlose.components.composition.SlideTextActor;
+import com.bebel.youlose.components.refound.CheckActor;
 import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.menu.MenuScreen;
 import com.bebel.youlose.utils.FontParameter;
 
 public class MenuOptions extends AbstractGroup implements Actionnable {
     private final MenuOptionsLangues langues;
-    private final SlideActor musiques;
-    private final SlideActor sounds;
+    private final SlideTextActor musiques;
+    private final SlideTextActor sounds;
+    private final CheckActor fullscreen;
 
     public MenuOptions(final MenuScreen parent, final AssetsManager manager) {
         super(manager);
@@ -21,24 +24,25 @@ public class MenuOptions extends AbstractGroup implements Actionnable {
 
         final BitmapFont font = manager.getFont("sector.ttf", new FontParameter(20, Color.WHITE));
 
-//        addActor(new SpriteActor("ref.png", manager));
+//        addActor(new ImageActor("ref.png", manager));
 
         langues = putActor(new MenuOptionsLangues(parent, manager));
 
-        musiques = putActor(new SlideActor(manager, font, "musiques"));
+        musiques = putActor(new SlideTextActor(manager, font, "musiques", "slide.png", "pointer.png"));
         musiques.move(centerX(musiques), 426);
 
-        sounds = putActor(new SlideActor(manager, font, "sounds"));
+        sounds = putActor(new SlideTextActor(manager, font, "sounds", "slide.png", "pointer.png"));
         sounds.move(centerX(sounds), 540);
+
+        fullscreen = putActor(new CheckActor(manager, font, "fullscreen", "case.png", "case_coche.png"));
+        fullscreen.move(centerX(fullscreen), 560);
         refresh();
     }
 
     public void makeEvents() {
         langues.makeEvents();
-        musiques.makeEvents();
-        sounds.makeEvents();
-        musiques.onChange(() -> manager.setMusic(musiques.getPercent()));
-        sounds.onChange(() -> manager.setSound(sounds.getPercent()));
+        musiques.onChange(() -> manager.sound.setMusic((int)musiques.getValue()));
+        sounds.onChange(() -> manager.sound.setSound((int)sounds.getValue()));
     }
 
     @Override

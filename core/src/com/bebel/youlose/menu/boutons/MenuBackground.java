@@ -1,11 +1,11 @@
-package com.bebel.youlose.menu;
+package com.bebel.youlose.menu.boutons;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
-import com.bebel.youlose.components.actors.AbstractGroup;
-import com.bebel.youlose.components.actors.SpriteActor;
+import com.bebel.youlose.components.refound.AbstractGroup;
+import com.bebel.youlose.components.refound.ImageActor;
 import com.bebel.youlose.manager.AssetsManager;
 
 import static com.badlogic.gdx.math.Interpolation.*;
@@ -13,16 +13,16 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
 
 public class MenuBackground extends AbstractGroup {
-    private SpriteActor haut;
-    private SpriteActor bas;
+    private ImageActor haut;
+    private ImageActor bas;
 
     public MenuBackground(final AssetsManager manager) {
         super(manager);
         manager.setContext("menu");
         setTouchable(Touchable.disabled);
-        bas = putActor(new SpriteActor("porte_bas.png", manager));
+        bas = putActor(new ImageActor(manager, "porte_bas.png"));
 
-        haut = putActor(new SpriteActor("porte_haut.png", manager));
+        haut = putActor(new ImageActor(manager, "porte_haut.png"));
         haut.move(0, 0);
 
     }

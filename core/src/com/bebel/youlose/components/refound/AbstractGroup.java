@@ -1,16 +1,13 @@
-package com.bebel.youlose.components.actors;
+package com.bebel.youlose.components.refound;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.bebel.youlose.components.actions.Actions;
 import com.bebel.youlose.components.interfaces.Actionnable;
 import com.bebel.youlose.components.interfaces.Movable;
 import com.bebel.youlose.manager.AssetsManager;
-
-import java.util.List;
 
 import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;

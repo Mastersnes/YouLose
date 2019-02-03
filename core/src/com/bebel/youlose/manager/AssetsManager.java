@@ -3,37 +3,39 @@ package com.bebel.youlose.manager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.utils.FontParameter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manager de ressource
  */
 public class AssetsManager extends AssetManager {
-    private String context;
-    private Locale language;
-    private int music;
-    private int sound;
+    public String context;
     private Map<Class, String> typeMap = new HashMap<>();
     private Map<String, BitmapFont> fonts = new HashMap<>();
     private List<String> loaded = new ArrayList<>();
+
+    public SoundManager sound;
+    public LanguageManager langue;
 
     public AssetsManager() {
         super();
         typeMap.put(Texture.class, "textures");
         typeMap.put(FreeTypeFontGenerator.class, "fonts");
-
         setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(getFileHandleResolver()));
-        setLanguage(Locale.getDefault().getLanguage(), true);
+
+        sound = new SoundManager(this);
+        langue = new LanguageManager(this);
     }
 
     /**
@@ -42,11 +44,12 @@ public class AssetsManager extends AssetManager {
     public void load(final String context) {
         if (context == null) return;
         this.context = context;
-        loadI18n();
+        langue.load();
         loadAssets(Texture.class);
         loadAssets(FreeTypeFontGenerator.class);
         finishLoading();
     }
+
     public void unloadAll() {
         for (final String loadedPath : loaded) {
             unload(loadedPath);
@@ -58,7 +61,7 @@ public class AssetsManager extends AssetManager {
      * Permet de charger les ressources du contexte
      */
     private <T> void loadAssets(final Class<T> type) {
-        final String path = getPath(context, type, language.getLanguage());
+        final String path = getPath(context, type, langue.getLanguage());
         final String defaultPath = getPath(context, type, "en");
         FileHandle[] files = Gdx.files.internal(path).list();
         FileHandle[] defaultFiles = Gdx.files.internal(defaultPath).list();
@@ -70,13 +73,6 @@ public class AssetsManager extends AssetManager {
         }
     }
 
-    private void loadI18n() {
-        load("i18n/i18n", I18NBundle.class, new I18NBundleLoader.I18NBundleParameter(this.language, "UTF-8"));
-        finishLoading();
-        // On remet le langage finalement trouvé
-        setLanguage(getI18n().getLocale().getLanguage(), false);
-    }
-
     /**
      * Permet de recuperer les ressources du contexte
      *
@@ -85,18 +81,25 @@ public class AssetsManager extends AssetManager {
      */
 
     public <T> T getAsset(final String name, final Class<T> type) {
-        final String path = getPath(context, type, language.getLanguage()) + name;
+        final String path = getPath(context, type, langue.getLanguage()) + name;
         final String defaultPath = getPath(context, type, "en") + name;
 
         if (isLoaded(path)) return get(path, type);
         else return get(defaultPath, type);
     }
+
+    public TextureRegionDrawable getDrawable(final String name) {
+        return new TextureRegionDrawable(getTexture(name));
+    }
+
     public Texture getTexture(final String name) {
         return getAsset(name, Texture.class);
     }
+
     public FreeTypeFontGenerator getFont(final String name) {
         return getAsset(name, FreeTypeFontGenerator.class);
     }
+
     public BitmapFont getFont(final String name, final FontParameter parameter) {
         final String key = name + parameter.getCode();
         BitmapFont font = fonts.get(key);
@@ -105,9 +108,6 @@ public class AssetsManager extends AssetManager {
             fonts.put(key, font);
         }
         return font;
-    }
-    public I18NBundle getI18n() {
-        return get("i18n/i18n", I18NBundle.class);
     }
 
     @Override
@@ -123,28 +123,15 @@ public class AssetsManager extends AssetManager {
         this.context = context;
     }
 
-    public void setMusic(int music) {
-        this.music = music;
-    }
-
-    public void setSound(int sound) {
-        this.sound = sound;
-    }
-
-    public void setLanguage(final String language, boolean refresh) {
-        if (refresh && isLoaded("i18n/i18n")) unload("i18n/i18n");
-        this.language = new Locale(language);
-        if (refresh) load(context);
-    }
-
     @Override
-    public synchronized <T> void load (String fileName, Class<T> type, AssetLoaderParameters<T> parameter) {
+    public synchronized <T> void load(String fileName, Class<T> type, AssetLoaderParameters<T> parameter) {
         super.load(fileName, type, parameter);
         loaded.add(fileName);
     }
 
     /**
      * Renvoi le chemin formaté
+     *
      * @param context
      * @param type
      * @param language
@@ -160,6 +147,7 @@ public class AssetsManager extends AssetManager {
 
     /**
      * Trouve un fichier dans une liste
+     *
      * @param files
      * @param name
      * @return

@@ -1,11 +1,8 @@
 package com.bebel.youlose.components.interfaces;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.bebel.youlose.components.actors.AbstractGroup;
 
 import static com.badlogic.gdx.utils.Align.*;
-import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
-import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 
 /**
  * Represente une entitée pouvant etre bougée

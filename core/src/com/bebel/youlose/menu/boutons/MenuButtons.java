@@ -1,4 +1,4 @@
-package com.bebel.youlose.menu;
+package com.bebel.youlose.menu.boutons;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -6,9 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.bebel.youlose.components.actions.Actions;
 import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
-import com.bebel.youlose.components.actors.AbstractGroup;
-import com.bebel.youlose.components.actors.ButtonActor;
+import com.bebel.youlose.components.refound.AbstractGroup;
+import com.bebel.youlose.components.refound.ButtonActor;
 import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.menu.MenuScreen;
 
 import static com.badlogic.gdx.math.Interpolation.fastSlow;
 import static com.badlogic.gdx.math.Interpolation.slowFast;
@@ -25,15 +26,15 @@ public class MenuButtons extends AbstractGroup {
     public MenuButtons(final AssetsManager manager) {
         super(manager);
         manager.setContext("menu");
-        play = putActor(new ButtonActor("play.png", manager));
+        play = putActor(new ButtonActor(manager, "play.png"));
         play.addHover("play_hover.png");
         play.move(-play.getWidth(), 55);
 
-        options = putActor(new ButtonActor("options.png", manager));
+        options = putActor(new ButtonActor(manager, "options.png"));
         options.addHover("options_hover.png");
         options.move(-options.getWidth(), 283, top | right);
 
-        credits = putActor(new ButtonActor("credits.png", manager));
+        credits = putActor(new ButtonActor(manager, "credits.png"));
         credits.addHover("credits_hover.png");
         credits.setPosition(-credits.getWidth(), 30, bottom | left);
 

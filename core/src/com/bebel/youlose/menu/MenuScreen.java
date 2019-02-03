@@ -3,8 +3,11 @@ package com.bebel.youlose.menu;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.actions.Actions;
-import com.bebel.youlose.components.actors.SpriteActor;
+import com.bebel.youlose.components.refound.ImageActor;
 import com.bebel.youlose.components.interfaces.Actionnable;
+import com.bebel.youlose.menu.boutons.MenuBackground;
+import com.bebel.youlose.menu.boutons.MenuButtons;
+import com.bebel.youlose.menu.options.MenuOptions;
 import com.bebel.youlose.utils.AbstractStage;
 
 public class MenuScreen extends AbstractStage implements Actionnable {
@@ -19,7 +22,7 @@ public class MenuScreen extends AbstractStage implements Actionnable {
     @Override
     public void create() {
         manager.load("menu");
-        addActor(new SpriteActor("fond.bmp", manager));
+        addActor(new ImageActor(manager, "fond.bmp"));
         options = putActor(new MenuOptions(this, manager));
         background = putActor(new MenuBackground(manager));
         buttons = putActor(new MenuButtons(manager));
@@ -72,4 +75,7 @@ public class MenuScreen extends AbstractStage implements Actionnable {
     public enum Screens {
         MENU, PLAY, OPTIONS, CREDITS
     }
+
+    @Override
+    public void setTouchable(final Touchable disabled) {}
 }
