@@ -5,35 +5,46 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.Locale;
 
+/**
+ * Manager de langue
+ */
 public class LanguageManager {
     private AssetsManager parent;
-    private Locale language;
 
     public LanguageManager(final AssetsManager manager) {
         parent = manager;
-        setLanguage(Locale.getDefault().getLanguage(), true);
+        load(parent.conf.getLanguage());
     }
 
-    public void load() {
-        parent.load("i18n/i18n", I18NBundle.class, new I18NBundleLoader.I18NBundleParameter(this.language, "UTF-8"));
+    /**
+     * Permet de charger le nouveau language
+     *
+     * @param newLanguage
+     */
+    public void load(final String newLanguage) {
+        parent.conf.setLanguage(newLanguage);
+
+        if (parent.isLoaded("i18n/i18n")) parent.unload("i18n/i18n");
+        parent.load("i18n/i18n", I18NBundle.class,
+                new I18NBundleLoader.I18NBundleParameter(new Locale(parent.conf.getLanguage()), "UTF-8"));
+
         parent.finishLoading();
+
         // On remet le langage finalement trouvé
-        setLanguage(getI18n().getLocale().getLanguage(), false);
+        parent.conf.setLanguage(getI18n().getLocale().getLanguage());
     }
 
-    public I18NBundle getI18n() {
-        return parent.get("i18n/i18n", I18NBundle.class);
-    }
+    /**
+     * Permet de recuperer le texte dans la bonne langue
+     *
+     * @param key
+     * @return
+     */
     public String get(final String key) {
         return getI18n().get(key);
     }
+    public I18NBundle getI18n() {
+        return parent.get("i18n/i18n", I18NBundle.class);
+    }
 
-    public void setLanguage(final String language, boolean refresh) {
-        if (refresh && parent.isLoaded("i18n/i18n")) parent.unload("i18n/i18n");
-        this.language = new Locale(language);
-        if (refresh) parent.load(parent.context);
-    }
-    public String getLanguage() {
-        return language.getLanguage();
-    }
 }

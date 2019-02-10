@@ -1,161 +1,132 @@
 package com.bebel.youlose.manager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.utils.FontParameter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Manager de ressource
+ *
  */
 public class AssetsManager extends AssetManager {
     public String context;
-    private Map<Class, String> typeMap = new HashMap<>();
-    private Map<String, BitmapFont> fonts = new HashMap<>();
     private List<String> loaded = new ArrayList<>();
 
-    public SoundManager sound;
+    public TextureManager textures;
+    public FontsManager fonts;
+    public SoundManager sounds;
     public LanguageManager langue;
+    public ConfigManager conf;
 
+    /**
+     * Construction et premiere resolution de l'I18N
+     */
     public AssetsManager() {
         super();
-        typeMap.put(Texture.class, "textures");
-        typeMap.put(FreeTypeFontGenerator.class, "fonts");
         setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(getFileHandleResolver()));
-
-        sound = new SoundManager(this);
+        conf = new ConfigManager(this);
         langue = new LanguageManager(this);
+        textures = new TextureManager(this);
+        sounds = new SoundManager(this);
+        fonts = new FontsManager(this);
     }
 
     /**
-     * Permet de charger les ressources du context
+     * Rechargement du context en cours avec un nouveau language
+     *
+     * @param newLangage
      */
-    public void load(final String context) {
-        if (context == null) return;
+    public void reload(final String newLangage) {
+        langue.load(newLangage);
+        loadContext(context);
+    }
+
+    /**
+     * Chargement du context indiqué
+     *
+     * @param context
+     */
+    public void loadContext(final String context) {
         this.context = context;
-        langue.load();
-        loadAssets(Texture.class);
-        loadAssets(FreeTypeFontGenerator.class);
+        textures.load();
+        sounds.load();
+        fonts.load();
         finishLoading();
     }
 
-    public void unloadAll() {
-        for (final String loadedPath : loaded) {
-            unload(loadedPath);
+    @Override
+    public synchronized <T> void load(final String fileName, final Class<T> type, final AssetLoaderParameters<T> parameter) {
+        if (isLoaded(fileName)) return;
+        else if (langue != null) {
+            // On efface d'abord les elements des autres langues avant de charger le nouvel element
+            final String languagePath = "/" + conf.getLanguage() + "/";
+            unload(fileName.replace(languagePath, "/en/"));
+            unload(fileName.replace(languagePath, "/fr/"));
+            unload(fileName.replace(languagePath, "/eo/"));
         }
-        loaded.clear();
+        super.load(fileName, type, parameter);
+        if (!"i18n/i18n".equals(fileName))
+            loaded.add(fileName);
+    }
+
+    @Override
+    public synchronized void unload(String fileName) {
+        if (isLoaded(fileName)) {
+            super.unload(fileName);
+            loaded.remove(fileName);
+        }
     }
 
     /**
-     * Permet de charger les ressources du contexte
+     * Permet de tout decharger
      */
-    private <T> void loadAssets(final Class<T> type) {
-        final String path = getPath(context, type, langue.getLanguage());
-        final String defaultPath = getPath(context, type, "en");
-        FileHandle[] files = Gdx.files.internal(path).list();
-        FileHandle[] defaultFiles = Gdx.files.internal(defaultPath).list();
-        for (FileHandle defaultFile : defaultFiles) {
-            final FileHandle file = findIn(files, defaultFile.name());
-            if (file != null)
-                load(path + file.name(), type);
-            else load(defaultPath + defaultFile.name(), type);
+    public synchronized void unloadAll() {
+        String fileName;
+        for (final Iterator<String> it = loaded.iterator(); it.hasNext(); ) {
+            fileName = it.next();
+            if (isLoaded(fileName)) {
+                super.unload(fileName);
+                it.remove();
+            }
         }
     }
 
-    /**
-     * Permet de recuperer les ressources du contexte
-     *
-     * @param name
-     * @return
-     */
-
-    public <T> T getAsset(final String name, final Class<T> type) {
-        final String path = getPath(context, type, langue.getLanguage()) + name;
-        final String defaultPath = getPath(context, type, "en") + name;
-
-        if (isLoaded(path)) return get(path, type);
-        else return get(defaultPath, type);
-    }
-
-    public TextureRegionDrawable getDrawable(final String name) {
-        return new TextureRegionDrawable(getTexture(name));
-    }
-
+    //--Utils
     public Texture getTexture(final String name) {
-        return getAsset(name, Texture.class);
+        return textures.get(name);
     }
-
-    public FreeTypeFontGenerator getFont(final String name) {
-        return getAsset(name, FreeTypeFontGenerator.class);
+    public Drawable getDrawable(final String name) {
+        return new TextureRegionDrawable(textures.get(name));
     }
-
+    public Sound getSound(final String name) {
+        return sounds.get(name);
+    }
     public BitmapFont getFont(final String name, final FontParameter parameter) {
-        final String key = name + parameter.getCode();
-        BitmapFont font = fonts.get(key);
-        if (font == null) {
-            font = getFont(name).generateFont(parameter);
-            fonts.put(key, font);
-        }
-        return font;
+        return fonts.get(name, parameter);
     }
+
 
     @Override
     public synchronized void dispose() {
         super.dispose();
-        for (final BitmapFont font : fonts.values()) {
-            font.dispose();
-        }
+        textures.dispose();
+        sounds.dispose();
+        fonts.dispose();
     }
 
-    //-----
+    //--- Getter setter
     public void setContext(final String context) {
         this.context = context;
-    }
-
-    @Override
-    public synchronized <T> void load(String fileName, Class<T> type, AssetLoaderParameters<T> parameter) {
-        super.load(fileName, type, parameter);
-        loaded.add(fileName);
-    }
-
-    /**
-     * Renvoi le chemin formaté
-     *
-     * @param context
-     * @param type
-     * @param language
-     * @return
-     */
-    private <T> String getPath(String context, Class<T> type, final String language) {
-        final StringBuilder path = new StringBuilder();
-        path.append(context).append("/");
-        path.append(typeMap.get(type)).append("/");
-        path.append(language).append("/");
-        return path.toString();
-    }
-
-    /**
-     * Trouve un fichier dans une liste
-     *
-     * @param files
-     * @param name
-     * @return
-     */
-    private FileHandle findIn(final FileHandle[] files, final String name) {
-        for (final FileHandle file : files) {
-            if (file.name().equals(name)) return file;
-        }
-        return null;
     }
 }

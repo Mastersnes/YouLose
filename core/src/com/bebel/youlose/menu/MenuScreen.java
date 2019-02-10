@@ -21,8 +21,8 @@ public class MenuScreen extends AbstractStage implements Actionnable {
 
     @Override
     public void create() {
-        manager.load("menu");
-        addActor(new ImageActor(manager, "fond.bmp"));
+        manager.loadContext("menu");
+        addActor(new ImageActor(manager, "background/fond.bmp"));
         options = putActor(new MenuOptions(this, manager));
         background = putActor(new MenuBackground(manager));
         buttons = putActor(new MenuButtons(manager));

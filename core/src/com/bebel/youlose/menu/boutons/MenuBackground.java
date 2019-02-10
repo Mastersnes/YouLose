@@ -20,9 +20,9 @@ public class MenuBackground extends AbstractGroup {
         super(manager);
         manager.setContext("menu");
         setTouchable(Touchable.disabled);
-        bas = putActor(new ImageActor(manager, "porte_bas.png"));
+        bas = putActor(new ImageActor(manager, "background/porte_bas.png"));
 
-        haut = putActor(new ImageActor(manager, "porte_haut.png"));
+        haut = putActor(new ImageActor(manager, "background/porte_haut.png"));
         haut.move(0, 0);
 
     }

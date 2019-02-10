@@ -1,25 +1,30 @@
 package com.bebel.youlose.manager;
 
-public class SoundManager {
-    private AssetsManager parent;
-    private int music;
-    private int sound;
+import com.badlogic.gdx.audio.Sound;
 
+/**
+ * Manager de son
+ */
+public class SoundManager extends AbstractSubManager<Sound> {
     public SoundManager(final AssetsManager manager) {
-        parent = manager;
+        super(manager);
     }
 
-    public int getMusic() {
-        return music;
-    }
-    public void setMusic(int music) {
-        this.music = music;
+    @Override
+    protected String getPath(final String language) {
+        final StringBuilder path = new StringBuilder("sounds/");
+        path.append(parent.context).append("/");
+        return path.toString();
     }
 
-    public int getSound() {
-        return sound;
+    @Override
+    protected Class<Sound> getType() {
+        return Sound.class;
     }
-    public void setSound(int sound) {
-        this.sound = sound;
+
+
+    @Override
+    public void dispose() {
+
     }
 }

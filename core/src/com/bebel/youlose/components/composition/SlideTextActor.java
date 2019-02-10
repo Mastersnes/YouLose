@@ -23,7 +23,8 @@ public class SlideTextActor extends AbstractGroup {
         setBounds(0, 0, slide.getWidth(), label.getHeight() + slide.getHeight() + 20);
 
         label.move(centerX(label), 0);
-        slide.move(centerX(slide), 49);
+        slide.move(centerX(slide), 45);
+        slide.setRange(0, 100);
 
         refresh();
     }
@@ -40,6 +41,8 @@ public class SlideTextActor extends AbstractGroup {
     public float getValue() {
         return slide.getValue();
     }
+    public void setValue(final float value) { slide.setValue(value);}
+
 
     @Override
     public boolean refresh() {

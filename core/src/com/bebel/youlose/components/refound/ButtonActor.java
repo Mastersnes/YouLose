@@ -5,19 +5,21 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.bebel.youlose.components.interfaces.Actionnable;
-import com.bebel.youlose.components.interfaces.Hoverable;
-import com.bebel.youlose.components.interfaces.Movable;
-import com.bebel.youlose.components.interfaces.Refreshable;
+import com.bebel.youlose.components.interfaces.*;
 import com.bebel.youlose.manager.AssetsManager;
 
 /**
- * Acteur se comportant comme un bouton
+ * Abstraction de bouton
  */
-public class ButtonActor extends Button implements Movable, Actionnable, Refreshable, Hoverable {
+public class ButtonActor extends Button implements Movable, Actionnable, Refreshable, Hoverable, Clickable {
     private AssetsManager manager;
     private ImageActor hover;
 
+    /**
+     * Constructeur
+     * @param manager
+     * @param image
+     */
     public ButtonActor(final AssetsManager manager, final String image) {
         super(new ButtonStyle(manager.getDrawable(image), null, null));
         getStyle().disabled = ((TextureRegionDrawable)getStyle().up).tint(Color.GRAY);

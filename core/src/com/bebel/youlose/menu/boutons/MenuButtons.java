@@ -26,16 +26,16 @@ public class MenuButtons extends AbstractGroup {
     public MenuButtons(final AssetsManager manager) {
         super(manager);
         manager.setContext("menu");
-        play = putActor(new ButtonActor(manager, "play.png"));
-        play.addHover("play_hover.png");
+        play = putActor(new ButtonActor(manager, "text-button/play.png"));
+        play.addHover("text-button/play_hover.png");
         play.move(-play.getWidth(), 55);
 
-        options = putActor(new ButtonActor(manager, "options.png"));
-        options.addHover("options_hover.png");
+        options = putActor(new ButtonActor(manager, "text-button/options.png"));
+        options.addHover("text-button/options_hover.png");
         options.move(-options.getWidth(), 283, top | right);
 
-        credits = putActor(new ButtonActor(manager, "credits.png"));
-        credits.addHover("credits_hover.png");
+        credits = putActor(new ButtonActor(manager, "text-button/credits.png"));
+        credits.addHover("text-button/credits_hover.png");
         credits.setPosition(-credits.getWidth(), 30, bottom | left);
 
         addAction(appair());
@@ -82,25 +82,8 @@ public class MenuButtons extends AbstractGroup {
     }
 
     public void makeEvents(final MenuScreen parent) {
-        play.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return parent.switchTo(MenuScreen.Screens.PLAY);
-            }
-        });
-
-        options.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return parent.switchTo(MenuScreen.Screens.OPTIONS);
-            }
-        });
-
-        credits.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return parent.switchTo(MenuScreen.Screens.CREDITS);
-            }
-        });
+        play.onClick((x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.PLAY));
+        options.onClick((x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.OPTIONS));
+        credits.onClick((x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.CREDITS));
     }
 }
