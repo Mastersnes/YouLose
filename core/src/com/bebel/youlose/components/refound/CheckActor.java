@@ -1,12 +1,10 @@
 package com.bebel.youlose.components.refound;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Pools;
+import com.bebel.youlose.components.interfaces.Clickable;
 import com.bebel.youlose.components.interfaces.Movable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.manager.AssetsManager;
@@ -14,45 +12,50 @@ import com.bebel.youlose.manager.AssetsManager;
 /**
  * Abstraction de la checkbox
  */
-public class CheckActor extends CheckBox implements Movable, Refreshable {
-    private AssetsManager manager;
+public class CheckActor extends AbstractGroup implements Movable, Refreshable, Clickable {
+    private ImageActor on;
+    private ImageActor off;
+    private TextActor label;
+    private boolean isChecked;
+    private float spacing = 10;
 
     /**
      * Constructeur
+     *
      * @param manager
      * @param font
      * @param text
-     * @param off
-     * @param on
+     * @param offStr
+     * @param onStr
      */
-    public CheckActor(final AssetsManager manager, final BitmapFont font, final String text, final String off, final String on) {
-        this(manager, text, new CheckBoxStyle(manager.getDrawable(off), manager.getDrawable(on), font, Color.WHITE));
-    }
+    public CheckActor(final AssetsManager manager, final BitmapFont font, final String text, final String offStr, final String onStr) {
+        super(manager);
+        this.label = putActor(new TextActor(manager, text, font));
+        this.off = putActor(new ImageActor(manager, offStr));
+        this.on = putActor(new ImageActor(manager, onStr));
 
-    /**
-     * Constructeur
-     * @param manager
-     * @param text
-     * @param style
-     */
-    public CheckActor(final AssetsManager manager, final String text, final CheckBoxStyle style) {
-        super(text, style);
+        makeEvents();
         setName(text);
-        this.manager = manager;
         refresh();
     }
 
-    /**
-     * Inverse l'ordre de la checkbox
-     */
-    public CheckActor reverse() {
-        final Label label = getLabel();
-        final Image image = getImage();
-        clearChildren();
-        add(label);
-        add(image);
-        pack();
-        return this;
+    public void makeEvents() {
+        onClick((x, y, button, pointer) -> setChecked(!isChecked));
+    }
+
+    public void setChecked(boolean checked) {
+        this.isChecked = checked;
+
+        final ChangeListener.ChangeEvent changeEvent = Pools.obtain(ChangeListener.ChangeEvent.class);
+        fire(changeEvent);
+        Pools.free(changeEvent);
+
+        this.on.setVisible(isChecked);
+        this.off.setVisible(!isChecked);
+    }
+
+    public boolean isChecked() {
+        return isChecked;
     }
 
     /**
@@ -69,8 +72,11 @@ public class CheckActor extends CheckBox implements Movable, Refreshable {
 
     @Override
     public boolean refresh() {
-        setText(manager.langue.get(getName()));
-        pack();
+        label.refresh();
+
+        setBounds(getX(), getY(), label.getWidth() + on.getWidth() + spacing, on.getHeight());
+        on.setX(label.getWidth() + spacing);
+        off.setX(label.getWidth() + spacing);
         return true;
     }
 

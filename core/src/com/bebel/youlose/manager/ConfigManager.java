@@ -81,8 +81,7 @@ public class ConfigManager {
         if (!Gdx.graphics.supportsDisplayModeChange()) return;
 
         if (!fullscreen) {
-            final Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
-            Gdx.graphics.setWindowedMode(displayMode.width, displayMode.height);
+            Gdx.graphics.setWindowedMode(800, 600);
         } else Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
     }
 }

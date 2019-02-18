@@ -17,6 +17,16 @@ public class SoundManager extends AbstractSubManager<Sound> {
         return path.toString();
     }
 
+    /**
+     * Joue le son indiqué
+     * @param name
+     * @return
+     */
+    public long play(final String name) {
+        final Sound sound = get(name);
+        return sound.play(parent.conf.getSound() / 100f);
+    }
+
     @Override
     protected Class<Sound> getType() {
         return Sound.class;

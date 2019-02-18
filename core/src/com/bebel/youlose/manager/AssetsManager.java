@@ -26,6 +26,7 @@ public class AssetsManager extends AssetManager {
     public TextureManager textures;
     public FontsManager fonts;
     public SoundManager sounds;
+    public MusiqueManager musiques;
     public LanguageManager langue;
     public ConfigManager conf;
 
@@ -39,6 +40,7 @@ public class AssetsManager extends AssetManager {
         langue = new LanguageManager(this);
         textures = new TextureManager(this);
         sounds = new SoundManager(this);
+        musiques = new MusiqueManager(this);
         fonts = new FontsManager(this);
     }
 
@@ -61,6 +63,7 @@ public class AssetsManager extends AssetManager {
         this.context = context;
         textures.load();
         sounds.load();
+        musiques.load();
         fonts.load();
         finishLoading();
     }
@@ -108,9 +111,6 @@ public class AssetsManager extends AssetManager {
     }
     public Drawable getDrawable(final String name) {
         return new TextureRegionDrawable(textures.get(name));
-    }
-    public Sound getSound(final String name) {
-        return sounds.get(name);
     }
     public BitmapFont getFont(final String name, final FontParameter parameter) {
         return fonts.get(name, parameter);

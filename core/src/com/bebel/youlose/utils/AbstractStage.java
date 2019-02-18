@@ -1,8 +1,10 @@
 package com.bebel.youlose.utils;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.manager.AssetsManager;
@@ -19,6 +21,7 @@ public abstract class AbstractStage extends Stage {
 
     public AbstractStage(final LaunchGame parent) {
         super(new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, new OrthographicCamera()), parent.batch);
+        getRoot().setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
         this.manager = parent.manager;
         this.parent = parent;
         createStage();
@@ -52,5 +55,33 @@ public abstract class AbstractStage extends Stage {
     public <ACTOR extends Actor> ACTOR putActor(final ACTOR actor) {
         super.addActor(actor);
         return actor;
+    }
+
+    /**
+     * Centre l'element horizontalement
+     * @param element
+     * @return
+     */
+    protected float centerX(final Actor element) {
+        return getWidth()/2 - element.getWidth()/2;
+    }
+
+    /**
+     * Centre l'element verticalement
+     * @param element
+     * @return
+     */
+    protected float centerY(final Actor element) {
+        return getHeight()/2 - element.getHeight()/2;
+    }
+
+    /**
+     * Permet d'ajouter des actions à la suite
+     * @param actions
+     * @return
+     */
+    protected boolean addActions(final Action... actions) {
+        addAction(Actions.sequence(actions));
+        return true;
     }
 }

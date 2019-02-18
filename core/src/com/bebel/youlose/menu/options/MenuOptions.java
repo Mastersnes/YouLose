@@ -1,7 +1,5 @@
 package com.bebel.youlose.menu.options;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,10 +12,6 @@ import com.bebel.youlose.manager.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 import com.bebel.youlose.utils.FontParameter;
 
-/**
- * TODO : Mettre la bonne couleur de texte
- * TODO : la case a cochée n'est pas bien placée
- */
 public class MenuOptions extends AbstractGroup implements Actionnable {
     private final MenuScreen parent;
 
@@ -26,7 +20,6 @@ public class MenuOptions extends AbstractGroup implements Actionnable {
     private final SlideTextActor sounds;
     private final CheckActor fullscreen;
     private final ButtonActor valider;
-    private final Sound currentSound;
 
     public MenuOptions(final MenuScreen parent, final AssetsManager manager) {
         super(manager);
@@ -34,7 +27,7 @@ public class MenuOptions extends AbstractGroup implements Actionnable {
         setVisible(false);
         manager.setContext("menu");
 
-        final BitmapFont font = manager.getFont("sector.ttf", new FontParameter(21, Color.WHITE));
+        final BitmapFont font = manager.getFont("sector.ttf", new FontParameter(21, Color.valueOf("#AEA19A")));
 
 //        addActor(new ImageActor(manager, "ref.png"));
 
@@ -52,16 +45,13 @@ public class MenuOptions extends AbstractGroup implements Actionnable {
         sounds.setValue(manager.conf.getSound());
 
         fullscreen = putActor(new CheckActor(manager, font, "fullscreen",
-                "check-button/case.png", "check-button/case_coche.png"))
-                .reverse();
-        fullscreen.move(centerX(fullscreen), 588);
+                "check-button/case.png", "check-button/case_coche.png"));
+        fullscreen.move(centerX(fullscreen), 577);
         fullscreen.setChecked(manager.conf.isFullscreen());
 
         valider = putActor(new ButtonActor(manager, "text-button/valider.png"));
         valider.addHover("text-button/valider_hover.png");
         valider.move(centerX(valider), 657);
-
-        this.currentSound = manager.getSound("ferrets.wav");
 
         refresh();
     }
@@ -70,13 +60,11 @@ public class MenuOptions extends AbstractGroup implements Actionnable {
         langues.makeEvents();
         musiques.onChange(() -> {
             manager.conf.setMusic((int) musiques.getValue());
-            currentSound.stop();
-            currentSound.play(manager.conf.getMusic() / 100f);
+            manager.sounds.play("ferrets.wav");
         });
         sounds.onChange(() -> {
             manager.conf.setSound((int) sounds.getValue());
-            currentSound.stop();
-            currentSound.play(manager.conf.getSound() / 100f);
+            manager.musiques.play("ferrets.wav");
         });
         fullscreen.onChange(() -> manager.conf.setFullscreen(fullscreen.isChecked()));
 
@@ -92,6 +80,7 @@ public class MenuOptions extends AbstractGroup implements Actionnable {
         musiques.refresh();
         sounds.refresh();
         fullscreen.refresh();
+        fullscreen.setX(centerX(fullscreen));
         valider.refresh();
         return true;
     }

@@ -14,46 +14,35 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 /**
  * Abstraction de group
  */
-public abstract class AbstractGroup extends Group implements Movable, Actionnable {
+public abstract class AbstractActor extends Actor {
     protected final AssetsManager manager;
 
     /**
-     * Le group est par defaut de la taille de l'ecran
+     * L'acteur est par defaut de la taille de l'ecran
      * @param manager
      */
-    public AbstractGroup(final AssetsManager manager) {
+    public AbstractActor(final AssetsManager manager) {
         this.manager = manager;
-        setTouchable(Touchable.childrenOnly);
+        setTouchable(Touchable.enabled);
         setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     }
 
     /**
-     * Permet d'ajouter un acteur et de le retourner
-     * @param actor
-     * @param <ACTOR>
-     * @return
-     */
-    public <ACTOR extends Actor> ACTOR putActor(final ACTOR actor) {
-        super.addActor(actor);
-        return actor;
-    }
-
-    /**
      * Centre l'element horizontalement
-     * @param element
      * @return
      */
-    protected float centerX(final Actor element) {
-        return getWidth()/2 - element.getWidth()/2;
+    protected float centerX() {
+        float parentWidth = getParent() == null ? WORLD_WIDTH : getParent().getWidth();
+        return parentWidth/2 - getWidth()/2;
     }
 
     /**
      * Centre l'element verticalement
-     * @param element
      * @return
      */
-    protected float centerY(final Actor element) {
-        return getHeight()/2 - element.getHeight()/2;
+    protected float centerY() {
+        float parentHeight = getParent() == null ? WORLD_HEIGHT : getParent().getHeight();
+        return parentHeight/2 - getHeight()/2;
     }
 
     /**
@@ -65,13 +54,7 @@ public abstract class AbstractGroup extends Group implements Movable, Actionnabl
     }
 
     /**
-     * Permet de raffraichir les acteurs conditionnées par la langue
-     * @return
-     */
-    public abstract boolean refresh();
-
-    /**
-     * Stop les actions du groupe
+     * Stop les actions du
      */
     public void stop() {
         stop(this);
@@ -96,5 +79,33 @@ public abstract class AbstractGroup extends Group implements Movable, Actionnabl
         for (final Action action : actor.getActions()) {
             actor.removeAction(action);
         }
+    }
+
+    public void setDebug(final Actor toDebug) {
+        toDebug.setDebug(true);
+        toDebug.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                switch (keycode) {
+                    case Input.Keys.Z :
+                        toDebug.moveBy(0, 1);
+                        break;
+                    case Input.Keys.Q :
+                        toDebug.moveBy(-1, 0);
+                        break;
+                    case Input.Keys.S :
+                        toDebug.moveBy(0, -1);
+                        break;
+                    case Input.Keys.D :
+                        toDebug.moveBy(1, 0);
+                        break;
+                }
+
+                float y = getHeight() - toDebug.getHeight() - toDebug.getY();
+                Gdx.app.debug("MOVE", toDebug.getX() + ", " + y);
+
+                return true;
+            }
+        });
     }
 }
