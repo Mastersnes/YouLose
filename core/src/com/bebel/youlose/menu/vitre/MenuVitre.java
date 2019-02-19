@@ -1,32 +1,29 @@
 package com.bebel.youlose.menu.vitre;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
-import com.bebel.youlose.components.interfaces.Actionnable;
-import com.bebel.youlose.components.interfaces.Movable;
-import com.bebel.youlose.components.refound.AbstractGroup;
-import com.bebel.youlose.components.refound.ImageActor;
+import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
+import com.bebel.youlose.components.refound.actors.ImageActor;
 import com.bebel.youlose.manager.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
-import static com.badlogic.gdx.math.Interpolation.elastic;
 import static com.badlogic.gdx.math.Interpolation.linear;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.math.Interpolation.swing;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
+import static com.bebel.youlose.utils.ActorUtils.*;
 
-public class MenuVitre extends AbstractGroup implements Actionnable, Movable {
+public class MenuVitre extends AbstractGroup {
     private final MenuScreen parent;
 
-    private boolean clignotte = false;
     private final ImageActor led;
     private final ImageActor vitre;
     private final ImageActor texte;
-//    private final MenuScanner scan;
 
     public MenuVitre(final MenuScreen parent, final AssetsManager manager) {
         super(manager);
@@ -34,66 +31,40 @@ public class MenuVitre extends AbstractGroup implements Actionnable, Movable {
         setVisible(false);
         manager.setContext("menu");
 
-//        addActor(new ImageActor(manager, "vitre/ref.png"));
+        putActor(led = new ImageActor(manager, "vitre/led.png"));
 
-        vitre = new ImageActor(manager, "vitre/vitre.png");
+        putActor(vitre = new ImageActor(manager, "vitre/vitre.png"));
+        move(vitre, centerX(vitre), 0);
 
-        putActor(led = new ImageActor(manager, "vitre/led.png"))
-                .setAlpha(0);
-        led.move(169, 206);
+        putActor(texte = new ImageActor(manager, "vitre/youlose.png"));
+        texte.setPosition(led.getX(), led.getY());
 
-        putActor(vitre)
-                .move(centerX(vitre), 0);
-
-        putActor(texte = new ImageActor(manager, "vitre/youlose.png"))
-                .setAlpha(0);
-        texte.move(169, 206);
+        toDebug = texte;
 
         setY(getHeight());
-
         refresh();
     }
 
     public FinishRunnableAction appair() {
-        stop();
+        stop(this);
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {
-                addActionBloc(
-                        sequence(
-                                Actions.moveBy(0, -getHeight(), 3, linear),
-                                clignotte(),
-                                finish()
-                        )
+                addBlockedActions(MenuVitre.this,
+                        Actions.moveBy(0, -getHeight(), 3, linear),
+
+                        finish()
                 );
             }
         });
     }
 
-    public RunnableAction clignotte() {
-        return Actions.run(() -> {
-            texte.addActions(fadeOut(0.5f), fadeIn(8f, elastic));
-            led.addActions(fadeOut(0.5f), fadeIn(8f, elastic));
-        });
-    }
-
     public FinishRunnableAction disappair() {
-        stop();
+        stop(this);
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {
                 finish();
-            }
-        });
-    }
-
-    public void makeEvents() {
-        texte.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.debug("TEST", "CLICK");
-                addAction(clignotte());
-                return true;
             }
         });
     }

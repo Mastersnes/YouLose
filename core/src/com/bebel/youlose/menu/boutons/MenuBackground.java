@@ -4,13 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
-import com.bebel.youlose.components.refound.AbstractGroup;
-import com.bebel.youlose.components.refound.ImageActor;
+import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
+import com.bebel.youlose.components.refound.actors.ImageActor;
 import com.bebel.youlose.manager.AssetsManager;
 
 import static com.badlogic.gdx.math.Interpolation.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
+import static com.bebel.youlose.utils.ActorUtils.move;
+import static com.bebel.youlose.utils.ActorUtils.stop;
 
 public class MenuBackground extends AbstractGroup {
     private ImageActor haut;
@@ -23,7 +25,7 @@ public class MenuBackground extends AbstractGroup {
         bas = putActor(new ImageActor(manager, "background/porte_bas.png"));
 
         haut = putActor(new ImageActor(manager, "background/porte_haut.png"));
-        haut.move(0, 0);
+        move(haut, 0, 0);
 
     }
 
@@ -33,7 +35,7 @@ public class MenuBackground extends AbstractGroup {
     }
 
     public FinishRunnableAction open() {
-        stop();
+        stop(this);
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {
@@ -55,7 +57,7 @@ public class MenuBackground extends AbstractGroup {
     }
 
     public FinishRunnableAction close() {
-        stop();
+        stop(this);
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {

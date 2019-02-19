@@ -1,7 +1,8 @@
-package com.bebel.youlose.utils;
+package com.bebel.youlose.components.refound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.bebel.youlose.components.refound.abstrait.AbstractStage;
 
 /**
  * Template de scene

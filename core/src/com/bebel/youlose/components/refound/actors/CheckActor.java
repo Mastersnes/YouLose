@@ -1,18 +1,19 @@
-package com.bebel.youlose.components.refound;
+package com.bebel.youlose.components.refound.actors;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Pools;
-import com.bebel.youlose.components.interfaces.Clickable;
-import com.bebel.youlose.components.interfaces.Movable;
 import com.bebel.youlose.components.interfaces.Refreshable;
+import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.manager.AssetsManager;
+
+import static com.bebel.youlose.utils.EventUtils.onClick;
 
 /**
  * Abstraction de la checkbox
  */
-public class CheckActor extends AbstractGroup implements Movable, Refreshable, Clickable {
+public class CheckActor extends AbstractGroup implements Refreshable {
     private ImageActor on;
     private ImageActor off;
     private TextActor label;
@@ -40,7 +41,7 @@ public class CheckActor extends AbstractGroup implements Movable, Refreshable, C
     }
 
     public void makeEvents() {
-        onClick((x, y, button, pointer) -> setChecked(!isChecked));
+        onClick(this, (x, y, button, pointer) -> setChecked(!isChecked));
     }
 
     public void setChecked(boolean checked) {

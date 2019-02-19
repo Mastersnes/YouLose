@@ -1,15 +1,17 @@
 package com.bebel.youlose.menu.options;
 
-import com.bebel.youlose.components.refound.AbstractGroup;
-import com.bebel.youlose.components.refound.ButtonActor;
-import com.bebel.youlose.components.interfaces.Actionnable;
+import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
+import com.bebel.youlose.components.refound.actors.ButtonActor;
 import com.bebel.youlose.manager.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
 import static com.badlogic.gdx.utils.Align.right;
 import static com.badlogic.gdx.utils.Align.top;
+import static com.bebel.youlose.utils.ActorUtils.centerX;
+import static com.bebel.youlose.utils.ActorUtils.move;
+import static com.bebel.youlose.utils.EventUtils.onClick;
 
-public class MenuOptionsLangues extends AbstractGroup implements Actionnable {
+public class MenuOptionsLangues extends AbstractGroup {
     private final MenuScreen parent;
     private final ButtonActor fr;
     private final ButtonActor en;
@@ -20,28 +22,28 @@ public class MenuOptionsLangues extends AbstractGroup implements Actionnable {
         this.parent = parent;
 
         eo = putActor(new ButtonActor(manager, "lang-button/eo.png"));
-        eo.move(127, 0);
+        move(eo, 127, 0);
 
         fr = putActor(new ButtonActor(manager, "lang-button/fr.png"));
-        fr.move(centerX(fr) - 10, 0);
+        move(fr, centerX(fr) - 10, 0);
 
         en = putActor(new ButtonActor(manager, "lang-button/en.png"));
-        en.move(145, 0, top | right);
+        move(en, 145, 0, top | right);
         refresh();
     }
 
     public void makeEvents() {
-        fr.onClick((x, y, button, pointer) -> {
+        onClick(fr, (x, y, button, pointer) -> {
             manager.reload("fr");
             parent.refresh();
         });
 
-        en.onClick((x, y, button, pointer) -> {
+        onClick(en, (x, y, button, pointer) -> {
             manager.reload("en");
             parent.refresh();
         });
 
-        eo.onClick((x, y, button, pointer) -> {
+        onClick(eo, (x, y, button, pointer) -> {
             manager.reload("eo");
             parent.refresh();
         });

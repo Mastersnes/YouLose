@@ -1,20 +1,19 @@
-package com.bebel.youlose.components.refound;
+package com.bebel.youlose.components.refound.actors;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.bebel.youlose.components.interfaces.Actionnable;
-import com.bebel.youlose.components.interfaces.Movable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.manager.AssetsManager;
 
 /**
  * Specification de l'acteur Image
  */
-public class ImageActor extends Image implements Movable, Refreshable, Actionnable {
+public class ImageActor extends Image implements Refreshable {
     private final AssetsManager manager;
 
     /**
      * Constructeur
+     *
      * @param manager
      * @param image
      */
@@ -28,6 +27,7 @@ public class ImageActor extends Image implements Movable, Refreshable, Actionnab
 
     /**
      * Permet de definir la transparence de l'image
+     *
      * @param alpha
      */
     public ImageActor setAlpha(final int alpha) {

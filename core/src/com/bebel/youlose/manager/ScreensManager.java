@@ -1,10 +1,9 @@
 package com.bebel.youlose.manager;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.bebel.youlose.LaunchGame;
-import com.bebel.youlose.utils.AbstractStage;
-import com.bebel.youlose.utils.DefaultScreen;
+import com.bebel.youlose.components.refound.abstrait.AbstractStage;
+import com.bebel.youlose.components.refound.DefaultScreen;
 
 import java.util.HashMap;
 import java.util.Map;

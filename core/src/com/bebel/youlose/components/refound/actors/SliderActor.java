@@ -1,17 +1,15 @@
-package com.bebel.youlose.components.refound;
+package com.bebel.youlose.components.refound.actors;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.utils.Pool;
-import com.bebel.youlose.components.interfaces.Movable;
 import com.bebel.youlose.manager.AssetsManager;
 
 /**
  * Specification de l'acteur Slider
  */
-public class SliderActor extends Slider implements Movable {
+public class SliderActor extends Slider {
     /**
      * Constructeur
+     *
      * @param manager
      * @param slide
      * @param cursor
@@ -22,6 +20,7 @@ public class SliderActor extends Slider implements Movable {
 
     /**
      * Constructeur
+     *
      * @param style
      */
     public SliderActor(final SliderStyle style) {
