@@ -1,4 +1,4 @@
-package com.bebel.youlose.components.refound.actors;
+package com.bebel.youlose.components.refound.actors.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -6,29 +6,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Pools;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.manager.resources.AssetsManager;
 
-import static com.bebel.youlose.utils.EventUtils.onClick;
+import static com.bebel.youlose.components.refound.event.ClickCatcher.onClick;
 
 /**
- * Abstraction de la checkbox
+ * Acteur representant une checkbox
  */
 public class CheckActor extends AbstractGroup implements Refreshable {
-    private ImageActor on;
-    private ImageActor off;
-    private TextActor label;
     private boolean isChecked;
     private float spacing = 10;
 
-    /**
-     * Constructeur
-     *
-     * @param manager
-     * @param font
-     * @param text
-     * @param offStr
-     * @param onStr
-     */
+    private ImageActor on;
+    private ImageActor off;
+    private TextActor label;
+
     public CheckActor(final AssetsManager manager, final BitmapFont font, final String text, final String offStr, final String onStr) {
         super(manager);
         this.label = putActor(new TextActor(manager, text, font));
@@ -72,13 +64,14 @@ public class CheckActor extends AbstractGroup implements Refreshable {
     }
 
     @Override
-    public boolean refresh() {
+    public void refresh() {
         label.refresh();
+        off.refresh();
+        on.refresh();
 
         setBounds(getX(), getY(), label.getWidth() + on.getWidth() + spacing, on.getHeight());
         on.setX(label.getWidth() + spacing);
         off.setX(label.getWidth() + spacing);
-        return true;
     }
 
     @Override

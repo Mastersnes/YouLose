@@ -3,17 +3,16 @@ package com.bebel.youlose.menu.options;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bebel.youlose.components.composition.SlideTextActor;
-import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.components.refound.actors.ButtonActor;
-import com.bebel.youlose.components.refound.actors.CheckActor;
-import com.bebel.youlose.manager.AssetsManager;
-import com.bebel.youlose.menu.MenuScreen;
 import com.bebel.youlose.components.refound.FontParameter;
+import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
+import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
+import com.bebel.youlose.components.refound.actors.ui.CheckActor;
+import com.bebel.youlose.manager.resources.AssetsManager;
+import com.bebel.youlose.menu.MenuScreen;
 
-import static com.bebel.youlose.utils.ActorUtils.centerX;
-import static com.bebel.youlose.utils.ActorUtils.move;
-import static com.bebel.youlose.utils.EventUtils.onClick;
-
+/**
+ * Ecran des options
+ */
 public class MenuOptions extends AbstractGroup {
     private final MenuScreen parent;
 
@@ -33,27 +32,27 @@ public class MenuOptions extends AbstractGroup {
 
 //        addActor(new ImageActor(manager, "ref.png"));
 
-        langues = putActor(new MenuOptionsLangues(parent, manager));
-        move(langues, 0, 170);
+        langues = putActor(new MenuOptionsLangues(parent, manager))
+            .move(0, 170);
 
         musiques = putActor(new SlideTextActor(manager, font, "musiques",
                 "slide-button/slide.png", "slide-button/pointer.png"));
-        move(musiques, centerX(musiques), 406);
+        musiques.move(musiques.centerX(), 406);
         musiques.setValue(manager.conf.getMusic());
 
         sounds = putActor(new SlideTextActor(manager, font, "sounds",
                 "slide-button/slide.png", "slide-button/pointer.png"));
-        move(sounds, centerX(sounds), 504);
+        sounds.move(sounds.centerX(), 504);
         sounds.setValue(manager.conf.getSound());
 
         fullscreen = putActor(new CheckActor(manager, font, "fullscreen",
                 "check-button/case.png", "check-button/case_coche.png"));
-        move(fullscreen, centerX(fullscreen), 577);
+        fullscreen.move(fullscreen.centerX(), 577);
         fullscreen.setChecked(manager.conf.isFullscreen());
 
         valider = putActor(new ButtonActor(manager, "text-button/valider.png"));
         valider.addHover("text-button/valider_hover.png");
-        move(valider, centerX(valider), 657);
+        valider.move(valider.centerX(), 657);
 
         refresh();
     }
@@ -70,20 +69,19 @@ public class MenuOptions extends AbstractGroup {
         });
         fullscreen.onChange(() -> manager.conf.setFullscreen(fullscreen.isChecked()));
 
-        onClick(valider, (x, y, button, pointer) -> {
+        valider.onClick((x, y, button, pointer) -> {
             manager.conf.save();
             parent.switchTo(MenuScreen.Screens.MENU);
         });
     }
 
     @Override
-    public boolean refresh() {
+    public void refresh() {
         langues.refresh();
         musiques.refresh();
         sounds.refresh();
         fullscreen.refresh();
-        fullscreen.setX(centerX(fullscreen));
+        fullscreen.setX(fullscreen.centerX());
         valider.refresh();
-        return true;
     }
 }

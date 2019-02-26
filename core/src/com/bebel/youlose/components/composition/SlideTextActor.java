@@ -4,13 +4,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.components.refound.actors.SliderActor;
-import com.bebel.youlose.components.refound.actors.TextActor;
-import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.components.refound.actors.ui.SliderActor;
+import com.bebel.youlose.components.refound.actors.ui.TextActor;
+import com.bebel.youlose.manager.resources.AssetsManager;
 
-import static com.bebel.youlose.utils.ActorUtils.centerX;
 import static com.bebel.youlose.utils.ActorUtils.move;
 
+/**
+ * Composition d'un texte et d'un slider
+ */
 public class SlideTextActor extends AbstractGroup {
     private final TextActor label;
     private final SliderActor slide;
@@ -26,8 +28,8 @@ public class SlideTextActor extends AbstractGroup {
 
         setBounds(0, 0, slide.getWidth(), label.getHeight() + slide.getHeight() + 20);
 
-        move(label, centerX(label), 0);
-        move(slide, centerX(slide), 45);
+        label.move(label.centerX(), 0);
+        slide.move(slide.centerX(), 45);
         slide.setRange(0, 100);
 
         refresh();
@@ -45,16 +47,14 @@ public class SlideTextActor extends AbstractGroup {
     public float getValue() {
         return slide.getValue();
     }
-
     public void setValue(final float value) {
         slide.setValue(value);
     }
 
 
     @Override
-    public boolean refresh() {
+    public void refresh() {
         label.refresh();
-        label.setX(centerX(label));
-        return true;
+        label.setX(label.centerX());
     }
 }

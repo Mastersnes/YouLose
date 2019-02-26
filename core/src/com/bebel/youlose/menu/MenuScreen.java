@@ -1,28 +1,34 @@
 package com.bebel.youlose.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.LaunchGame;
-import com.bebel.youlose.components.actions.Actions;
-import com.bebel.youlose.components.refound.actors.ButtonActor;
-import com.bebel.youlose.components.refound.actors.ImageActor;
+import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
+import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
+import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.menu.boutons.MenuBackground;
 import com.bebel.youlose.menu.boutons.MenuButtons;
 import com.bebel.youlose.menu.options.MenuOptions;
+import com.bebel.youlose.menu.slots.MenuSlots;
 import com.bebel.youlose.menu.vitre.MenuVitre;
-import com.bebel.youlose.components.refound.abstrait.AbstractStage;
 
-import static com.badlogic.gdx.utils.Align.bottom;
-import static com.badlogic.gdx.utils.Align.right;
+import static com.badlogic.gdx.utils.Align.bottomRight;
 import static com.bebel.youlose.utils.ActorUtils.addActions;
 import static com.bebel.youlose.utils.ActorUtils.move;
-import static com.bebel.youlose.utils.EventUtils.onClick;
 
-public class MenuScreen extends AbstractStage {
+/**
+ * Ecran de menu permettant de switcher vers les differents sous ecrans
+ */
+public class MenuScreen extends AbstractScreen {
+    private CircleShape circle;
     private MenuBackground background;
     private MenuOptions options;
     private MenuButtons buttons;
     private MenuVitre vitre;
+    private MenuSlots slots;
+
     private ButtonActor quitter;
 
     public MenuScreen(final LaunchGame parent) {
@@ -34,21 +40,24 @@ public class MenuScreen extends AbstractStage {
         manager.loadContext("menu");
 
         addActor(new ImageActor(manager, "background/fond.bmp"));
-        options = putActor(new MenuOptions(this, manager));
-        background = putActor(new MenuBackground(manager));
-        buttons = putActor(new MenuButtons(manager));
+        putActor(options = new MenuOptions(this, manager));
+        putActor(background = new MenuBackground(manager));
+        putActor(buttons = new MenuButtons(this, manager));
         putActor(vitre = new MenuVitre(this, manager));
+        putActor(slots = new MenuSlots(this, manager));
 
         putActor(quitter = new ButtonActor(manager, "simple-button/quitter.png"));
-        move(quitter, 10, 10, bottom | right);
+        move(quitter, 10, 10, bottomRight);
     }
 
     @Override
     public void makeEvents() {
-        buttons.makeEvents(this);
+        buttons.makeEvents();
         options.makeEvents();
         vitre.makeEvents();
-        onClick(quitter, (x, y, button, pointer) -> Gdx.app.exit());
+        slots.makeEvents();
+
+        quitter.onClick((x, y, button, pointer) -> Gdx.app.exit());
     }
 
     /**
@@ -60,6 +69,7 @@ public class MenuScreen extends AbstractStage {
         buttons.setTouchable(Touchable.disabled);
         options.setTouchable(Touchable.disabled);
         vitre.setTouchable(Touchable.disabled);
+        slots.setTouchable(Touchable.disabled);
 
         switch (subscreen) {
             case MENU:
@@ -67,6 +77,7 @@ public class MenuScreen extends AbstractStage {
                 addActions(getRoot(), background.close(), buttons.appair(), Actions.run(() -> {
                     options.setVisible(false);
                     vitre.setVisible(false);
+                    slots.setVisible(false);
                 }));
                 break;
             case PLAY:
@@ -79,13 +90,17 @@ public class MenuScreen extends AbstractStage {
                 break;
             case CREDITS:
                 break;
+            case SLOT:
+                slots.setVisible(true);
+                addActions(getRoot(), vitre.disappair(), background.open(), Actions.run(() -> slots.setTouchable(Touchable.childrenOnly)));
+                break;
             default:
         }
         return true;
     }
 
     public enum Screens {
-        MENU, PLAY, OPTIONS, CREDITS
+        MENU, PLAY, OPTIONS, CREDITS, SLOT
     }
 
     @Override

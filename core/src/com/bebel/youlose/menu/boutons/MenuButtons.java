@@ -5,85 +5,98 @@ import com.bebel.youlose.components.actions.Actions;
 import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.components.refound.actors.ButtonActor;
-import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
+import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
 import static com.badlogic.gdx.math.Interpolation.fastSlow;
 import static com.badlogic.gdx.math.Interpolation.slowFast;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-import static com.badlogic.gdx.utils.Align.*;
+import static com.badlogic.gdx.utils.Align.bottomLeft;
+import static com.badlogic.gdx.utils.Align.topRight;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
-import static com.bebel.youlose.utils.ActorUtils.*;
-import static com.bebel.youlose.utils.EventUtils.onClick;
 
+/**
+ * Sous ecran des boutons principaux du menu "Play", "Options", "Creditsé"
+ */
 public class MenuButtons extends AbstractGroup {
+    private final MenuScreen parent;
+
     private ButtonActor play;
     private ButtonActor options;
     private ButtonActor credits;
     private float move_duration = 3;
 
-    public MenuButtons(final AssetsManager manager) {
+    public MenuButtons(final MenuScreen parent, final AssetsManager manager) {
         super(manager);
+        this.parent = parent;
         manager.setContext("menu");
         play = putActor(new ButtonActor(manager, "text-button/play.png"));
         play.addHover("text-button/play_hover.png");
-        move(play, -play.getWidth(), 55);
+        play.move(-play.getWidth(), 55);
 
         options = putActor(new ButtonActor(manager, "text-button/options.png"));
         options.addHover("text-button/options_hover.png");
-        move(options, -options.getWidth(), 283, top | right);
+        options.move(-options.getWidth(), 283, topRight);
 
         credits = putActor(new ButtonActor(manager, "text-button/credits.png"));
         credits.addHover("text-button/credits_hover.png");
-        credits.setPosition(-credits.getWidth(), 30, bottom | left);
+        credits.move(-credits.getWidth(), 30, bottomLeft);
 
         addAction(appair());
     }
 
     @Override
-    public boolean refresh() {
+    public void refresh() {
         play.refresh();
         options.refresh();
         credits.refresh();
-        return true;
     }
 
-
+    /**
+     * Fait apparaitre es boutons
+     *
+     * @return
+     */
     public FinishRunnableAction appair() {
-        stop(this);
+        stop();
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {
-                addBlockedActions(play, Actions.moveBy(play.getWidth(), 0, move_duration, fastSlow));
-                addBlockedActions(options, Actions.moveBy(-options.getWidth(), 0, move_duration, fastSlow));
-                addBlockedActions(credits,
-                    Actions.moveBy(credits.getWidth(), 0, move_duration, fastSlow),
-                    Actions.run(()->setTouchable(Touchable.childrenOnly)),
-                    finish()
+                play.addBlockedActions(Actions.moveBy(play.getWidth(), 0, move_duration, fastSlow));
+                options.addBlockedActions(Actions.moveBy(-options.getWidth(), 0, move_duration, fastSlow));
+                credits.addBlockedActions(
+                        Actions.moveBy(credits.getWidth(), 0, move_duration, fastSlow),
+                        Actions.run(() -> setTouchable(Touchable.childrenOnly)),
+                        finish()
                 );
             }
         });
     }
 
+    /**
+     * Fais disparraitre les boutons
+     *
+     * @return
+     */
     public FinishRunnableAction disappair() {
-        stop(this);
+        stop();
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {
-                addBlockedActions(play, Actions.moveBy(-play.getWidth(), 0, move_duration, slowFast));
-                addBlockedActions(options, Actions.moveBy(options.getWidth(), 0, move_duration, slowFast));
-                addBlockedActions(credits,
-                    Actions.moveBy(-credits.getWidth(), 0, move_duration, slowFast),
-                    finish()
+                play.addBlockedActions(Actions.moveBy(-play.getWidth(), 0, move_duration, slowFast));
+                options.addBlockedActions(Actions.moveBy(options.getWidth(), 0, move_duration, slowFast));
+                credits.addBlockedActions(
+                        Actions.moveBy(-credits.getWidth(), 0, move_duration, slowFast),
+                        finish()
                 );
             }
         });
     }
 
-    public void makeEvents(final MenuScreen parent) {
-        onClick(play, (x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.PLAY));
-        onClick(options, (x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.OPTIONS));
-        onClick(credits, (x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.CREDITS));
+    @Override
+    public void makeEvents() {
+        play.onClick((x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.PLAY));
+        options.onClick((x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.OPTIONS));
+        credits.onClick((x, y, pointer, button) -> parent.switchTo(MenuScreen.Screens.CREDITS));
     }
 }

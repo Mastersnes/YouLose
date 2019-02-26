@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
  * FINISH DOIT ETRE APPELER A LA FIN DE L'OPERATION !
  */
 public abstract class FinishRunnable implements Runnable {
-    boolean finish = false;
+    protected boolean finish = false;
 
     public RunnableAction finish() {
         return Actions.run(() -> finish = true);
@@ -20,4 +20,5 @@ public abstract class FinishRunnable implements Runnable {
     public boolean isFinish() {
         return finish;
     }
+    public void restart() {finish = false;}
 }

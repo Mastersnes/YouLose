@@ -1,8 +1,12 @@
-package com.bebel.youlose.manager;
+package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+/**
+ * Sous manager de ressources
+ * @param <T> Ressource concernée
+ */
 public abstract class AbstractSubManager<T> {
     protected AssetsManager parent;
 

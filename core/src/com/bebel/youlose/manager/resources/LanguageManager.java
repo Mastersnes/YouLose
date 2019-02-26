@@ -1,4 +1,4 @@
-package com.bebel.youlose.manager;
+package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.utils.I18NBundle;

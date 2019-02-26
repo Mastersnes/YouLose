@@ -5,15 +5,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.components.refound.actors.ImageActor;
-import com.bebel.youlose.manager.AssetsManager;
+import com.bebel.youlose.components.refound.actors.ui.ImageActor;
+import com.bebel.youlose.manager.resources.AssetsManager;
 
 import static com.badlogic.gdx.math.Interpolation.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
-import static com.bebel.youlose.utils.ActorUtils.move;
-import static com.bebel.youlose.utils.ActorUtils.stop;
 
+/**
+ * Fond du menu composé des deux portions de la porte
+ */
 public class MenuBackground extends AbstractGroup {
     private ImageActor haut;
     private ImageActor bas;
@@ -25,17 +26,16 @@ public class MenuBackground extends AbstractGroup {
         bas = putActor(new ImageActor(manager, "background/porte_bas.png"));
 
         haut = putActor(new ImageActor(manager, "background/porte_haut.png"));
-        move(haut, 0, 0);
+        haut.move(0, 0);
 
     }
 
-    @Override
-    public boolean refresh() {
-        return false;
-    }
-
+    /**
+     * Ouvre la porte
+     * @return
+     */
     public FinishRunnableAction open() {
-        stop(this);
+        stop();
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {
@@ -56,8 +56,12 @@ public class MenuBackground extends AbstractGroup {
         });
     }
 
+    /**
+     * Ferme la porte
+     * @return
+     */
     public FinishRunnableAction close() {
-        stop(this);
+        stop();
         return finishRun(new FinishRunnable() {
             @Override
             public void run() {

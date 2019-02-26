@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
+import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +20,10 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
  * Outils pour les acteurs
  */
 public class ActorUtils {
-    public synchronized static <ACTOR extends Actor> ACTOR move(final ACTOR actor, final float x, final float y) {
-        return move(actor, x, y, top | left);
+    public synchronized static <T extends Actor> T move(final T actor, final float x, final float y) {
+        return move(actor, x, y, topLeft);
     }
-    public synchronized static <ACTOR extends Actor> ACTOR move(final ACTOR actor, final float x, final float y, final int align) {
+    public synchronized static <T extends Actor> T move(final T actor, final float x, final float y, final int align) {
         float x2 = x; float y2 = y;
         float parentWidth = actor.getParent() != null ? actor.getParent().getWidth() : WORLD_WIDTH;
         float parentHeight = actor.getParent() != null ? actor.getParent().getHeight() : WORLD_HEIGHT;
@@ -35,33 +35,32 @@ public class ActorUtils {
         return actor;
     }
 
-    /**
-     * Ajoute une suite d'actions
-     * @param actor
-     * @param actions
-     */
+    public synchronized static <T extends Actor> T setAlpha(final T actor, final int alpha) {
+        actor.getColor().a = alpha;
+        return actor;
+    }
+    public synchronized static <T extends Actor> float getAlpha(final T actor) {
+        return actor.getColor().a;
+    }
+
     public synchronized static boolean addActions(final Actor actor, final Action... actions) {
         actor.addAction(Actions.sequence(actions));
         return true;
     }
 
-    /**
-     * Ajoute une suite d'actions durant laquel l'interaction est interdite
-     * @param actions
-     */
     public synchronized  static boolean addBlockedActions(final Actor actor, final Action... actions) {
         actor.setTouchable(Touchable.disabled);
         final List<Action> listAction = new ArrayList<>(Arrays.asList(actions));
-        listAction.add(run(() -> actor.setTouchable(Touchable.enabled)));
+        listAction.add(run(() ->  {
+            if (actor instanceof AbstractGroup || actor instanceof Group)
+                actor.setTouchable(Touchable.childrenOnly);
+            else actor.setTouchable(Touchable.enabled);
+        }));
 
         addActions(actor, listAction.toArray(new Action[listAction.size()]));
         return true;
     }
 
-    /**
-     * Stop les actions de l'acteur
-     * @param actor
-     */
     public synchronized static void stop(final Actor actor) {
         if (actor instanceof Group) {
             for (final Actor child : ((Group) actor).getChildren()) {

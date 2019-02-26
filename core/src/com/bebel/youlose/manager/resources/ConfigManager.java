@@ -1,7 +1,6 @@
-package com.bebel.youlose.manager;
+package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.files.FileHandle;
 
 import java.io.*;

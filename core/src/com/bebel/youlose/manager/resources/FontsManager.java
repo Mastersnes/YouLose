@@ -1,4 +1,4 @@
-package com.bebel.youlose.manager;
+package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;

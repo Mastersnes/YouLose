@@ -2,13 +2,15 @@ package com.bebel.youlose;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Logger;
-import com.bebel.youlose.manager.AssetsManager;
-import com.bebel.youlose.manager.ScreensManager;
+import com.bebel.youlose.manager.resources.AssetsManager;
+import com.bebel.youlose.manager.resources.ScreensManager;
 import com.bebel.youlose.menu.MenuScreen;
 
+/**
+ * Main
+ */
 public class LaunchGame extends Game {
 	public SpriteBatch batch;
 	public AssetsManager manager;
