@@ -26,10 +26,10 @@ public class MenuScan extends AbstractGroup {
         this.parent = parent;
         manager.setContext("menu");
 
-        putActor(carre = new ImageActor(manager, "vitre/carre.png"));
+        putActor(carre = new ImageActor(manager, "vitre/atlas:carre"));
         setBounds(0, 0, carre.getWidth(), carre.getHeight());
 
-        putActor(scan = new ImageActor(manager, "vitre/scan.png"))
+        putActor(scan = new ImageActor(manager, "vitre/atlas:scan"))
             .move(scan.centerX(), 0)
             .setVisible(false);
         scan.setTouchable(Touchable.disabled);

@@ -1,0 +1,26 @@
+atlas.png
+size: 1024, 1088
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+porte_bas
+  rotate: false
+  xy: 0, 0
+  size: 1024, 540
+  orig: 1024, 540
+  offset: 0, 0
+  index: -1
+porte_haut
+  rotate: false
+  xy: 0, 540
+  size: 1024, 489
+  orig: 1024, 489
+  offset: 0, 0
+  index: -1
+quitter
+  rotate: false
+  xy: 0, 1029
+  size: 87, 59
+  orig: 87, 59
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,47 @@
+buttons.png
+size: 808, 1000
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+credits
+  rotate: false
+  xy: 0, 772
+  size: 808, 228
+  orig: 808, 228
+  offset: 0, 0
+  index: -1
+credits_hover
+  rotate: false
+  xy: 0, 544
+  size: 808, 228
+  orig: 808, 228
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 0, 315
+  size: 805, 229
+  orig: 805, 229
+  offset: 0, 0
+  index: -1
+play_hover
+  rotate: false
+  xy: 0, 86
+  size: 805, 229
+  orig: 805, 229
+  offset: 0, 0
+  index: -1
+valider
+  rotate: false
+  xy: 208, 0
+  size: 208, 86
+  orig: 208, 86
+  offset: 0, 0
+  index: -1
+valider_hover
+  rotate: false
+  xy: 0, 0
+  size: 208, 86
+  orig: 208, 86
+  offset: 0, 0
+  index: -1

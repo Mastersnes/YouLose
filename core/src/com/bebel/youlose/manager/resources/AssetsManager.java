@@ -2,12 +2,11 @@ package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.components.refound.FontParameter;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.List;
 
 /**
  * Manager de ressource
- *
  */
 public class AssetsManager extends AssetManager {
     public String context;
@@ -65,6 +63,8 @@ public class AssetsManager extends AssetManager {
         musiques.load();
         fonts.load();
         finishLoading();
+
+        textures.indexTextures();
     }
 
     @Override
@@ -105,12 +105,13 @@ public class AssetsManager extends AssetManager {
     }
 
     //--Utils
-    public Texture getTexture(final String name) {
+    public TextureAtlas getAtlas(final String name) {
         return textures.get(name);
     }
     public Drawable getDrawable(final String name) {
-        return new TextureRegionDrawable(textures.get(name));
+        return textures.getDrawable(name);
     }
+
     public BitmapFont getFont(final String name, final FontParameter parameter) {
         return fonts.get(name, parameter);
     }

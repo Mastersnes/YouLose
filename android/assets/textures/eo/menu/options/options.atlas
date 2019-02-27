@@ -1,0 +1,19 @@
+options.png
+size: 1604, 220
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+options
+  rotate: false
+  xy: 0, 0
+  size: 802, 220
+  orig: 802, 220
+  offset: 0, 0
+  index: -1
+options_hover
+  rotate: false
+  xy: 802, 0
+  size: 802, 220
+  orig: 802, 220
+  offset: 0, 0
+  index: -1

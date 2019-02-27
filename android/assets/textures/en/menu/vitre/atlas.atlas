@@ -1,0 +1,40 @@
+atlas.png
+size: 789, 1345
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+carre
+  rotate: false
+  xy: 0, 0
+  size: 78, 96
+  orig: 78, 96
+  offset: 0, 0
+  index: -1
+led
+  rotate: false
+  xy: 78, 0
+  size: 690, 380
+  orig: 690, 380
+  offset: 0, 0
+  index: -1
+scan
+  rotate: false
+  xy: 0, 380
+  size: 99, 17
+  orig: 99, 17
+  offset: 0, 0
+  index: -1
+vitre
+  rotate: false
+  xy: 99, 380
+  size: 690, 585
+  orig: 690, 585
+  offset: 0, 0
+  index: -1
+youlose
+  rotate: false
+  xy: 0, 965
+  size: 690, 380
+  orig: 690, 380
+  offset: 0, 0
+  index: -1

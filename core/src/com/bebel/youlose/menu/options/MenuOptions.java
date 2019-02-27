@@ -7,6 +7,7 @@ import com.bebel.youlose.components.refound.FontParameter;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.components.refound.actors.ui.CheckActor;
+import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
@@ -32,26 +33,28 @@ public class MenuOptions extends AbstractGroup {
 
 //        addActor(new ImageActor(manager, "ref.png"));
 
+        addActor(new ImageActor(manager, "options/other:fond"));
+
         langues = putActor(new MenuOptionsLangues(parent, manager))
             .move(0, 170);
 
         musiques = putActor(new SlideTextActor(manager, font, "musiques",
-                "slide-button/slide.png", "slide-button/pointer.png"));
+                "options/other:slide", "options/other:pointer"));
         musiques.move(musiques.centerX(), 406);
         musiques.setValue(manager.conf.getMusic());
 
         sounds = putActor(new SlideTextActor(manager, font, "sounds",
-                "slide-button/slide.png", "slide-button/pointer.png"));
+                "options/other:slide", "options/other:pointer"));
         sounds.move(sounds.centerX(), 504);
         sounds.setValue(manager.conf.getSound());
 
         fullscreen = putActor(new CheckActor(manager, font, "fullscreen",
-                "check-button/case.png", "check-button/case_coche.png"));
+                "options/other:case", "options/other:case_coche"));
         fullscreen.move(fullscreen.centerX(), 577);
         fullscreen.setChecked(manager.conf.isFullscreen());
 
-        valider = putActor(new ButtonActor(manager, "text-button/valider.png"));
-        valider.addHover("text-button/valider_hover.png");
+        valider = putActor(new ButtonActor(manager, "options/buttons:valider"));
+        valider.addHover("options/buttons:valider_hover");
         valider.move(valider.centerX(), 657);
 
         refresh();

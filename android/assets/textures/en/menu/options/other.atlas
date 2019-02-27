@@ -1,0 +1,61 @@
+other.png
+size: 1024, 996
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+case
+  rotate: false
+  xy: 96, 0
+  size: 70, 65
+  orig: 70, 65
+  offset: 0, 0
+  index: -1
+case_coche
+  rotate: false
+  xy: 26, 0
+  size: 70, 65
+  orig: 70, 65
+  offset: 0, 0
+  index: -1
+en
+  rotate: false
+  xy: 377, 0
+  size: 212, 204
+  orig: 212, 204
+  offset: 0, 0
+  index: -1
+eo
+  rotate: false
+  xy: 166, 0
+  size: 211, 203
+  orig: 211, 203
+  offset: 0, 0
+  index: -1
+fond
+  rotate: false
+  xy: 0, 228
+  size: 1024, 768
+  orig: 1024, 768
+  offset: 0, 0
+  index: -1
+fr
+  rotate: false
+  xy: 589, 0
+  size: 215, 203
+  orig: 215, 203
+  offset: 0, 0
+  index: -1
+pointer
+  rotate: false
+  xy: 0, 0
+  size: 26, 34
+  orig: 26, 34
+  offset: 0, 0
+  index: -1
+slide
+  rotate: false
+  xy: 0, 204
+  size: 267, 24
+  orig: 267, 24
+  offset: 0, 0
+  index: -1

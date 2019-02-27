@@ -1,0 +1,40 @@
+slots.png
+size: 1024, 1056
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fond
+  rotate: false
+  xy: 0, 0
+  size: 1024, 768
+  orig: 1024, 768
+  offset: 0, 0
+  index: -1
+grille
+  rotate: false
+  xy: 0, 768
+  size: 191, 136
+  orig: 191, 136
+  offset: 0, 0
+  index: -1
+slot_droite
+  rotate: false
+  xy: 191, 768
+  size: 222, 232
+  orig: 222, 232
+  offset: 0, 0
+  index: -1
+slot_gauche
+  rotate: false
+  xy: 413, 768
+  size: 236, 280
+  orig: 236, 280
+  offset: 0, 0
+  index: -1
+slot_milieu
+  rotate: false
+  xy: 649, 768
+  size: 230, 288
+  orig: 230, 288
+  offset: 0, 0
+  index: -1

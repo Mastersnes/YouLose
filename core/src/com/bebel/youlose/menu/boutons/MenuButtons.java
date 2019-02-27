@@ -30,16 +30,16 @@ public class MenuButtons extends AbstractGroup {
         super(manager);
         this.parent = parent;
         manager.setContext("menu");
-        play = putActor(new ButtonActor(manager, "text-button/play.png"));
-        play.addHover("text-button/play_hover.png");
+        play = putActor(new ButtonActor(manager, "options/buttons:play"));
+        play.addHover("options/buttons:play_hover");
         play.move(-play.getWidth(), 55);
 
-        options = putActor(new ButtonActor(manager, "text-button/options.png"));
-        options.addHover("text-button/options_hover.png");
+        options = putActor(new ButtonActor(manager, "options/options:options"));
+        options.addHover("options/options:options_hover");
         options.move(-options.getWidth(), 283, topRight);
 
-        credits = putActor(new ButtonActor(manager, "text-button/credits.png"));
-        credits.addHover("text-button/credits_hover.png");
+        credits = putActor(new ButtonActor(manager, "options/buttons:credits"));
+        credits.addHover("options/buttons:credits_hover");
         credits.move(-credits.getWidth(), 30, bottomLeft);
 
         addAction(appair());

@@ -1,7 +1,6 @@
 package com.bebel.youlose.menu;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.LaunchGame;
@@ -22,7 +21,6 @@ import static com.bebel.youlose.utils.ActorUtils.move;
  * Ecran de menu permettant de switcher vers les differents sous ecrans
  */
 public class MenuScreen extends AbstractScreen {
-    private CircleShape circle;
     private MenuBackground background;
     private MenuOptions options;
     private MenuButtons buttons;
@@ -39,14 +37,13 @@ public class MenuScreen extends AbstractScreen {
     public void create() {
         manager.loadContext("menu");
 
-        addActor(new ImageActor(manager, "background/fond.bmp"));
         putActor(options = new MenuOptions(this, manager));
+        putActor(slots = new MenuSlots(this, manager));
         putActor(background = new MenuBackground(manager));
         putActor(buttons = new MenuButtons(this, manager));
         putActor(vitre = new MenuVitre(this, manager));
-        putActor(slots = new MenuSlots(this, manager));
 
-        putActor(quitter = new ButtonActor(manager, "simple-button/quitter.png"));
+        putActor(quitter = new ButtonActor(manager, "background/atlas:quitter"));
         move(quitter, 10, 10, bottomRight);
     }
 

@@ -8,20 +8,12 @@ import com.bebel.youlose.menu.MenuScreen;
  * Acteur representant un slot
  */
 public class SlotActor extends AbstractGroup {
-    private final MenuScreen parent;
-
-    private final SlotActor slot1;
-    private final SlotActor slot2;
-    private final SlotActor slot3;
-
-    public SlotActor(final MenuScreen parent, final AssetsManager manager) {
+    /**
+     * Le groupe est par defaut de la taille de l'ecran
+     *
+     * @param manager
+     */
+    public SlotActor(AssetsManager manager) {
         super(manager);
-        this.parent = parent;
-        setVisible(false);
-        manager.setContext("menu");
-
-        putActor(slot1 = new SlotActor());
-
-        refresh();
     }
 }

@@ -34,14 +34,14 @@ public class MenuVitre extends AbstractGroup {
         setVisible(false);
         manager.setContext("menu");
 
-        putActor(led = new ImageActor(manager, "vitre/led.png"));
+        putActor(led = new ImageActor(manager, "vitre/atlas:led"));
         led.move(led.centerX(), 206);
         led.setAlpha(0);
 
-        putActor(vitre = new ImageActor(manager, "vitre/vitre.png"));
+        putActor(vitre = new ImageActor(manager, "vitre/atlas:vitre"));
         vitre.move(vitre.centerX(), 0);
 
-        putActor(texte = new ImageActor(manager, "vitre/youlose.png"));
+        putActor(texte = new ImageActor(manager, "vitre/atlas:youlose"));
         texte.setPosition(led.getX(), led.getY());
         texte.setAlpha(0);
 

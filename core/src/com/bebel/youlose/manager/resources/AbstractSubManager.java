@@ -34,7 +34,7 @@ public abstract class AbstractSubManager<T> {
         if (!parent.isLoaded(filePath)) {
             filePath = filePath.replace("/" + language + "/", "/en/");
         }
-        return parent.get(filePath);
+        return parent.get(filePath, getType());
     }
 
     /**
@@ -49,10 +49,14 @@ public abstract class AbstractSubManager<T> {
             if (defaultFile.isDirectory()) loadAssets(defaultFile.list());
             else {
                 final FileHandle file = getSpecificFile(currentLanguage, defaultFile.path());
-                if (file.exists()) parent.load(file.path(), getType());
-                else parent.load(defaultFile.path(), getType());
+                if (file.exists()) load(file.path());
+                else load(defaultFile.path());
             }
         }
+    }
+
+    protected void load(final String path) {
+        parent.load(path, getType());
     }
 
     protected FileHandle getDir(final String language) {

@@ -20,13 +20,13 @@ public class MenuOptionsLangues extends AbstractGroup {
         super(manager);
         this.parent = parent;
 
-        eo = putActor(new ButtonActor(manager, "lang-button/eo.png"))
+        eo = putActor(new ButtonActor(manager, "options/other:eo"))
             .move(127, 0);
 
-        fr = putActor(new ButtonActor(manager, "lang-button/fr.png"));
+        fr = putActor(new ButtonActor(manager, "options/other:fr"));
         fr.move(fr.centerX() - 10, 0);
 
-        en = putActor(new ButtonActor(manager, "lang-button/en.png"));
+        en = putActor(new ButtonActor(manager, "options/other:en"));
         en.move(145, 0, topRight);
         refresh();
     }
