@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.FontParameter;
 
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ import java.util.List;
  * Manager de ressource
  */
 public class AssetsManager extends AssetManager {
+    private static AssetsManager instance;
+
+    public LaunchGame game;
+
     public String context;
     private List<String> loaded = new ArrayList<>();
 
@@ -39,6 +44,13 @@ public class AssetsManager extends AssetManager {
         sounds = new SoundManager(this);
         musiques = new MusiqueManager(this);
         fonts = new FontsManager(this);
+    }
+
+    public static synchronized AssetsManager getInstance() {
+        if (instance == null) {
+            instance = new AssetsManager();
+        }
+        return instance;
     }
 
     /**

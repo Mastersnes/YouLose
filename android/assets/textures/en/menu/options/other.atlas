@@ -55,7 +55,7 @@ pointer
 slide
   rotate: false
   xy: 0, 204
-  size: 267, 24
+  size: 267, 23
   orig: 267, 24
   offset: 0, 0
   index: -1

@@ -1,11 +1,12 @@
 package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
 
-import java.awt.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -14,6 +15,7 @@ import java.util.Properties;
  */
 public class ConfigManager {
     private AssetsManager parent;
+
     private String language;
     private float sound;
     private float music;
@@ -75,14 +77,9 @@ public class ConfigManager {
     public boolean isFullscreen() {
         return fullscreen;
     }
-
     public void setFullscreen(final boolean fullscreen) {
         this.fullscreen = fullscreen;
-
-        if (!Gdx.graphics.supportsDisplayModeChange()) return;
-
-        if (!fullscreen) {
-            Gdx.graphics.setWindowedMode(800, 600);
-        } else Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        if (fullscreen) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        else Gdx.graphics.setWindowedMode(800, 600);
     }
 }
