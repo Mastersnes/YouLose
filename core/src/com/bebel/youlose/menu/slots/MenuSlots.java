@@ -28,7 +28,7 @@ public class MenuSlots extends AbstractGroup {
         putActor(slotCentre = new SlotActor("slots/slots:slot_milieu"))
             .move(389, 248);
         putActor(slotDroite = new SlotActor("slots/slots:slot_droite"))
-            .move(slotCentre.centerX() + 200, 256);
+            .move(674, 256);
 
         addDebug(slotDroite);
 

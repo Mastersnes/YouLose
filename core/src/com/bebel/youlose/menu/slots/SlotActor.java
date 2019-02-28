@@ -12,6 +12,7 @@ public class SlotActor extends AbstractGroup {
 
 
     public SlotActor(final String image) {
+        setName(image);
         putActor(slot = new ImageActor(image));
         putActor(grille = new ImageActor("slots/slots:grille"))
                 .setVisible(false);
