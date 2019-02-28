@@ -20,12 +20,11 @@ import java.util.List;
 public class AssetsManager extends AssetManager {
     private static AssetsManager instance;
 
-    public LaunchGame game;
-
     public String context;
     private List<String> loaded = new ArrayList<>();
 
     public TextureManager textures;
+    public ImageManager images;
     public FontsManager fonts;
     public SoundManager sounds;
     public MusiqueManager musiques;
@@ -35,11 +34,12 @@ public class AssetsManager extends AssetManager {
     /**
      * Construction et premiere resolution de l'I18N
      */
-    public AssetsManager() {
+    private AssetsManager() {
         super();
         setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(getFileHandleResolver()));
         conf = new ConfigManager(this);
         langue = new LanguageManager(this);
+        images = new ImageManager(this);
         textures = new TextureManager(this);
         sounds = new SoundManager(this);
         musiques = new MusiqueManager(this);
@@ -70,6 +70,7 @@ public class AssetsManager extends AssetManager {
      */
     public void loadContext(final String context) {
         this.context = context;
+        images.load();
         textures.load();
         sounds.load();
         musiques.load();
@@ -121,6 +122,9 @@ public class AssetsManager extends AssetManager {
         return textures.get(name);
     }
     public Drawable getDrawable(final String name) {
+        if (name.endsWith(".png") || name.endsWith(".jpg")) {
+            return images.getDrawable(name);
+        }
         return textures.getDrawable(name);
     }
 
@@ -132,6 +136,7 @@ public class AssetsManager extends AssetManager {
     @Override
     public synchronized void dispose() {
         super.dispose();
+        images.dispose();
         textures.dispose();
         sounds.dispose();
         fonts.dispose();

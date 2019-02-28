@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Pools;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.manager.resources.AssetsManager;
 
 import static com.bebel.youlose.components.refound.event.ClickCatcher.onClick;
 
@@ -21,11 +20,11 @@ public class CheckActor extends AbstractGroup implements Refreshable {
     private ImageActor off;
     private TextActor label;
 
-    public CheckActor(final AssetsManager manager, final BitmapFont font, final String text, final String offStr, final String onStr) {
-        super(manager);
-        this.label = putActor(new TextActor(manager, text, font));
-        this.off = putActor(new ImageActor(manager, offStr));
-        this.on = putActor(new ImageActor(manager, onStr));
+    public CheckActor(final BitmapFont font, final String text, final String offStr, final String onStr) {
+        super();
+        this.label = putActor(new TextActor(text, font));
+        this.off = putActor(new ImageActor(offStr));
+        this.on = putActor(new ImageActor(onStr));
 
         makeEvents();
         setName(text);
@@ -72,10 +71,5 @@ public class CheckActor extends AbstractGroup implements Refreshable {
         setBounds(getX(), getY(), label.getWidth() + on.getWidth() + spacing, on.getHeight());
         on.setX(label.getWidth() + spacing);
         off.setX(label.getWidth() + spacing);
-    }
-
-    @Override
-    public AssetsManager getManager() {
-        return manager;
     }
 }

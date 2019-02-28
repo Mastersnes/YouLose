@@ -6,9 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.SliderActor;
 import com.bebel.youlose.components.refound.actors.ui.TextActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
-
-import static com.bebel.youlose.utils.ActorUtils.move;
 
 /**
  * Composition d'un texte et d'un slider
@@ -17,12 +14,12 @@ public class SlideTextActor extends AbstractGroup {
     private final TextActor label;
     private final SliderActor slide;
 
-    public SlideTextActor(final AssetsManager manager, final BitmapFont font, final String text, final String slider, final String cursor) {
-        this(new TextActor(manager, text, font), new SliderActor(manager, slider, cursor));
+    public SlideTextActor(final BitmapFont font, final String text, final String slider, final String cursor) {
+        this(new TextActor(text, font), new SliderActor(slider, cursor));
     }
 
     public SlideTextActor(final TextActor label, final SliderActor slide) {
-        super(label.getManager());
+        super();
         this.label = putActor(label);
         this.slide = putActor(slide);
 

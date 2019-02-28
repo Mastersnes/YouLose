@@ -5,7 +5,6 @@ import com.bebel.youlose.components.actions.Actions;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.components.refound.event.ClickCatcher;
-import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
 import static com.badlogic.gdx.math.Interpolation.linear;
@@ -21,15 +20,15 @@ public class MenuScan extends AbstractGroup {
     private final ImageActor carre;
     private final ImageActor scan;
 
-    public MenuScan(final MenuScreen parent, final AssetsManager manager) {
-        super(manager);
+    public MenuScan(final MenuScreen parent) {
+        super();
         this.parent = parent;
         manager.setContext("menu");
 
-        putActor(carre = new ImageActor(manager, "vitre/atlas:carre"));
+        putActor(carre = new ImageActor("vitre/atlas:carre"));
         setBounds(0, 0, carre.getWidth(), carre.getHeight());
 
-        putActor(scan = new ImageActor(manager, "vitre/atlas:scan"))
+        putActor(scan = new ImageActor("vitre/atlas:scan"))
             .move(scan.centerX(), 0)
             .setVisible(false);
         scan.setTouchable(Touchable.disabled);

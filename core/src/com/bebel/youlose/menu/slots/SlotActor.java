@@ -1,19 +1,21 @@
 package com.bebel.youlose.menu.slots;
 
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.manager.resources.AssetsManager;
-import com.bebel.youlose.menu.MenuScreen;
+import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 
 /**
  * Acteur representant un slot
  */
 public class SlotActor extends AbstractGroup {
-    /**
-     * Le groupe est par defaut de la taille de l'ecran
-     *
-     * @param manager
-     */
-    public SlotActor(AssetsManager manager) {
-        super(manager);
+    private final ImageActor slot;
+    private final ImageActor grille;
+
+
+    public SlotActor(final String image) {
+        putActor(slot = new ImageActor(image));
+        putActor(grille = new ImageActor("slots/slots:grille"))
+                .setVisible(false);
+
+        setBounds(0,0,slot.getWidth(), slot.getHeight());
     }
 }

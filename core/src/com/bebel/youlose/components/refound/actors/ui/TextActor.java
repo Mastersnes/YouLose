@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bebel.youlose.components.interfaces.Refreshable;
-import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.utils.ActorUtils;
 import com.bebel.youlose.utils.IActor;
@@ -16,9 +15,9 @@ import com.bebel.youlose.utils.IActor;
 public class TextActor extends Label implements Refreshable, IActor {
     private final AssetsManager manager;
 
-    public TextActor(final AssetsManager manager, final String key, final BitmapFont font) {
+    public TextActor(final String key, final BitmapFont font) {
         super(key, new LabelStyle(font, null));
-        this.manager = manager;
+        this.manager = AssetsManager.getInstance();
         setName(key);
         refresh();
     }

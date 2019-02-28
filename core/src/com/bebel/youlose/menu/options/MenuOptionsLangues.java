@@ -2,7 +2,6 @@ package com.bebel.youlose.menu.options;
 
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
 import static com.badlogic.gdx.utils.Align.topRight;
@@ -16,17 +15,17 @@ public class MenuOptionsLangues extends AbstractGroup {
     private final ButtonActor en;
     private final ButtonActor eo;
 
-    public MenuOptionsLangues(final MenuScreen parent, final AssetsManager manager) {
-        super(manager);
+    public MenuOptionsLangues(final MenuScreen parent) {
+        super();
         this.parent = parent;
 
-        eo = putActor(new ButtonActor(manager, "options/other:eo"))
+        eo = putActor(new ButtonActor("options/other:eo"))
             .move(127, 0);
 
-        fr = putActor(new ButtonActor(manager, "options/other:fr"));
+        fr = putActor(new ButtonActor("options/other:fr"));
         fr.move(fr.centerX() - 10, 0);
 
-        en = putActor(new ButtonActor(manager, "options/other:en"));
+        en = putActor(new ButtonActor("options/other:en"));
         en.move(145, 0, topRight);
         refresh();
     }

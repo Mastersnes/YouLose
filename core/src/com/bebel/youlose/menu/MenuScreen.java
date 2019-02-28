@@ -37,13 +37,13 @@ public class MenuScreen extends AbstractScreen {
     public void create() {
         manager.loadContext("menu");
 
-        putActor(options = new MenuOptions(this, manager));
-        putActor(slots = new MenuSlots(this, manager));
-        putActor(background = new MenuBackground(manager));
-        putActor(buttons = new MenuButtons(this, manager));
-        putActor(vitre = new MenuVitre(this, manager));
+        putActor(options = new MenuOptions(this));
+        putActor(slots = new MenuSlots(this));
+        putActor(background = new MenuBackground());
+        putActor(buttons = new MenuButtons(this));
+        putActor(vitre = new MenuVitre(this));
 
-        putActor(quitter = new ButtonActor(manager, "background/atlas:quitter"));
+        putActor(quitter = new ButtonActor("background/atlas:quitter"));
         move(quitter, 10, 10, bottomRight);
     }
 

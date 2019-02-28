@@ -6,7 +6,6 @@ import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
 
 import static com.badlogic.gdx.math.Interpolation.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -19,13 +18,13 @@ public class MenuBackground extends AbstractGroup {
     private ImageActor haut;
     private ImageActor bas;
 
-    public MenuBackground(final AssetsManager manager) {
-        super(manager);
+    public MenuBackground() {
+        super();
         manager.setContext("menu");
         setTouchable(Touchable.disabled);
-        bas = putActor(new ImageActor(manager, "background/atlas:porte_bas"));
+        bas = putActor(new ImageActor("background/atlas:porte_bas"));
 
-        haut = putActor(new ImageActor(manager, "background/atlas:porte_haut"));
+        haut = putActor(new ImageActor("background/atlas:porte_haut"));
         haut.move(0, 0);
 
     }

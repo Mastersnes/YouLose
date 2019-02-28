@@ -20,15 +20,15 @@ credits_hover
 play
   rotate: false
   xy: 0, 311
-  size: 803, 225
-  orig: 803, 225
+  size: 806, 225
+  orig: 806, 225
   offset: 0, 0
   index: -1
 play_hover
   rotate: false
   xy: 0, 86
-  size: 803, 225
-  orig: 803, 225
+  size: 806, 225
+  orig: 806, 225
   offset: 0, 0
   index: -1
 valider

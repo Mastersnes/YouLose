@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.event.ClickCatcher;
-import com.bebel.youlose.manager.resources.AssetsManager;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
@@ -27,16 +26,16 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
     private boolean disable = false;
     private String disabledImage; private Drawable disabled;
 
-    public ButtonActor(final AssetsManager manager, final String image) {
-        super(manager);
+    public ButtonActor(final String image) {
+        super();
         upImage = image;
-        addActor(button = new ImageActor(manager, image));
+        addActor(button = new ImageActor(image));
         addListener(clickCatcher = new ClickCatcher());
         refresh();
     }
 
     public ButtonActor addHover(final String image) {
-        addActor(hover = new ImageActor(manager, image));
+        addActor(hover = new ImageActor(image));
         hover.setTouchable(Touchable.disabled);
         hover.setAlpha(0);
         clickCatcher.enter((x, y, pointer, button) -> {

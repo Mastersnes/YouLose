@@ -1,9 +1,13 @@
 package com.bebel.youlose.manager.resources;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Graphics;
 import com.badlogic.gdx.files.FileHandle;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -79,7 +83,14 @@ public class ConfigManager {
     }
     public void setFullscreen(final boolean fullscreen) {
         this.fullscreen = fullscreen;
-        if (fullscreen) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-        else Gdx.graphics.setWindowedMode(800, 600);
+        final Graphics.DisplayMode displayMode = Gdx.graphics.getDisplayMode();
+        if (fullscreen) Gdx.graphics.setFullscreenMode(displayMode);
+        else {
+            Gdx.graphics.setWindowedMode(800, 600);
+            if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+                final Lwjgl3Graphics lwg = (Lwjgl3Graphics) Gdx.graphics;
+                lwg.getWindow().setPosition(displayMode.width/2 - 800/2, displayMode.height/2 - 600/2);
+            }
+        }
     }
 }

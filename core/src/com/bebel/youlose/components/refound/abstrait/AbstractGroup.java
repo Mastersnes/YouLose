@@ -28,10 +28,9 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     /**
      * Le groupe est par defaut de la taille de l'ecran
      *
-     * @param manager
      */
-    public AbstractGroup(final AssetsManager manager) {
-        this.manager = manager;
+    public AbstractGroup() {
+        this.manager = AssetsManager.getInstance();
         setTouchable(Touchable.childrenOnly);
         setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     }

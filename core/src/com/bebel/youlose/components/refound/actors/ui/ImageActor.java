@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
 
 /**
  * Un acteur uniquement composé d'une image
@@ -14,8 +13,8 @@ import com.bebel.youlose.manager.resources.AssetsManager;
 public class ImageActor extends AbstractActor implements Refreshable {
     protected Drawable image;
 
-    public ImageActor(final AssetsManager manager, final String image) {
-        super(manager);
+    public ImageActor(final String image) {
+        super();
         setName(image);
         refresh();
     }

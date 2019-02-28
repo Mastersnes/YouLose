@@ -55,6 +55,7 @@ public class TextureManager extends AbstractSubManager<TextureAtlas> {
 
     /**
      * Renvoi la texture demandée
+     *
      * @param name
      * @return
      */

@@ -6,10 +6,10 @@ import com.bebel.youlose.components.actions.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
-import static com.badlogic.gdx.math.Interpolation.*;
+import static com.badlogic.gdx.math.Interpolation.elastic;
+import static com.badlogic.gdx.math.Interpolation.linear;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
 
@@ -28,24 +28,24 @@ public class MenuVitre extends AbstractGroup {
     private int delayClignottement;
     private boolean stopClignotte;
 
-    public MenuVitre(final MenuScreen parent, final AssetsManager manager) {
-        super(manager);
+    public MenuVitre(final MenuScreen parent) {
+        super();
         this.parent = parent;
         setVisible(false);
         manager.setContext("menu");
 
-        putActor(led = new ImageActor(manager, "vitre/atlas:led"));
+        putActor(led = new ImageActor("vitre/atlas:led"));
         led.move(led.centerX(), 206);
         led.setAlpha(0);
 
-        putActor(vitre = new ImageActor(manager, "vitre/atlas:vitre"));
+        putActor(vitre = new ImageActor("vitre/atlas:vitre"));
         vitre.move(vitre.centerX(), 0);
 
-        putActor(texte = new ImageActor(manager, "vitre/atlas:youlose"));
+        putActor(texte = new ImageActor("vitre/atlas:youlose"));
         texte.setPosition(led.getX(), led.getY());
         texte.setAlpha(0);
 
-        putActor(carre = new MenuScan(parent, manager))
+        putActor(carre = new MenuScan(parent))
         .move(588, 427);
         carre.setAlpha(0);
 

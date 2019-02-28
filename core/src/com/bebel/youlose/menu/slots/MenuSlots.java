@@ -2,7 +2,6 @@ package com.bebel.youlose.menu.slots;
 
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
 /**
@@ -11,16 +10,27 @@ import com.bebel.youlose.menu.MenuScreen;
 public class MenuSlots extends AbstractGroup {
     private final MenuScreen parent;
 
-    public MenuSlots(final MenuScreen parent, final AssetsManager manager) {
-        super(manager);
+    private final SlotActor slotGauche;
+    private final SlotActor slotCentre;
+    private final SlotActor slotDroite;
+
+    public MenuSlots(final MenuScreen parent) {
+        super();
         this.parent = parent;
         setVisible(false);
         manager.setContext("menu");
 
-        addActor(new ImageActor(manager, "slots/slots:fond"));
+        addActor(new ImageActor("slots/slots:fond"));
+        addActor(new ImageActor("slots/ref.png"));
 
-        putActor(new ImageActor(manager, "slots/slots:slot_gauche"))
-        .move(50, 50);
+        putActor(slotGauche = new SlotActor("slots/slots:slot_gauche"))
+            .move(113, 256);
+        putActor(slotCentre = new SlotActor("slots/slots:slot_milieu"))
+            .move(389, 248);
+        putActor(slotDroite = new SlotActor("slots/slots:slot_droite"))
+            .move(slotCentre.centerX() + 200, 256);
+
+        addDebug(slotDroite);
 
         refresh();
     }

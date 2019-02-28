@@ -8,7 +8,6 @@ import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.components.refound.actors.ui.CheckActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
-import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.menu.MenuScreen;
 
 /**
@@ -23,8 +22,8 @@ public class MenuOptions extends AbstractGroup {
     private final CheckActor fullscreen;
     private final ButtonActor valider;
 
-    public MenuOptions(final MenuScreen parent, final AssetsManager manager) {
-        super(manager);
+    public MenuOptions(final MenuScreen parent) {
+        super();
         this.parent = parent;
         setVisible(false);
         manager.setContext("menu");
@@ -33,27 +32,27 @@ public class MenuOptions extends AbstractGroup {
 
 //        addActor(new ImageActor(manager, "ref.png"));
 
-        addActor(new ImageActor(manager, "options/other:fond"));
+        addActor(new ImageActor("options/other:fond"));
 
-        langues = putActor(new MenuOptionsLangues(parent, manager))
+        langues = putActor(new MenuOptionsLangues(parent))
             .move(0, 170);
 
-        musiques = putActor(new SlideTextActor(manager, font, "musiques",
+        musiques = putActor(new SlideTextActor(font, "musiques",
                 "options/other:slide", "options/other:pointer"));
         musiques.move(musiques.centerX(), 406);
         musiques.setValue(manager.conf.getMusic());
 
-        sounds = putActor(new SlideTextActor(manager, font, "sounds",
+        sounds = putActor(new SlideTextActor(font, "sounds",
                 "options/other:slide", "options/other:pointer"));
         sounds.move(sounds.centerX(), 504);
         sounds.setValue(manager.conf.getSound());
 
-        fullscreen = putActor(new CheckActor(manager, font, "fullscreen",
+        fullscreen = putActor(new CheckActor(font, "fullscreen",
                 "options/other:case", "options/other:case_coche"));
         fullscreen.move(fullscreen.centerX(), 577);
         fullscreen.setChecked(manager.conf.isFullscreen());
 
-        valider = putActor(new ButtonActor(manager, "options/buttons:valider"));
+        valider = putActor(new ButtonActor("options/buttons:valider"));
         valider.addHover("options/buttons:valider_hover");
         valider.move(valider.centerX(), 657);
 

@@ -8,7 +8,6 @@ import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.utils.ActorUtils;
 import com.bebel.youlose.utils.IActor;
 
-import static com.badlogic.gdx.utils.Align.*;
 import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 
@@ -18,9 +17,9 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 public abstract class AbstractActor extends Actor implements IActor {
     protected final AssetsManager manager;
 
-    public AbstractActor(final AssetsManager manager) {
+    public AbstractActor() {
         super();
-        this.manager = manager;
+        this.manager = AssetsManager.getInstance();
         setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
     }
 
