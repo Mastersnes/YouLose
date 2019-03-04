@@ -6,14 +6,14 @@ repeat: none
 options
   rotate: false
   xy: 0, 0
-  size: 795, 224
+  size: 794, 224
   orig: 795, 224
   offset: 0, 0
   index: -1
 options_hover
   rotate: false
   xy: 795, 0
-  size: 795, 224
+  size: 794, 224
   orig: 795, 224
   offset: 0, 0
   index: -1

@@ -106,6 +106,12 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
         setBounds(getX(), getY(), button.getWidth(), button.getHeight());
     }
 
+    @Override
+    public void stop() {
+        super.stop();
+        if (hover != null) hover.setAlpha(0);
+    }
+
     //-- Getter setter
     public boolean isDisable() {
         return disable;

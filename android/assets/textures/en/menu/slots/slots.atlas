@@ -1,40 +1,47 @@
 slots.png
-size: 1024, 1056
+size: 1024, 1284
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 fond
   rotate: false
-  xy: 0, 0
+  xy: 0, 516
   size: 1024, 768
   orig: 1024, 768
   offset: 0, 0
   index: -1
 grille
   rotate: false
-  xy: 0, 768
-  size: 191, 136
-  orig: 191, 136
+  xy: 0, 0
+  size: 179, 133
+  orig: 179, 133
+  offset: 0, 0
+  index: -1
+noir
+  rotate: false
+  xy: 0, 275
+  size: 237, 241
+  orig: 237, 241
   offset: 0, 0
   index: -1
 slot_droite
   rotate: false
-  xy: 191, 768
-  size: 222, 232
-  orig: 222, 232
+  xy: 179, 0
+  size: 206, 207
+  orig: 206, 207
   offset: 0, 0
   index: -1
 slot_gauche
   rotate: false
-  xy: 413, 768
-  size: 236, 280
-  orig: 236, 280
+  xy: 604, 0
+  size: 221, 275
+  orig: 221, 275
   offset: 0, 0
   index: -1
 slot_milieu
   rotate: false
-  xy: 649, 768
-  size: 230, 288
-  orig: 230, 288
+  xy: 385, 0
+  size: 219, 274
+  orig: 219, 274
   offset: 0, 0
   index: -1

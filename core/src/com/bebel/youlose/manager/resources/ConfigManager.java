@@ -27,7 +27,7 @@ public class ConfigManager {
 
     public ConfigManager(final AssetsManager manager) {
         this.parent = manager;
-        final FileHandle file = Gdx.files.external("/youlose/youlose.conf");
+        final FileHandle file = Gdx.files.external("/youlose/conf/youlose.conf");
         try (final InputStream in = file.read()) {
             final Properties prop = new Properties();
             prop.load(in);
@@ -44,7 +44,7 @@ public class ConfigManager {
      * Sauvegarde les configurations
      */
     public void save() {
-        final FileHandle file = Gdx.files.external("/youlose/youlose.conf");
+        final FileHandle file = Gdx.files.external("/youlose/conf/youlose.conf");
         try (final OutputStreamWriter out = (OutputStreamWriter) file.writer(false)) {
             final Properties prop = new Properties();
             prop.setProperty("language", language);

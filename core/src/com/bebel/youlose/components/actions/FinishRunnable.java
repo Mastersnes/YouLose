@@ -10,7 +10,13 @@ public abstract class FinishRunnable implements Runnable {
     protected boolean finish = false;
 
     public RunnableAction finish() {
-        return Actions.run(() -> finish = true);
+        return finish(null);
+    }
+    public RunnableAction finish(final Runnable callback) {
+        return Actions.run(() -> {
+            finish = true;
+            if (callback != null) callback.run();
+        });
     }
 
     /**

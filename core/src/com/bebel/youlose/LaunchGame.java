@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Logger;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.manager.resources.ScreensManager;
-import com.bebel.youlose.menu.MenuScreen;
+import com.bebel.youlose.screens.menu.MenuScreen;
 
 /**
  * Main

@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.utils.Pool;
 
 /**
- * RunnableAction bloquante
+ * Action lancant un runnable et attendant sa fin
  */
 public class FinishRunnableAction extends Action {
     private FinishRunnable runnable;

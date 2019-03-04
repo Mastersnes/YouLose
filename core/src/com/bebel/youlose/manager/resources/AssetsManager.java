@@ -2,11 +2,14 @@ package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Array;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.FontParameter;
 
@@ -120,6 +123,13 @@ public class AssetsManager extends AssetManager {
     //--Utils
     public TextureAtlas getAtlas(final String name) {
         return textures.get(name);
+    }
+    public Animation<TextureRegion> getAnimation(Animation.PlayMode playMode, final String... files) {
+        final Array<TextureRegion> frames = new Array<>();
+        for (final String file : files) {
+            frames.addAll(getAtlas(file).getRegions());
+        }
+        return new Animation<>(1f / 24f, frames, playMode);
     }
     public Drawable getDrawable(final String name) {
         if (name.endsWith(".png") || name.endsWith(".jpg")) {
