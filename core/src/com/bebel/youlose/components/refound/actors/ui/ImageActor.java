@@ -1,7 +1,9 @@
 package com.bebel.youlose.components.refound.actors.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractActor;
@@ -16,7 +18,7 @@ public class ImageActor extends AbstractActor implements Refreshable {
     public ImageActor(final String image) {
         super();
         setName(image);
-        refresh();
+        refresh(getColor());
     }
 
     @Override
@@ -26,14 +28,16 @@ public class ImageActor extends AbstractActor implements Refreshable {
 
     protected void draw(final Drawable drawable, final Batch batch, final float parentAlpha) {
         super.draw(batch, parentAlpha);
+
+        if (drawable instanceof SpriteDrawable)
+            ((SpriteDrawable)drawable).draw(batch, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
         if (drawable instanceof TextureRegionDrawable)
-            ((TextureRegionDrawable) drawable).draw(batch, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        else
-            drawable.draw(batch, getX(), getY(), getWidth(), getHeight());
+            ((TextureRegionDrawable)drawable).draw(batch, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
     @Override
-    public void refresh() {
+    public void refresh(final Color color) {
+        setColor(color);
         setImage(getName());
         setSize(image.getMinWidth(), image.getMinHeight());
     }

@@ -1,5 +1,6 @@
 package com.bebel.youlose.components.composition;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -29,7 +30,7 @@ public class SlideTextActor extends AbstractGroup {
         slide.move(slide.centerX(), 45);
         slide.setRange(0, 100);
 
-        refresh();
+        refresh(getColor());
     }
 
     public void onChange(final Runnable onChangeAction) {
@@ -50,8 +51,8 @@ public class SlideTextActor extends AbstractGroup {
 
 
     @Override
-    public void refresh() {
-        label.refresh();
+    public void refresh(final Color color) {
+        label.refresh(color);
         label.setX(label.centerX());
     }
 }

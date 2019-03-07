@@ -56,7 +56,7 @@ public class MenuOptions extends AbstractGroup {
         valider.addHover("options/buttons:valider_hover");
         valider.move(valider.centerX(), 657);
 
-        refresh();
+        refresh(getColor());
     }
 
     public void makeEvents() {
@@ -78,12 +78,12 @@ public class MenuOptions extends AbstractGroup {
     }
 
     @Override
-    public void refresh() {
-        langues.refresh();
-        musiques.refresh();
-        sounds.refresh();
-        fullscreen.refresh();
+    public void refresh(final Color color) {
+        langues.refresh(color);
+        musiques.refresh(color);
+        sounds.refresh(color);
+        fullscreen.refresh(color);
         fullscreen.setX(fullscreen.centerX());
-        valider.refresh();
+        valider.refresh(color);
     }
 }

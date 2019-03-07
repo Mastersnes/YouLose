@@ -33,7 +33,7 @@ public class MenuScan extends AbstractGroup {
             .setVisible(false);
         scan.setTouchable(Touchable.disabled);
 
-        refresh();
+        refresh(getColor());
     }
 
     @Override

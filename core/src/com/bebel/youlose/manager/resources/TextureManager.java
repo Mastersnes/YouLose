@@ -1,7 +1,6 @@
 package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
@@ -21,10 +20,10 @@ public class TextureManager extends AbstractSubManager<TextureAtlas> {
     }
 
     @Override
-    protected String getPath(final String language) {
+    protected String getPath(final String language, final String context) {
         final StringBuilder path = new StringBuilder("textures/");
         path.append(language).append("/");
-        path.append(parent.context).append("/");
+        if (context != null) path.append(context).append("/");
         return path.toString();
     }
 
@@ -59,7 +58,7 @@ public class TextureManager extends AbstractSubManager<TextureAtlas> {
      * @param name
      * @return
      */
-    public Drawable getDrawable(final String name) {
+    public TextureRegionDrawable getDrawable(final String name) {
         String path = getPath(parent.conf.getLanguage());
         TextureAtlas.AtlasRegion region = texturesLoaded.get(path + name);
         if (region == null) {
@@ -76,6 +75,8 @@ public class TextureManager extends AbstractSubManager<TextureAtlas> {
 
     @Override
     public void dispose() {
+        texturesLoaded.clear();
+        atlasLoaded.clear();
     }
 
 }

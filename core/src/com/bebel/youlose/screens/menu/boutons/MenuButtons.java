@@ -1,5 +1,6 @@
 package com.bebel.youlose.screens.menu.boutons;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.actions.Actions;
 import com.bebel.youlose.components.actions.FinishRunnable;
@@ -43,10 +44,10 @@ public class MenuButtons extends AbstractGroup {
     }
 
     @Override
-    public void refresh() {
-        play.refresh();
-        options.refresh();
-        credits.refresh();
+    public void refresh(final Color color) {
+        play.refresh(color);
+        options.refresh(color);
+        credits.refresh(color);
     }
 
     /**

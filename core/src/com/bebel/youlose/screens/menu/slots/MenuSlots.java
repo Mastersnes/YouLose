@@ -1,12 +1,9 @@
 package com.bebel.youlose.screens.menu.slots;
 
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
-import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
+import com.bebel.youlose.manager.save.SaveManager;
 import com.bebel.youlose.screens.menu.MenuScreen;
-
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
-import static com.bebel.youlose.screens.menu.MenuScreen.Screens.GAME;
 
 /**
  * Ecran des slots
@@ -24,9 +21,9 @@ public class MenuSlots extends AbstractGroup {
         setVisible(false);
         manager.setContext("menu");
 
-        slotGauche = new SlotActor("slots/slots:slot_gauche");
-        slotCentre = new SlotActor("slots/slots:slot_milieu");
-        slotDroite = new SlotActor("slots/slots:slot_droite");
+        slotGauche = new SlotActor("slots/slots:slot_gauche", SaveManager.getInstance().getGauche());
+        slotCentre = new SlotActor("slots/slots:slot_milieu", SaveManager.getInstance().getCentre());
+        slotDroite = new SlotActor("slots/slots:slot_droite", SaveManager.getInstance().getDroite());
 
         slotGauche.addNoir(this, 112, 246);
         slotCentre.addNoir(this, 386, 245);
@@ -42,53 +39,14 @@ public class MenuSlots extends AbstractGroup {
         putActor(slotCentre).move(395, 257);
         putActor(slotDroite).move(679, 259);
 
-        refresh();
+        refresh(getColor());
     }
 
     @Override
     public void makeEvents() {
         super.makeEvents();
-
-        slotGauche.onClick((x, y, pointer, button) -> {
-            final AnimatedActor animation = parent.getBackground().getAnimationCote();
-            addBlockedActions(
-                    slotGauche.open(),
-                    parent.getBackground().play(animation, false),
-                    run(() -> parent.switchTo(GAME))
-            );
-        });
-        slotGauche.onErase((x, y, pointer, button) -> {
-            addBlockedActions(
-                    slotGauche.close()
-            );
-        });
-
-        slotCentre.onClick((x, y, pointer, button) -> {
-            final AnimatedActor animation = parent.getBackground().getAnimationCentre();
-            addBlockedActions(
-                    slotCentre.open(),
-                    parent.getBackground().play(animation, false),
-                    run(() -> parent.switchTo(GAME))
-            );
-        });
-        slotCentre.onErase((x, y, pointer, button) -> {
-            addBlockedActions(
-                    slotCentre.close()
-            );
-        });
-
-        slotDroite.onClick((x, y, pointer, button) -> {
-            final AnimatedActor animation = parent.getBackground().getAnimationCote();
-            addBlockedActions(
-                    slotDroite.open(),
-                    parent.getBackground().play(animation, true),
-                    run(() -> parent.switchTo(GAME))
-            );
-        });
-        slotDroite.onErase((x, y, pointer, button) -> {
-            addBlockedActions(
-                    slotDroite.close()
-            );
-        });
+        slotGauche.makeEvents(parent);
+        slotCentre.makeEvents(parent);
+        slotDroite.makeEvents(parent);
     }
 }

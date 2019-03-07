@@ -1,0 +1,33 @@
+atlas.png
+size: 1024, 1447
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bloc_texte
+  rotate: false
+  xy: 0, 0
+  size: 1001, 114
+  orig: 1001, 114
+  offset: 0, 0
+  index: -1
+cadre_bois
+  rotate: false
+  xy: 0, 114
+  size: 598, 565
+  orig: 598, 565
+  offset: 0, 0
+  index: -1
+feuille
+  rotate: false
+  xy: 598, 114
+  size: 101, 60
+  orig: 101, 60
+  offset: 0, 0
+  index: -1
+fond
+  rotate: false
+  xy: 0, 679
+  size: 1024, 768
+  orig: 1024, 768
+  offset: 0, 0
+  index: -1

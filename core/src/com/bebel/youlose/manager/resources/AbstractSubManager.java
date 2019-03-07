@@ -3,6 +3,8 @@ package com.bebel.youlose.manager.resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import static com.bebel.youlose.manager.resources.AssetsManager.GENERAL_PATH;
+
 /**
  * Sous manager de ressources
  * @param <T> Ressource concernée
@@ -29,8 +31,11 @@ public abstract class AbstractSubManager<T> {
      */
     public T get(final String name) {
         final String language = parent.conf.getLanguage();
-        String filePath = getPath(language, name);
+        String context = parent.context;
+        if (name.contains(GENERAL_PATH))
+            context = null;
 
+        String filePath = getPath(language, context) + name;
         if (!parent.isLoaded(filePath)) {
             filePath = filePath.replace("/" + language + "/", "/en/");
         }
@@ -65,11 +70,11 @@ public abstract class AbstractSubManager<T> {
     protected FileHandle getSpecificFile(final String language, final String defaultPath) {
         return Gdx.files.internal(defaultPath.replace("/en/", "/" + language + "/"));
     }
-    protected String getPath(final String language, final String name) {
-        return new StringBuilder(getPath(language)).append(name).toString();
-    }
 
-    protected abstract String getPath(final String language);
+    protected String getPath(final String language) {
+        return getPath(language, parent.context);
+    }
+    protected abstract String getPath(final String language, final String context);
 
     protected abstract Class<T> getType();
 

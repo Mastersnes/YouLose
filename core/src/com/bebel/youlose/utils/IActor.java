@@ -1,5 +1,6 @@
 package com.bebel.youlose.utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -24,8 +25,9 @@ public interface IActor {
      * @param alpha
      */
     <T extends Actor> T setAlpha(final int alpha);
-    <T extends Actor> float getAlpha();
+    float getAlpha();
 
+    void setColor(final Color color);
     /**
      * Ajoute une suite d'actions
      *

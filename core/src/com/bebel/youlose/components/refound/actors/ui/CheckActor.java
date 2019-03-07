@@ -1,5 +1,6 @@
 package com.bebel.youlose.components.refound.actors.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -28,7 +29,7 @@ public class CheckActor extends AbstractGroup implements Refreshable {
 
         makeEvents();
         setName(text);
-        refresh();
+        refresh(getColor());
     }
 
     public void makeEvents() {
@@ -63,10 +64,10 @@ public class CheckActor extends AbstractGroup implements Refreshable {
     }
 
     @Override
-    public void refresh() {
-        label.refresh();
-        off.refresh();
-        on.refresh();
+    public void refresh(final Color color) {
+        label.refresh(color);
+        off.refresh(color);
+        on.refresh(color);
 
         setBounds(getX(), getY(), label.getWidth() + on.getWidth() + spacing, on.getHeight());
         on.setX(label.getWidth() + spacing);

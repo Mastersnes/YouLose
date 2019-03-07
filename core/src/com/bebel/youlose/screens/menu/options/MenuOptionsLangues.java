@@ -1,5 +1,6 @@
 package com.bebel.youlose.screens.menu.options;
 
+import com.badlogic.gdx.graphics.Color;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.screens.menu.MenuScreen;
@@ -27,7 +28,7 @@ public class MenuOptionsLangues extends AbstractGroup {
 
         en = putActor(new ButtonActor("options/other:en"));
         en.move(145, 0, topRight);
-        refresh();
+        refresh(getColor());
     }
 
     public void makeEvents() {
@@ -48,10 +49,16 @@ public class MenuOptionsLangues extends AbstractGroup {
     }
 
     @Override
-    public void refresh() {
+    public void refresh(final Color color) {
         final String language = manager.conf.getLanguage();
+
+        fr.refresh(color);
         fr.setDisable(!"fr".equals(language));
+
+        en.refresh(color);
         en.setDisable(!"en".equals(language));
+
+        eo.refresh(color);
         eo.setDisable(!"eo".equals(language));
     }
 }

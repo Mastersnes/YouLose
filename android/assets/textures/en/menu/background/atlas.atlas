@@ -1,5 +1,5 @@
 atlas.png
-size: 1024, 1088
+size: 1024, 1029
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -15,12 +15,5 @@ porte_haut
   xy: 0, 540
   size: 1024, 489
   orig: 1024, 489
-  offset: 0, 0
-  index: -1
-quitter
-  rotate: false
-  xy: 0, 1029
-  size: 87, 59
-  orig: 87, 59
   offset: 0, 0
   index: -1

@@ -20,8 +20,8 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
 
     private final ImageActor button;
     private ImageActor hover;
-    private String upImage; private Drawable up;
-    private String downImage; private Drawable down;
+    private String upImage; private TextureRegionDrawable up;
+    private String downImage; private TextureRegionDrawable down;
 
     private boolean disable = false;
     private String disabledImage; private Drawable disabled;
@@ -31,7 +31,7 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
         upImage = image;
         addActor(button = new ImageActor(image));
         addListener(clickCatcher = new ClickCatcher());
-        refresh();
+        refresh(getColor());
     }
 
     public ButtonActor addHover(final String image) {
@@ -56,7 +56,7 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
 
     public ButtonActor addDisable(final String image) {
         disabledImage = image;
-        disabled = manager.getDrawable(image);
+        disabled = manager.getDrawable(image, getColor());
         return this;
     }
 
@@ -73,18 +73,20 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
     }
 
     @Override
-    public void refresh() {
-        if (hover != null) hover.refresh();
+    public void refresh(final Color color) {
+        if (hover != null) {
+            hover.refresh(color);
+        }
 
         up = manager.getDrawable(upImage);
         if (downImage != null)
             down = manager.getDrawable(downImage);
         if (disabledImage != null)
-            disabled = manager.getDrawable(disabledImage);
+            disabled = manager.getDrawable(disabledImage, getColor());
         else
-            disabled = ((TextureRegionDrawable) up).tint(Color.GRAY);
+            disabled = up.tint(Color.GRAY);
 
-        button.refresh();
+        button.refresh(color);
 
         refreshButton();
     }

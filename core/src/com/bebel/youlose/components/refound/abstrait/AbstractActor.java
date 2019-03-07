@@ -49,6 +49,9 @@ public abstract class AbstractActor extends Actor implements IActor {
     @Override
     public float getAlpha() { return ActorUtils.getAlpha(this); }
     @Override
+    public void setColor(final Color color) { ActorUtils.setColor(this, color); }
+
+    @Override
     public boolean addActions(final Action... actions) {
         return ActorUtils.addActions(this, actions);
     }

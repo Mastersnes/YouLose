@@ -2,6 +2,7 @@ package com.bebel.youlose.components.refound.abstrait;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,7 +18,7 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 /**
  * Template d'ecran
  */
-public abstract class AbstractScreen extends Stage implements Screen, Refreshable, Eventable {
+public abstract class AbstractScreen extends Stage implements Screen, Eventable {
     protected final LaunchGame parent;
     protected final AssetsManager manager;
 
@@ -40,11 +41,10 @@ public abstract class AbstractScreen extends Stage implements Screen, Refreshabl
         return actor;
     }
 
-    @Override
     public void refresh() {
         for (final Actor actor : getActors()) {
             if (actor instanceof Refreshable)
-                ((Refreshable) actor).refresh();
+                ((Refreshable) actor).refresh(actor.getColor());
         }
     }
 
@@ -54,11 +54,6 @@ public abstract class AbstractScreen extends Stage implements Screen, Refreshabl
             if (actor instanceof Eventable)
                 ((Eventable) actor).makeEvents();
         }
-    }
-
-    @Override
-    public AssetsManager getManager() {
-        return manager;
     }
 
     //--Screen

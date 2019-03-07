@@ -13,9 +13,10 @@ public class ImageManager extends AbstractSubManager<Texture> {
     }
 
     @Override
-    protected String getPath(final String language) {
+    protected String getPath(final String language, final String context) {
         final StringBuilder path = new StringBuilder("images/");
-        path.append(parent.context).append("/");
+        path.append(language).append("/");
+        if (context != null) path.append(context).append("/");
         return path.toString();
     }
 
@@ -25,7 +26,7 @@ public class ImageManager extends AbstractSubManager<Texture> {
      * @param name
      * @return
      */
-    public Drawable getDrawable(final String name) {
+    public TextureRegionDrawable getDrawable(final String name) {
         return new TextureRegionDrawable(get(name));
     }
 

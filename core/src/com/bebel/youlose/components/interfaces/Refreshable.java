@@ -1,11 +1,12 @@
 package com.bebel.youlose.components.interfaces;
 
+import com.badlogic.gdx.graphics.Color;
 import com.bebel.youlose.manager.resources.AssetsManager;
 
 /**
- * Represente une entitée sensible au language et necessitant d'etre raffraichit
+ * Represente une entitée necessitant d'etre raffraichit
  */
 public interface Refreshable {
-    void refresh();
+    void refresh(final Color color);
     AssetsManager getManager();
 }

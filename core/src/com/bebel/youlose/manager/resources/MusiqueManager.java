@@ -14,9 +14,9 @@ public class MusiqueManager extends AbstractSubManager<Music> {
     }
 
     @Override
-    protected String getPath(final String language) {
+    protected String getPath(final String language, final String context) {
         final StringBuilder path = new StringBuilder("musics/");
-        path.append(parent.context).append("/");
+        if (context != null) path.append(context).append("/");
         return path.toString();
     }
 

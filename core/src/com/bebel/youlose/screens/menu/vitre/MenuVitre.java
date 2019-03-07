@@ -50,7 +50,7 @@ public class MenuVitre extends AbstractGroup {
         carre.setAlpha(0);
 
         setY(getHeight());
-        refresh();
+        refresh(getColor());
     }
 
     @Override

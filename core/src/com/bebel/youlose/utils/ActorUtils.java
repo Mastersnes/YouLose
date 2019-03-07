@@ -1,5 +1,6 @@
 package com.bebel.youlose.utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -41,6 +42,10 @@ public class ActorUtils {
     }
     public synchronized static <T extends Actor> float getAlpha(final T actor) {
         return actor.getColor().a;
+    }
+
+    public synchronized static <T extends Actor> void setColor(final T actor, final Color color) {
+        actor.setColor(color.r, color.g, color.b, actor.getColor().a);
     }
 
     public synchronized static boolean addActions(final Actor actor, final Action... actions) {

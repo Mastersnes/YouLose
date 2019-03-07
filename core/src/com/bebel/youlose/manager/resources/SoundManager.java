@@ -11,9 +11,9 @@ public class SoundManager extends AbstractSubManager<Sound> {
     }
 
     @Override
-    protected String getPath(final String language) {
+    protected String getPath(final String language, final String context) {
         final StringBuilder path = new StringBuilder("sounds/");
-        path.append(parent.context).append("/");
+        if (context != null) path.append(context).append("/");
         return path.toString();
     }
 

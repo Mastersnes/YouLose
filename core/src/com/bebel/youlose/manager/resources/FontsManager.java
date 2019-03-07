@@ -18,9 +18,9 @@ public class FontsManager extends AbstractSubManager<FreeTypeFontGenerator> {
     }
 
     @Override
-    protected String getPath(final String language) {
+    protected String getPath(final String language, final String context) {
         final StringBuilder path = new StringBuilder("fonts/");
-        path.append(parent.context).append("/");
+        if (context != null) path.append(context).append("/");
         return path.toString();
     }
 

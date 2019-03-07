@@ -1,5 +1,6 @@
 package com.bebel.youlose.components.refound.actors.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -41,6 +42,8 @@ public class SliderActor extends Slider implements IActor {
     }
     @Override
     public float getAlpha() {return ActorUtils.getAlpha(this);}
+    @Override
+    public void setColor(final Color color) { ActorUtils.setColor(this, color); }
     @Override
     public boolean addActions(final Action... actions) {
         return ActorUtils.addActions(this, actions);

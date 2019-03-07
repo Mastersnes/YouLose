@@ -3,6 +3,7 @@ package com.bebel.youlose.manager.resources;
 import com.badlogic.gdx.Gdx;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
+import com.bebel.youlose.screens.enigme1.Enigme1;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +15,10 @@ public class ScreensManager {
     private static ScreensManager instance;
     private LaunchGame parent;
     private Map<Class<? extends AbstractScreen>, AbstractScreen> screens = new HashMap<>();
+    private Map<String, Class<? extends AbstractScreen>> types = new HashMap<>();
 
     private ScreensManager() {
+        types.put(Enigme1.NAME, Enigme1.class);
     }
 
     public static void init(final LaunchGame parent) {
@@ -45,5 +48,15 @@ public class ScreensManager {
         if (parent.getScreen() != null)
             parent.getScreen().dispose();
         parent.setScreen(screen);
+    }
+
+    public void switchTo(final String screenName) {
+        final Class<? extends AbstractScreen> screenType = types.get(screenName);
+        switchTo(screenType);
+    }
+
+    public void screenName(final String screenName) {
+        final Class<? extends AbstractScreen> screenType = types.get(screenName);
+        switchTo(screenType);
     }
 }

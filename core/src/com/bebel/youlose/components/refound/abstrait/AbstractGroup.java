@@ -1,6 +1,7 @@
 package com.bebel.youlose.components.refound.abstrait;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -41,10 +42,10 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     }
 
     @Override
-    public void refresh() {
+    public void refresh(final Color color) {
         for (final Actor actor : getChildren()) {
             if (actor instanceof Refreshable)
-                ((Refreshable) actor).refresh();
+                ((Refreshable) actor).refresh(color);
         }
     }
 
@@ -80,7 +81,7 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
                 toDebug.moveBy(debugX, debugY);
                 float parentHeight = toDebug.getParent() != null ? toDebug.getParent().getHeight() : WORLD_HEIGHT;
                 float y = parentHeight - toDebug.getHeight() - toDebug.getY();
-                Gdx.app.debug("MOVE:"+toDebug.getName(), toDebug.getX() + ", " + y);
+                Gdx.app.debug("MOVE: "+toDebug.getName(), toDebug.getX() + ", " + y);
             }
         }
     }
@@ -106,6 +107,11 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     @Override
     public float getAlpha() {
         return ActorUtils.getAlpha(this);
+    }
+    @Override
+    public void setColor(final Color color) {
+        ActorUtils.setColor(this, color);
+        refresh(getColor());
     }
     @Override
     public boolean addActions(final Action... actions) {

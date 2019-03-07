@@ -1,16 +1,18 @@
 package com.bebel.youlose.manager.resources;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.FontParameter;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ import java.util.List;
  * Manager de ressource
  */
 public class AssetsManager extends AssetManager {
+    public static final String GENERAL_CONTEXT = "general";
+    public static final String GENERAL_PATH = GENERAL_CONTEXT+"/";
     private static AssetsManager instance;
 
     public String context;
@@ -47,6 +51,8 @@ public class AssetsManager extends AssetManager {
         sounds = new SoundManager(this);
         musiques = new MusiqueManager(this);
         fonts = new FontsManager(this);
+
+        loadContext(GENERAL_CONTEXT);
     }
 
     public static synchronized AssetsManager getInstance() {
@@ -94,7 +100,9 @@ public class AssetsManager extends AssetManager {
             unload(fileName.replace(languagePath, "/eo/"));
         }
         super.load(fileName, type, parameter);
-        if (!"i18n/i18n".equals(fileName))
+        if (fileName.contains(GENERAL_PATH) || "i18n/i18n".equals(fileName))
+            Gdx.app.debug("AssetsManager", "Do not cache");
+        else
             loaded.add(fileName);
     }
 
@@ -121,6 +129,9 @@ public class AssetsManager extends AssetManager {
     }
 
     //--Utils
+    public TextureAtlas getGeneralAtlas(final String name) {
+        return getAtlas(GENERAL_PATH + name);
+    }
     public TextureAtlas getAtlas(final String name) {
         return textures.get(name);
     }
@@ -131,13 +142,22 @@ public class AssetsManager extends AssetManager {
         }
         return new Animation<>(1f / 24f, frames, playMode);
     }
-    public Drawable getDrawable(final String name) {
+    public TextureRegionDrawable getGeneralDrawable(final String name) {
+        return getDrawable(GENERAL_PATH + name);
+    }
+    public TextureRegionDrawable getDrawable(final String name) {
         if (name.endsWith(".png") || name.endsWith(".jpg")) {
             return images.getDrawable(name);
         }
         return textures.getDrawable(name);
     }
+    public SpriteDrawable getDrawable(final String name, final Color color) {
+        return (SpriteDrawable) getDrawable(name).tint(color);
+    }
 
+    public BitmapFont getGeneralFont(final String name, final FontParameter parameter) {
+        return getFont(GENERAL_PATH, parameter);
+    }
     public BitmapFont getFont(final String name, final FontParameter parameter) {
         return fonts.get(name, parameter);
     }
@@ -150,6 +170,7 @@ public class AssetsManager extends AssetManager {
         textures.dispose();
         sounds.dispose();
         fonts.dispose();
+        unloadAll();
     }
 
     //--- Getter setter

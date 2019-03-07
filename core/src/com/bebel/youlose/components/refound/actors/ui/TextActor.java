@@ -1,5 +1,6 @@
 package com.bebel.youlose.components.refound.actors.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,14 +20,20 @@ public class TextActor extends Label implements Refreshable, IActor {
         super(key, new LabelStyle(font, null));
         this.manager = AssetsManager.getInstance();
         setName(key);
-        refresh();
+        refresh(getColor());
     }
 
     @Override
-    public void refresh() {
+    public void refresh(final Color color) {
+        setColor(color);
         setText(manager.langue.get(getName()));
         setSize(getPrefWidth(), getPrefHeight());
         setBounds(getX(), getY(), getPrefWidth(), getPrefHeight());
+    }
+
+    @Override
+    public void setColor(Color color) {
+        super.setColor(color.r, color.g, color.b, getAlpha());
     }
 
     @Override
