@@ -36,6 +36,8 @@ public class ScreensManager {
      * @param screenType
      */
     public void switchTo(final Class<? extends AbstractScreen> screenType) {
+        if (parent.getScreen() != null) parent.getScreen().dispose();
+
         AbstractScreen screen = screens.get(screenType);
         if (screen == null) {
             try {
@@ -45,17 +47,10 @@ public class ScreensManager {
                 Gdx.app.error("ScreensManager", "Impossible d'instancier le screen : " + screenType, e);
             }
         }
-        if (parent.getScreen() != null)
-            parent.getScreen().dispose();
         parent.setScreen(screen);
     }
 
     public void switchTo(final String screenName) {
-        final Class<? extends AbstractScreen> screenType = types.get(screenName);
-        switchTo(screenType);
-    }
-
-    public void screenName(final String screenName) {
         final Class<? extends AbstractScreen> screenType = types.get(screenName);
         switchTo(screenType);
     }

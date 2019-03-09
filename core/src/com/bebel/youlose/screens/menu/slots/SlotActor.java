@@ -34,6 +34,9 @@ public class SlotActor extends AbstractGroup {
     private ImageActor grille;
     private final TextActor texte;
 
+    //-- Actions
+    private boolean open;
+
 
     public SlotActor(final String image, final SaveInstance save) {
         this.save = save;
@@ -60,19 +63,10 @@ public class SlotActor extends AbstractGroup {
         menuSlots.putActor(grille = new ImageActor("slots/slots:grille"))
                 .move(x, y);
         if (save.isUsed()) {
+            open = true;
             grille.moveBy(-grille.getWidth() / 2, 0);
             grille.setScaleX(0.5f);
         }
-    }
-
-    public void onClick(final ClickCatcher.ClickEvent runnable) {
-        slot.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                runnable.run(x, y, pointer, button);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
     }
 
     public void makeEvents(final MenuScreen parent) {
@@ -81,7 +75,10 @@ public class SlotActor extends AbstractGroup {
         texte.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                addBlockedActions(close(), run(() -> save.delete()));
+                addBlockedActions(
+                        close(),
+                        run(() -> save.delete())
+                );
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -103,8 +100,6 @@ public class SlotActor extends AbstractGroup {
         });
     }
 
-    //-- Actions
-    private boolean open;
     /**
      * Ouvre la grille
      * @return
@@ -140,7 +135,10 @@ public class SlotActor extends AbstractGroup {
                                         Actions.moveBy(grille.getWidth() / 2, 0, 1.5f, linear),
                                         Actions.scaleTo( 1f, 1f, 1.5f, linear)
                                 ),
-                                finish(() -> open = true)
+                                finish(() -> {
+                                    texte.setVisible(false);
+                                    open = true;
+                                })
                         )
                 );
             }

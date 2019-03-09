@@ -111,6 +111,7 @@ public class MenuScreen extends AbstractScreen {
         if (!save.isUsed()) {
             save.setEmplacement(Enigme1.NAME);
             save.setUsed(true);
+            save.save();
         }
         ScreensManager.getInstance().switchTo(save.getEmplacement());
 
@@ -124,7 +125,7 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
-        manager.unloadAll();
+        manager.unloadContext("menu");
         Gdx.app.debug("MenuScreen", "DISPOSE");
     }
 }

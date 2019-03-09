@@ -118,12 +118,18 @@ public class AssetsManager extends AssetManager {
      * Permet de tout decharger
      */
     public synchronized void unloadAll() {
+        unloadContext(null);
+    }
+    public synchronized void unloadContext(final String context) {
         String fileName;
         for (final Iterator<String> it = loaded.iterator(); it.hasNext(); ) {
             fileName = it.next();
             if (isLoaded(fileName)) {
-                super.unload(fileName);
-                it.remove();
+                if (context == null || fileName.contains("/" + context + "/")) {
+                    Gdx.app.log("[AssetsManager]", "Unload : " + fileName);
+                    super.unload(fileName);
+                    it.remove();
+                }
             }
         }
     }
