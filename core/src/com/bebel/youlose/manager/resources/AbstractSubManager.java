@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
 import static com.bebel.youlose.manager.resources.AssetsManager.GENERAL_PATH;
+import static com.bebel.youlose.utils.Constantes.DEFAULT_LANGUAGE;
 
 /**
  * Sous manager de ressources
@@ -20,7 +21,7 @@ public abstract class AbstractSubManager<T> {
      * Charge les ressources du contexte
      */
     public void load() {
-        loadAssets(getDir("en").list());
+        loadAssets(getDir(DEFAULT_LANGUAGE).list());
     }
 
     /**

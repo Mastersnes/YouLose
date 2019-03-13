@@ -1,0 +1,33 @@
+tourne_48-51.png
+size: 1572, 1386
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame0048
+  rotate: false
+  xy: 0, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0049
+  rotate: false
+  xy: 786, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0050
+  rotate: false
+  xy: 0, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0051
+  rotate: false
+  xy: 786, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1

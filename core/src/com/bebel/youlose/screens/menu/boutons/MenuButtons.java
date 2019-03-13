@@ -29,7 +29,6 @@ public class MenuButtons extends AbstractGroup {
     public MenuButtons(final MenuScreen parent) {
         super();
         this.parent = parent;
-        manager.setContext("menu");
         play = putActor(new ButtonActor("options/buttons:play"));
         play.addHover("options/buttons:play_hover");
         play.move(-play.getWidth(), 55);

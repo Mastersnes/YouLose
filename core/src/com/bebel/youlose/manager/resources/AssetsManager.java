@@ -6,14 +6,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.bebel.youlose.components.refound.FontParameter;
+import com.bebel.youlose.components.refound.draw.Sprite;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -31,6 +28,7 @@ public class AssetsManager extends AssetManager {
     private List<String> loaded = new ArrayList<>();
 
     public TextureManager textures;
+    public AnimationManager animations;
     public ImageManager images;
     public FontsManager fonts;
     public SoundManager sounds;
@@ -48,11 +46,12 @@ public class AssetsManager extends AssetManager {
         langue = new LanguageManager(this);
         images = new ImageManager(this);
         textures = new TextureManager(this);
+        animations = new AnimationManager(this);
         sounds = new SoundManager(this);
         musiques = new MusiqueManager(this);
         fonts = new FontsManager(this);
 
-        loadContext(GENERAL_CONTEXT);
+        loadContext(GENERAL_CONTEXT, true);
     }
 
     public static synchronized AssetsManager getInstance() {
@@ -69,7 +68,7 @@ public class AssetsManager extends AssetManager {
      */
     public void reload(final String newLangage) {
         langue.load(newLangage);
-        loadContext(context);
+        loadContext(context, true);
     }
 
     /**
@@ -77,16 +76,23 @@ public class AssetsManager extends AssetManager {
      *
      * @param context
      */
-    public void loadContext(final String context) {
+    public void loadContext(final String context, boolean synchrone) {
+        final String oldContext = this.context;
         this.context = context;
         images.load();
         textures.load();
+        animations.load();
         sounds.load();
         musiques.load();
         fonts.load();
-        finishLoading();
+        this.context = oldContext;
 
-        textures.indexTextures();
+        if (synchrone) finishLoading(context);
+    }
+
+    public void finishLoading(final String context) {
+        this.context = context;
+        super.finishLoading();
     }
 
     @Override
@@ -101,7 +107,7 @@ public class AssetsManager extends AssetManager {
         }
         super.load(fileName, type, parameter);
         if (fileName.contains(GENERAL_PATH) || "i18n/i18n".equals(fileName))
-            Gdx.app.debug("AssetsManager", "Do not cache");
+            Gdx.app.debug("AssetsManager", "Do not cache : " + fileName);
         else
             loaded.add(fileName);
     }
@@ -126,7 +132,6 @@ public class AssetsManager extends AssetManager {
             fileName = it.next();
             if (isLoaded(fileName)) {
                 if (context == null || fileName.contains("/" + context + "/")) {
-                    Gdx.app.log("[AssetsManager]", "Unload : " + fileName);
                     super.unload(fileName);
                     it.remove();
                 }
@@ -135,35 +140,20 @@ public class AssetsManager extends AssetManager {
     }
 
     //--Utils
-    public TextureAtlas getGeneralAtlas(final String name) {
-        return getAtlas(GENERAL_PATH + name);
-    }
-    public TextureAtlas getAtlas(final String name) {
-        return textures.get(name);
-    }
-    public Animation<TextureRegion> getAnimation(Animation.PlayMode playMode, final String... files) {
-        final Array<TextureRegion> frames = new Array<>();
-        for (final String file : files) {
-            frames.addAll(getAtlas(file).getRegions());
-        }
-        return new Animation<>(1f / 24f, frames, playMode);
-    }
-    public TextureRegionDrawable getGeneralDrawable(final String name) {
-        return getDrawable(GENERAL_PATH + name);
-    }
-    public TextureRegionDrawable getDrawable(final String name) {
-        if (name.endsWith(".png") || name.endsWith(".jpg")) {
-            return images.getDrawable(name);
-        }
-        return textures.getDrawable(name);
-    }
-    public SpriteDrawable getDrawable(final String name, final Color color) {
-        return (SpriteDrawable) getDrawable(name).tint(color);
+    public Animation<TextureRegion> getAnimation(final String key, final Animation.PlayMode playMode, final float fps) {
+        return animations.getAnimation(key, playMode, fps);
     }
 
-    public BitmapFont getGeneralFont(final String name, final FontParameter parameter) {
-        return getFont(GENERAL_PATH, parameter);
+    public Sprite getSprite(final String name, final Color color) {
+        final Sprite sprite;
+        if (name.endsWith(".png") || name.endsWith(".jpg")) {
+            sprite = new Sprite(images.get(name));
+        } else sprite = new Sprite(textures.getTexture(name));
+
+        sprite.setColor(color.r, color.g, color.b, 1f);
+        return sprite;
     }
+
     public BitmapFont getFont(final String name, final FontParameter parameter) {
         return fonts.get(name, parameter);
     }

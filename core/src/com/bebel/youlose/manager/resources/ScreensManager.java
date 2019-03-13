@@ -51,7 +51,8 @@ public class ScreensManager {
     }
 
     public void switchTo(final String screenName) {
-        final Class<? extends AbstractScreen> screenType = types.get(screenName);
+        Class<? extends AbstractScreen> screenType = types.get(screenName);
+        if (screenType == null) screenType = Enigme1.class;
         switchTo(screenType);
     }
 }

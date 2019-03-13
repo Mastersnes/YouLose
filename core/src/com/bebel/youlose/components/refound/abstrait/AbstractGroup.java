@@ -2,12 +2,14 @@ package com.bebel.youlose.components.refound.abstrait;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.interfaces.Eventable;
 import com.bebel.youlose.components.interfaces.Refreshable;
+import com.bebel.youlose.components.refound.shape.IShape;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.utils.ActorUtils;
 import com.bebel.youlose.utils.IActor;
@@ -24,7 +26,9 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
  */
 public abstract class AbstractGroup extends Group implements Refreshable, Eventable, IActor {
     protected final AssetsManager manager;
-    private List<Actor> debugList = new ArrayList<>();
+    protected List<Actor> debugList = new ArrayList<>();
+    protected IShape hitbox;
+    protected boolean debugHitbox;
 
     /**
      * Le groupe est par defaut de la taille de l'ecran
@@ -61,29 +65,21 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     public void act(float delta) {
         super.act(delta);
         actDebug();
+        actDebugHitbox();
     }
 
-    public void addDebug(final Actor... actors) {
-        for (final Actor actor : actors) {
-            debugList.add(actor.debug());
-        }
+    public void setHitbox(final IShape hitbox) {
+        this.hitbox = hitbox;
     }
-    private void actDebug() {
-        if (debugList.isEmpty()) return;
-        int debugX=0, debugY=0;
-        if (Gdx.input.isKeyPressed(UP)) debugY=1;
-        else if (Gdx.input.isKeyPressed(LEFT)) debugX=-1;
-        else if (Gdx.input.isKeyPressed(DOWN)) debugY=-1;
-        else if (Gdx.input.isKeyPressed(RIGHT)) debugX=1;
 
-        if (debugX + debugY != 0) {
-            for (final Actor toDebug : debugList) {
-                toDebug.moveBy(debugX, debugY);
-                float parentHeight = toDebug.getParent() != null ? toDebug.getParent().getHeight() : WORLD_HEIGHT;
-                float y = parentHeight - toDebug.getHeight() - toDebug.getY();
-                Gdx.app.debug("MOVE: "+toDebug.getName(), toDebug.getX() + ", " + y);
-            }
+    @Override
+    public Actor hit(float x, float y, boolean touchable) {
+        final Actor hitter = super.hit(x, y, touchable);
+        if (hitter == this) {
+            if (hitbox.contains(x, y)) return this;
+            else return null;
         }
+        return hitter;
     }
 
     @Override
@@ -133,4 +129,59 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     public float centerY() {
         return ActorUtils.centerY(this);
     }
+
+    ///----- DEBUG
+    public void debugHitbox() {
+        this.debugHitbox = true;
+    }
+
+    private void actDebugHitbox() {
+        if (!getDebug() || !debugHitbox || hitbox == null) return;
+        float debugX = 0, debugY = 0, debugR = 0;
+        if (Gdx.input.isKeyPressed(UP)) debugY = 1;
+        else if (Gdx.input.isKeyPressed(LEFT)) debugX = -1;
+        else if (Gdx.input.isKeyPressed(DOWN)) debugY = -1;
+        else if (Gdx.input.isKeyPressed(RIGHT)) debugX = 1;
+        else if (Gdx.input.isKeyPressed(A)) debugR = -1;
+        else if (Gdx.input.isKeyPressed(D)) debugR = 1;
+
+        if (debugX + debugY + debugR != 0) {
+            hitbox.add(debugX, debugY, debugR);
+            Gdx.app.debug("MOVE CIRCLE: ", hitbox.getX() + ", " + hitbox.getY() + " : " + hitbox.getR() + "°");
+        }
+    }
+
+    @Override
+    public void drawDebug(ShapeRenderer shapes) {
+        super.drawDebug(shapes);
+        if (hitbox != null) hitbox.draw(shapes, getX(), getY());
+    }
+
+    public void addDebug(final Actor... actors) {
+        for (final Actor actor : actors) {
+            debugList.add(actor.debug());
+        }
+    }
+
+    private void actDebug() {
+        if (!getDebug() || debugList.isEmpty()) return;
+        float debugX = 0, debugY = 0, debugR = 0;
+        if (Gdx.input.isKeyPressed(UP)) debugY = 1;
+        else if (Gdx.input.isKeyPressed(LEFT)) debugX = -1;
+        else if (Gdx.input.isKeyPressed(DOWN)) debugY = -1;
+        else if (Gdx.input.isKeyPressed(RIGHT)) debugX = 1;
+        else if (Gdx.input.isKeyPressed(A)) debugR = -1;
+        else if (Gdx.input.isKeyPressed(D)) debugR = 1;
+
+        if (debugX + debugY + debugR != 0) {
+            for (final Actor toDebug : debugList) {
+                toDebug.moveBy(debugX, debugY);
+                toDebug.rotateBy(debugR);
+                float parentHeight = toDebug.getParent() != null ? toDebug.getParent().getHeight() : WORLD_HEIGHT;
+                float y = parentHeight - toDebug.getHeight() - toDebug.getY();
+                Gdx.app.debug("MOVE: " + toDebug.getName(), toDebug.getX() + ", " + y + " : " + toDebug.getRotation() + "°");
+            }
+        }
+    }
+
 }

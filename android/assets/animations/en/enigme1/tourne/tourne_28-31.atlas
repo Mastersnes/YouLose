@@ -1,0 +1,33 @@
+tourne_28-31.png
+size: 1572, 1386
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame0028
+  rotate: false
+  xy: 0, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0029
+  rotate: false
+  xy: 786, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0030
+  rotate: false
+  xy: 0, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0031
+  rotate: false
+  xy: 786, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1

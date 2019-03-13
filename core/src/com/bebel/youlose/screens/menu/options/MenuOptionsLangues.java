@@ -6,6 +6,7 @@ import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.screens.menu.MenuScreen;
 
 import static com.badlogic.gdx.utils.Align.topRight;
+import static com.bebel.youlose.utils.Constantes.*;
 
 /**
  * Widget des langues
@@ -33,17 +34,17 @@ public class MenuOptionsLangues extends AbstractGroup {
 
     public void makeEvents() {
         fr.onClick((x, y, button, pointer) -> {
-            manager.reload("fr");
+            manager.reload(FR_LANGUAGE);
             parent.refresh();
         });
 
         en.onClick((x, y, button, pointer) -> {
-            manager.reload("en");
+            manager.reload(EN_LANGUAGE);
             parent.refresh();
         });
 
         eo.onClick((x, y, button, pointer) -> {
-            manager.reload("eo");
+            manager.reload(EO_LANGUAGE);
             parent.refresh();
         });
     }
@@ -53,12 +54,12 @@ public class MenuOptionsLangues extends AbstractGroup {
         final String language = manager.conf.getLanguage();
 
         fr.refresh(color);
-        fr.setDisable(!"fr".equals(language));
+        fr.setDisable(!FR_LANGUAGE.equals(language));
 
         en.refresh(color);
-        en.setDisable(!"en".equals(language));
+        en.setDisable(!EN_LANGUAGE.equals(language));
 
         eo.refresh(color);
-        eo.setDisable(!"eo".equals(language));
+        eo.setDisable(!EO_LANGUAGE.equals(language));
     }
 }

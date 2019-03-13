@@ -1,0 +1,33 @@
+tourne_52-55.png
+size: 1572, 1386
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame0052
+  rotate: false
+  xy: 0, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0053
+  rotate: false
+  xy: 786, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0054
+  rotate: false
+  xy: 0, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0055
+  rotate: false
+  xy: 786, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1

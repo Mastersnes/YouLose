@@ -26,7 +26,6 @@ public class MenuOptions extends AbstractGroup {
         super();
         this.parent = parent;
         setVisible(false);
-        manager.setContext("menu");
 
         final BitmapFont font = manager.getFont("sector.ttf", new FontParameter(21, Color.valueOf("#AEA19A")));
 

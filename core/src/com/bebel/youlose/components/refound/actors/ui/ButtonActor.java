@@ -3,10 +3,9 @@ package com.bebel.youlose.components.refound.actors.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
+import com.bebel.youlose.components.refound.draw.Sprite;
 import com.bebel.youlose.components.refound.event.ClickCatcher;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
@@ -20,11 +19,14 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
 
     private final ImageActor button;
     private ImageActor hover;
-    private String upImage; private TextureRegionDrawable up;
-    private String downImage; private TextureRegionDrawable down;
+    private String upImage;
+    private Sprite up;
+    private String downImage;
+    private Sprite down;
 
     private boolean disable = false;
-    private String disabledImage; private Drawable disabled;
+    private String disabledImage;
+    private Sprite disabled;
 
     public ButtonActor(final String image) {
         super();
@@ -56,13 +58,13 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
 
     public ButtonActor addDisable(final String image) {
         disabledImage = image;
-        disabled = manager.getDrawable(image, getColor());
+        disabled = manager.getSprite(image, getColor());
         return this;
     }
 
     public ButtonActor addDown(final String image) {
         downImage = image;
-        down = manager.getDrawable(image);
+        down = manager.getSprite(image, getColor());
         return this;
     }
 
@@ -78,13 +80,15 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
             hover.refresh(color);
         }
 
-        up = manager.getDrawable(upImage);
+        up = manager.getSprite(upImage, color);
         if (downImage != null)
-            down = manager.getDrawable(downImage);
+            down = manager.getSprite(downImage, color);
         if (disabledImage != null)
-            disabled = manager.getDrawable(disabledImage, getColor());
-        else
-            disabled = up.tint(Color.GRAY);
+            disabled = manager.getSprite(disabledImage, color);
+        else {
+            disabled = new Sprite(up);
+            disabled.setColor(Color.GRAY);
+        }
 
         button.refresh(color);
 
@@ -92,19 +96,19 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
     }
 
     private void refreshButton() {
-        Drawable drawable;
+        Sprite sprite;
         if (hover != null) hover.setVisible(true);
 
         if (disable) {
             if (hover != null) hover.setVisible(false);
-            drawable = disabled;
+            sprite = disabled;
         }
         else if (clickCatcher.isPressed() && down != null) {
             if (hover != null) hover.setVisible(false);
-            drawable = down;
-        } else drawable = up;
+            sprite = down;
+        } else sprite = up;
 
-        button.setImage(drawable);
+        button.setImage(sprite);
         setBounds(getX(), getY(), button.getWidth(), button.getHeight());
     }
 

@@ -23,7 +23,6 @@ public class MenuScan extends AbstractGroup {
     public MenuScan(final MenuScreen parent) {
         super();
         this.parent = parent;
-        manager.setContext("menu");
 
         putActor(carre = new ImageActor("vitre/atlas:carre"));
         setBounds(0, 0, carre.getWidth(), carre.getHeight());

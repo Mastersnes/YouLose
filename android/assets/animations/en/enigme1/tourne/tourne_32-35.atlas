@@ -1,0 +1,33 @@
+tourne_32-35.png
+size: 1572, 1386
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame0032
+  rotate: false
+  xy: 0, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0033
+  rotate: false
+  xy: 786, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0034
+  rotate: false
+  xy: 0, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0035
+  rotate: false
+  xy: 786, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1

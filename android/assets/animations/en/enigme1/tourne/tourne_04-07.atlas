@@ -1,0 +1,33 @@
+tourne_04-07.png
+size: 1572, 1386
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame0004
+  rotate: false
+  xy: 0, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0005
+  rotate: false
+  xy: 786, 0
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0006
+  rotate: false
+  xy: 0, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1
+frame0007
+  rotate: false
+  xy: 786, 693
+  size: 786, 693
+  orig: 786, 693
+  offset: 0, 0
+  index: -1

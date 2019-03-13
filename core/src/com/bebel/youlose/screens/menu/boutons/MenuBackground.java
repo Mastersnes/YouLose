@@ -1,6 +1,5 @@
 package com.bebel.youlose.screens.menu.boutons;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.components.actions.FinishAnimAction;
@@ -10,6 +9,7 @@ import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 
+import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.badlogic.gdx.math.Interpolation.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.bebel.youlose.components.actions.Actions.*;
@@ -27,29 +27,16 @@ public class MenuBackground extends AbstractGroup {
 
     public MenuBackground() {
         super();
-        manager.setContext("menu");
         setTouchable(Touchable.disabled);
         bas = putActor(new ImageActor("background/atlas:porte_bas"));
 
-        haut = putActor(new ImageActor("background/atlas:porte_haut"));
-        haut.move(0, 0);
+        haut = putActor(new ImageActor("background/atlas:porte_haut"))
+                .move(0, 0);
 
-        putActor(animationCote = new AnimatedActor(Animation.PlayMode.NORMAL,
-                "slots/cote/animation_0-4.atlas", "slots/cote/animation_5-8.atlas",
-                "slots/cote/animation_9-12.atlas", "slots/cote/animation_13-16.atlas",
-                "slots/cote/animation_17-20.atlas", "slots/cote/animation_21-24.atlas",
-                "slots/cote/animation_25-28.atlas", "slots/cote/animation_29-32.atlas",
-                "slots/cote/animation_33-36.atlas", "slots/cote/animation_37-40.atlas",
-                "slots/cote/animation_41-45.atlas")
-        ).move(0, 0);
-        putActor(animationCentre = new AnimatedActor(Animation.PlayMode.NORMAL,
-                "slots/centre/animation_0-4.atlas", "slots/centre/animation_5-8.atlas",
-                "slots/centre/animation_9-12.atlas", "slots/centre/animation_13-16.atlas",
-                "slots/centre/animation_17-20.atlas", "slots/centre/animation_21-24.atlas",
-                "slots/centre/animation_25-28.atlas", "slots/centre/animation_29-32.atlas",
-                "slots/centre/animation_33-36.atlas", "slots/centre/animation_37-40.atlas",
-                "slots/centre/animation_41-45.atlas")
-        ).move(0, 0);
+        putActor(animationCote = new AnimatedActor("cote/", NORMAL, 24f))
+                .move(0, 0);
+        putActor(animationCentre = new AnimatedActor("centre/", NORMAL, 24f))
+                .move(0, 0);
         close = true;
     }
 

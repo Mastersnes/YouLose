@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.utils.ActorUtils;
 import com.bebel.youlose.utils.IActor;
@@ -13,7 +14,12 @@ import com.bebel.youlose.utils.IActor;
  */
 public class SliderActor extends Slider implements IActor {
     public SliderActor(final String slide, final String cursor) {
-        this(new SliderStyle(AssetsManager.getInstance().getDrawable(slide), AssetsManager.getInstance().getDrawable(cursor)));
+        this(
+                new SliderStyle(
+                        new SpriteDrawable(AssetsManager.getInstance().getSprite(slide, Color.WHITE)),
+                        new SpriteDrawable(AssetsManager.getInstance().getSprite(cursor, Color.WHITE))
+                )
+        );
     }
 
     public SliderActor(final SliderStyle style) {

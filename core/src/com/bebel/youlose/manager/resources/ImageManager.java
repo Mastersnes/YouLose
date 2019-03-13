@@ -1,8 +1,6 @@
 package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Manager de texture
@@ -18,16 +16,6 @@ public class ImageManager extends AbstractSubManager<Texture> {
         path.append(language).append("/");
         if (context != null) path.append(context).append("/");
         return path.toString();
-    }
-
-    /**
-     * Renvoi la texture demandée
-     *
-     * @param name
-     * @return
-     */
-    public TextureRegionDrawable getDrawable(final String name) {
-        return new TextureRegionDrawable(get(name));
     }
 
     @Override

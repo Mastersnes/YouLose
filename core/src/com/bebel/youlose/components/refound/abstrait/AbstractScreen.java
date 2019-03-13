@@ -12,6 +12,9 @@ import com.bebel.youlose.components.interfaces.Eventable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.manager.resources.AssetsManager;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 
@@ -31,8 +34,12 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable 
     }
 
     public void createStage() {
+        manager.finishLoading(context());
         create();
         makeEvents();
+        for (final String nextScreen : nextScreens()) {
+            manager.loadContext(nextScreen, false);
+        }
     }
     public abstract void create();
 
@@ -87,5 +94,17 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable 
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        manager.unloadContext(context());
+        Gdx.app.debug(context(), "DISPOSE");
+    }
+
+    protected abstract String context();
+    protected List<String> nextScreens() {
+        return Arrays.asList();
     }
 }

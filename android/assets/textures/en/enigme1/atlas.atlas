@@ -13,7 +13,7 @@ bloc_texte
 cadre_bois
   rotate: false
   xy: 0, 114
-  size: 598, 565
+  size: 598, 564
   orig: 598, 565
   offset: 0, 0
   index: -1

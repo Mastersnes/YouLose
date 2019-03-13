@@ -32,7 +32,6 @@ public class MenuVitre extends AbstractGroup {
         super();
         this.parent = parent;
         setVisible(false);
-        manager.setContext("menu");
 
         putActor(led = new ImageActor("vitre/atlas:led"));
         led.move(led.centerX(), 206);

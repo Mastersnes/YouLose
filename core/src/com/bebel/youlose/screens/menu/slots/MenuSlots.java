@@ -19,7 +19,6 @@ public class MenuSlots extends AbstractGroup {
         super();
         this.parent = parent;
         setVisible(false);
-        manager.setContext("menu");
 
         slotGauche = new SlotActor("slots/slots:slot_gauche", SaveManager.getInstance().getGauche());
         slotCentre = new SlotActor("slots/slots:slot_milieu", SaveManager.getInstance().getCentre());

@@ -26,11 +26,18 @@ public class ActorUtils {
     }
     public synchronized static <T extends Actor> T move(final T actor, final float x, final float y, final int align) {
         float x2 = x; float y2 = y;
-        float parentWidth = actor.getParent() != null ? actor.getParent().getWidth() : WORLD_WIDTH;
-        float parentHeight = actor.getParent() != null ? actor.getParent().getHeight() : WORLD_HEIGHT;
+        float parentW = WORLD_WIDTH, parentH = WORLD_HEIGHT;
+        final Group parent = actor.getParent();
+        if (parent != null) {
+            parentW = parent.getWidth() * parent.getScaleX();
+            parentH = parent.getHeight() * parent.getScaleY();
+        }
 
-        if ((align & right) != 0) x2 = parentWidth - actor.getWidth() - x;
-        if ((align & top) != 0) y2 = parentHeight - actor.getHeight() - y;
+        float actorW = actor.getWidth() * actor.getScaleX();
+        float actorH = actor.getHeight() * actor.getScaleY();
+
+        if ((align & right) != 0) x2 = parentW - actorW - x;
+        if ((align & top) != 0) y2 = parentH - actorH - y;
         actor.setPosition(x2, y2);
 
         return actor;
@@ -84,5 +91,11 @@ public class ActorUtils {
     public synchronized static float centerY(final Actor actor) {
         final float ph = actor.getParent() != null ? actor.getParent().getHeight() : WORLD_HEIGHT;
         return ph / 2 - actor.getHeight() / 2;
+    }
+
+    public synchronized static void hide(final Actor... actors) {
+        for (final Actor actor : actors) {
+            actor.setVisible(false);
+        }
     }
 }

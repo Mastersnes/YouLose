@@ -11,26 +11,36 @@ import com.bebel.youlose.components.refound.abstrait.AbstractActor;
  * Acteur effectuant une animation
  */
 public class AnimatedActor extends AbstractActor {
-    private float stateTime;
+    private float speed, stateTime;
     private final Animation<TextureRegion> animation;
     private boolean flipH, flipV;
     private boolean working; private boolean finish;
 
-    public AnimatedActor(final Animation.PlayMode playMode, final String... image) {
+    public AnimatedActor(final String key, final Animation.PlayMode playMode, final float fps) {
         super();
         setTouchable(Touchable.disabled);
-        animation = manager.getAnimation(playMode, image);
+        animation = manager.getAnimation(key, playMode, fps);
+        speed = 1f;
     }
 
-    public void play() {
-        play(false, false);
+    public void setSpeed(final float speed) {
+        this.speed = speed;
     }
-    public void play(final boolean flipH, final boolean flipV) {
+
+    public AnimatedActor play() {
+        return play(false, false);
+    }
+
+    public AnimatedActor play(final boolean flipH, final boolean flipV) {
         stateTime = 0f;
         working = true; finish = false;
         this.flipH = flipH; this.flipV = flipV;
+        return this;
     }
+
+    @Override
     public void stop() {
+        super.stop();
         stateTime = 0f;
         working = false; finish = true;
         flipH = false; flipV = false;
@@ -41,7 +51,7 @@ public class AnimatedActor extends AbstractActor {
         super.draw(batch, parentAlpha);
 
         if (working) {
-            stateTime += Gdx.graphics.getDeltaTime();
+            stateTime += speed * Gdx.graphics.getDeltaTime();
             final TextureRegion frame = animation.getKeyFrame(stateTime);
             frame.flip(flipH, flipV);
             batch.draw(frame, getX(), getY());
