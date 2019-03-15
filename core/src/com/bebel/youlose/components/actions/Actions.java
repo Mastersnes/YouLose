@@ -1,5 +1,6 @@
 package com.bebel.youlose.components.actions;
 
+import com.bebel.youlose.components.runnable.FinishRunnable;
 import com.bebel.youlose.components.refound.actors.AnimatedActor;
 
 /**

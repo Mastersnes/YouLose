@@ -38,7 +38,7 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable 
         create();
         makeEvents();
         for (final String nextScreen : nextScreens()) {
-            manager.loadContext(nextScreen, false);
+            manager.loadContext(nextScreen);
         }
     }
     public abstract void create();

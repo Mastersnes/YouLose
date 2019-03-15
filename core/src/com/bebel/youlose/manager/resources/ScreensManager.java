@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
 import com.bebel.youlose.screens.enigme1.Enigme1;
+import com.bebel.youlose.screens.menu.MenuScreen;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class ScreensManager {
     private Map<String, Class<? extends AbstractScreen>> types = new HashMap<>();
 
     private ScreensManager() {
+        types.put(MenuScreen.NAME, MenuScreen.class);
         types.put(Enigme1.NAME, Enigme1.class);
     }
 

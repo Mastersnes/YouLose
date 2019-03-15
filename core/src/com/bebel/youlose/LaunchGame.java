@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Logger;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.manager.resources.ScreensManager;
+import com.bebel.youlose.screens.enigme1.Enigme1;
 import com.bebel.youlose.screens.menu.MenuScreen;
+import com.sun.corba.se.impl.legacy.connection.EndPointInfoImpl;
 
 /**
  * Main
@@ -20,8 +22,6 @@ public class LaunchGame extends Game {
 		Gdx.app.setLogLevel(Logger.DEBUG);
 		batch = new SpriteBatch();
 		manager = AssetsManager.getInstance();
-		manager.loadContext(MenuScreen.NAME, false);
-//		Gdx.graphics.setContinuousRendering(false);
 		ScreensManager.init(this);
 		ScreensManager.getInstance().switchTo(MenuScreen.class);
 	}

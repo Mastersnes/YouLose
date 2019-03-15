@@ -11,10 +11,12 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.bebel.youlose.components.refound.FontParameter;
 import com.bebel.youlose.components.refound.draw.Sprite;
+import org.lwjgl.system.CallbackI;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Manager de ressource
@@ -25,7 +27,7 @@ public class AssetsManager extends AssetManager {
     private static AssetsManager instance;
 
     public String context;
-    private List<String> loaded = new ArrayList<>();
+    private Map<String, List<String>> loaded = new HashMap<>();
 
     public TextureManager textures;
     public AnimationManager animations;
@@ -51,7 +53,7 @@ public class AssetsManager extends AssetManager {
         musiques = new MusiqueManager(this);
         fonts = new FontsManager(this);
 
-        loadContext(GENERAL_CONTEXT, true);
+        finishLoading(GENERAL_CONTEXT);
     }
 
     public static synchronized AssetsManager getInstance() {
@@ -68,7 +70,8 @@ public class AssetsManager extends AssetManager {
      */
     public void reload(final String newLangage) {
         langue.load(newLangage);
-        loadContext(context, true);
+        loadContext(context);
+        finishLoading(context);
     }
 
     /**
@@ -76,7 +79,10 @@ public class AssetsManager extends AssetManager {
      *
      * @param context
      */
-    public void loadContext(final String context, boolean synchrone) {
+    public void loadContext(final String context) {
+        if (!loaded.containsKey(context))
+            loaded.put(context, new ArrayList<>());
+
         final String oldContext = this.context;
         this.context = context;
         images.load();
@@ -86,11 +92,12 @@ public class AssetsManager extends AssetManager {
         musiques.load();
         fonts.load();
         this.context = oldContext;
-
-        if (synchrone) finishLoading(context);
     }
 
     public void finishLoading(final String context) {
+        if (!loaded.containsKey(context))
+            loadContext(context);
+
         this.context = context;
         super.finishLoading();
     }
@@ -109,14 +116,17 @@ public class AssetsManager extends AssetManager {
         if (fileName.contains(GENERAL_PATH) || "i18n/i18n".equals(fileName))
             Gdx.app.debug("AssetsManager", "Do not cache : " + fileName);
         else
-            loaded.add(fileName);
+            loaded.get(context).add(fileName);
     }
 
     @Override
     public synchronized void unload(String fileName) {
         if (isLoaded(fileName)) {
             super.unload(fileName);
-            loaded.remove(fileName);
+            for (final List<String> list : loaded.values()) {
+                list.remove(fileName);
+                break;
+            }
         }
     }
 
@@ -124,19 +134,17 @@ public class AssetsManager extends AssetManager {
      * Permet de tout decharger
      */
     public synchronized void unloadAll() {
-        unloadContext(null);
+        for (final String context : loaded.keySet()) {
+            unloadContext(context);
+        }
     }
     public synchronized void unloadContext(final String context) {
-        String fileName;
-        for (final Iterator<String> it = loaded.iterator(); it.hasNext(); ) {
-            fileName = it.next();
+        for (final String fileName : loaded.get(context)) {
             if (isLoaded(fileName)) {
-                if (context == null || fileName.contains("/" + context + "/")) {
-                    super.unload(fileName);
-                    it.remove();
-                }
+                super.unload(fileName);
             }
         }
+        loaded.remove(context);
     }
 
     //--Utils
@@ -164,6 +172,8 @@ public class AssetsManager extends AssetManager {
         super.dispose();
         images.dispose();
         textures.dispose();
+        animations.dispose();
+        musiques.dispose();
         sounds.dispose();
         fonts.dispose();
         unloadAll();

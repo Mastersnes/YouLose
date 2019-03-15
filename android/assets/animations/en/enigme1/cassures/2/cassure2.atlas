@@ -1,0 +1,33 @@
+cassure2.png
+size: 1064, 268
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame0000
+  rotate: false
+  xy: 0, 0
+  size: 266, 268
+  orig: 266, 268
+  offset: 0, 0
+  index: -1
+frame0001
+  rotate: false
+  xy: 266, 0
+  size: 266, 268
+  orig: 266, 268
+  offset: 0, 0
+  index: -1
+frame0002
+  rotate: false
+  xy: 532, 0
+  size: 266, 268
+  orig: 266, 268
+  offset: 0, 0
+  index: -1
+frame0003
+  rotate: false
+  xy: 798, 0
+  size: 266, 268
+  orig: 266, 268
+  offset: 0, 0
+  index: -1

@@ -6,11 +6,20 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.refound.abstrait.AbstractActor;
+import com.bebel.youlose.components.runnable.OneTimeRunnable;
+import com.bebel.youlose.utils.IActor;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.bebel.youlose.utils.RunnableUtils.oneTime;
 
 /**
  * Acteur effectuant une animation
  */
 public class AnimatedActor extends AbstractActor {
+    private Map<Integer, OneTimeRunnable> runByFrame = new HashMap<>();
+
     private float speed, stateTime;
     private final Animation<TextureRegion> animation;
     private boolean flipH, flipV;
@@ -52,12 +61,16 @@ public class AnimatedActor extends AbstractActor {
 
         if (working) {
             stateTime += speed * Gdx.graphics.getDeltaTime();
+            final int frameIndex = animation.getKeyFrameIndex(stateTime);
             final TextureRegion frame = animation.getKeyFrame(stateTime);
             frame.flip(flipH, flipV);
             batch.draw(frame, getX(), getY());
             frame.flip(flipH, flipV);
 
             finish = animation.isAnimationFinished(stateTime);
+
+            final OneTimeRunnable run = runByFrame.get(frameIndex);
+            if (run != null) run.run();
         }
     }
 
@@ -66,5 +79,9 @@ public class AnimatedActor extends AbstractActor {
     }
     public boolean isFinish() {
         return finish;
+    }
+
+    public void onFrame(final int frame, final Runnable runnable) {
+        runByFrame.put(frame, oneTime(runnable));
     }
 }

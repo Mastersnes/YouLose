@@ -19,10 +19,8 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
 
     private final ImageActor button;
     private ImageActor hover;
-    private String upImage;
-    private Sprite up;
-    private String downImage;
-    private Sprite down;
+    private String upImage; private Sprite up;
+    private String downImage; private Sprite down;
 
     private boolean disable = false;
     private String disabledImage;

@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -51,6 +53,10 @@ public class SaveManager {
 
     public SaveInstance getCurrent() {
         return current;
+    }
+
+    public List<SaveInstance> getSaves() {
+        return Arrays.asList(gauche, centre, droite);
     }
 
     public enum SaveEnum {

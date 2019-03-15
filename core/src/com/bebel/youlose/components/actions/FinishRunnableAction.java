@@ -2,6 +2,7 @@ package com.bebel.youlose.components.actions;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.utils.Pool;
+import com.bebel.youlose.components.runnable.FinishRunnable;
 
 /**
  * Action lancant un runnable et attendant sa fin

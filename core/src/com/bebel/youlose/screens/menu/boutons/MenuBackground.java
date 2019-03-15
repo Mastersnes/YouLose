@@ -3,11 +3,12 @@ package com.bebel.youlose.screens.menu.boutons;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.bebel.youlose.components.actions.FinishAnimAction;
-import com.bebel.youlose.components.actions.FinishRunnable;
+import com.bebel.youlose.components.runnable.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
+import com.bebel.youlose.utils.IActor;
 
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.badlogic.gdx.math.Interpolation.*;

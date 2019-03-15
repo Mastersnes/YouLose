@@ -44,6 +44,11 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void create() {
+        final List<SaveInstance> saves = SaveManager.getInstance().getSaves();
+        for (final SaveInstance save : saves) {
+            manager.loadContext(save.getEmplacement());
+        }
+
         putActor(options = new MenuOptions(this));
         putActor(slots = new MenuSlots(this));
         putActor(background = new MenuBackground());
@@ -131,6 +136,6 @@ public class MenuScreen extends AbstractScreen {
     }
     @Override
     protected List<String> nextScreens() {
-        return Arrays.asList(Enigme1.NAME);
+        return Arrays.asList();
     }
 }

@@ -2,7 +2,7 @@ package com.bebel.youlose.screens.menu.vitre;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.bebel.youlose.components.actions.FinishRunnable;
+import com.bebel.youlose.components.runnable.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;

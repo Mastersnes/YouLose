@@ -1,6 +1,7 @@
-package com.bebel.youlose.components.actions;
+package com.bebel.youlose.components.runnable;
 
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.bebel.youlose.components.actions.Actions;
 
 /**
  * Runnable avec condition de fin

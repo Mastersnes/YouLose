@@ -154,7 +154,7 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     @Override
     public void drawDebug(ShapeRenderer shapes) {
         super.drawDebug(shapes);
-        if (hitbox != null) hitbox.draw(shapes, getX(), getY());
+        if (getDebug() && hitbox != null) hitbox.draw(shapes, getX(), getY());
     }
 
     public void addDebug(final Actor... actors) {
@@ -164,7 +164,7 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
     }
 
     private void actDebug() {
-        if (!getDebug() || debugList.isEmpty()) return;
+        if (debugList.isEmpty()) return;
         float debugX = 0, debugY = 0, debugR = 0;
         if (Gdx.input.isKeyPressed(UP)) debugY = 1;
         else if (Gdx.input.isKeyPressed(LEFT)) debugX = -1;
