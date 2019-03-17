@@ -1,14 +1,12 @@
 package com.bebel.youlose.screens.enigme1;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
-
-import java.util.Arrays;
-import java.util.List;
+import com.bebel.youlose.manager.resources.ScreensManager;
+import com.bebel.youlose.screens.menu.MenuScreen;
 
 import static com.badlogic.gdx.utils.Align.bottomRight;
 
@@ -32,23 +30,26 @@ public class Enigme1 extends AbstractScreen {
         putActor(feuilles = new FeuillesGroup(this));
 
         putActor(cadre = new ImageActor("atlas:cadre_bois"))
-                .move(220, 49)
                 .setTouchable(Touchable.disabled);
 
         feuilles.create(cadre);
 
-        putActor(globe = new GlobeActor(this))
-                .move(114, -75);
+        putActor(globe = new GlobeActor(this));
 
         putActor(quitter = new ButtonActor("general/quitter.png"))
             .scaleBy(-0.5f);
+    }
+
+    @Override
+    public void start() {
+        cadre.move(220, 49);
+        globe.move(114, -75);
         quitter.move(10, 10, bottomRight);
     }
 
     @Override
     public void makeEvents() {
-        quitter.onClick((x, y, button, pointer) -> Gdx.app.exit());
-        globe.makeEvents();
+        quitter.onClick((x, y, button, pointer) -> ScreensManager.getInstance().switchTo(MenuScreen.class));
     }
 
     @Override

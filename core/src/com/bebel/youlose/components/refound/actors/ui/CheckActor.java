@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Pools;
+import com.bebel.youlose.components.interfaces.Eventable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 
@@ -13,7 +14,7 @@ import static com.bebel.youlose.components.refound.event.ClickCatcher.onClick;
 /**
  * Acteur representant une checkbox
  */
-public class CheckActor extends AbstractGroup implements Refreshable {
+public class CheckActor extends AbstractGroup implements Refreshable, Eventable {
     private boolean isChecked;
     private float spacing = 10;
 
@@ -27,12 +28,12 @@ public class CheckActor extends AbstractGroup implements Refreshable {
         this.off = putActor(new ImageActor(offStr));
         this.on = putActor(new ImageActor(onStr));
 
-        makeEvents();
         setName(text);
         refresh(getColor());
     }
 
-    public void makeEvents() {
+    @Override
+    public void makeSpecificEvents() {
         onClick(this, (x, y, button, pointer) -> setChecked(!isChecked));
     }
 

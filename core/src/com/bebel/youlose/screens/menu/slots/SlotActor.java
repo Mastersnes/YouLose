@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.runnable.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.FontParameter;
@@ -26,10 +27,12 @@ import static com.bebel.youlose.manager.save.SaveManager.SaveEnum.DROITE;
 /**
  * Acteur representant un slot
  */
-public class SlotActor extends AbstractGroup {
+public class SlotActor extends AbstractGroup implements Startable {
+    private final MenuScreen parent;
     private final SaveInstance save;
 
     private final ImageActor slot;
+    private ImageActor noir;
     private ImageActor grille;
     private final TextActor texte;
 
@@ -37,7 +40,9 @@ public class SlotActor extends AbstractGroup {
     private boolean open;
 
 
-    public SlotActor(final String image, final SaveInstance save) {
+    public SlotActor(final MenuScreen parent, final String image, final SaveInstance save) {
+        this.parent = parent;
+
         this.save = save;
         setName(image);
         setTouchable(Touchable.enabled);
@@ -48,9 +53,18 @@ public class SlotActor extends AbstractGroup {
         putActor(slot);
 
         final BitmapFont font = manager.getFont("sector.ttf", new FontParameter(15, Color.valueOf("#AEA19A")));
-        putActor(texte = new TextActor("delete", font))
-            .move(texte.centerX(), -20)
+        putActor(texte = new TextActor("delete", font));
+    }
+
+    public void start() {
+        texte.move(texte.centerX(), -20)
             .setVisible(save.isUsed());
+
+        if (save.isUsed()) {
+            open = true;
+            grille.moveBy(-grille.getWidth() / 2, 0);
+            grille.setScaleX(0.5f);
+        }
     }
 
     @Override
@@ -59,24 +73,19 @@ public class SlotActor extends AbstractGroup {
         texte.setX(texte.centerX());
     }
 
-    public void addNoir(final MenuSlots menuSlots, final float x, final float y) {
-        menuSlots.putActor(new ImageActor("slots/slots:noir"))
-                .move(x, y);
+    public ImageActor getGrille() {
+        if (grille == null)
+            grille = new ImageActor("slots/slots:grille");
+        grille.debug();
+        return grille;
+    }
+    public ImageActor getNoir() {
+        if (noir == null)
+            noir = new ImageActor("slots/slots:noir");
+        return noir;
     }
 
-    public void addGrille(final MenuSlots menuSlots, final float x, final float y) {
-        menuSlots.putActor(grille = new ImageActor("slots/slots:grille"))
-                .move(x, y);
-        if (save.isUsed()) {
-            open = true;
-            grille.moveBy(-grille.getWidth() / 2, 0);
-            grille.setScaleX(0.5f);
-        }
-    }
-
-    public void makeEvents(final MenuScreen parent) {
-        super.makeEvents();
-
+    public void makeSpecificEvents() {
         texte.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -142,7 +151,7 @@ public class SlotActor extends AbstractGroup {
                                 ),
                                 finish(() -> {
                                     texte.setVisible(false);
-                                    open = true;
+                                    open = false;
                                 })
                         )
                 );

@@ -22,7 +22,6 @@ import java.util.List;
 
 import static com.badlogic.gdx.utils.Align.bottomRight;
 import static com.bebel.youlose.utils.ActorUtils.addActions;
-import static com.bebel.youlose.utils.ActorUtils.move;
 
 /**
  * Ecran de menu permettant de switcher vers les differents sous ecrans
@@ -51,22 +50,26 @@ public class MenuScreen extends AbstractScreen {
 
         putActor(options = new MenuOptions(this));
         putActor(slots = new MenuSlots(this));
-        putActor(background = new MenuBackground());
+        putActor(background = new MenuBackground(this));
         putActor(buttons = new MenuButtons(this));
         putActor(vitre = new MenuVitre(this));
 
         putActor(quitter = new ButtonActor("general/quitter.png"));
-        move(quitter, 10, 10, bottomRight);
+    }
+
+    @Override
+    public void show() {
+        super.show();
         switchTo(Screens.MENU);
     }
 
     @Override
-    public void makeEvents() {
-        buttons.makeEvents();
-        options.makeEvents();
-        vitre.makeEvents();
-        slots.makeEvents();
+    public void start() {
+        quitter.move(10, 10, bottomRight);
+    }
 
+    @Override
+    public void makeEvents() {
         quitter.onClick((x, y, button, pointer) -> Gdx.app.exit());
     }
 

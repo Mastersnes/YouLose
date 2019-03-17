@@ -56,7 +56,7 @@ public class AnimatedActor extends AbstractActor {
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void draw(final Batch batch, final float parentAlpha) {
         super.draw(batch, parentAlpha);
 
         if (working) {

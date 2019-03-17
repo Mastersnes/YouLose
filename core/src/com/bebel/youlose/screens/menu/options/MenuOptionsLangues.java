@@ -32,7 +32,7 @@ public class MenuOptionsLangues extends AbstractGroup {
         refresh(getColor());
     }
 
-    public void makeEvents() {
+    public void makeSpecificEvents() {
         fr.onClick((x, y, button, pointer) -> {
             manager.reload(FR_LANGUAGE);
             parent.refresh();

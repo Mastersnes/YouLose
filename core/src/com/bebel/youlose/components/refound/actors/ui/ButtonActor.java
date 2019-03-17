@@ -123,4 +123,8 @@ public class ButtonActor extends AbstractGroup implements Refreshable {
     public void setDisable(final boolean disable) {
         this.disable = disable;
     }
+
+    @Override
+    public void makeSpecificEvents() {
+    }
 }

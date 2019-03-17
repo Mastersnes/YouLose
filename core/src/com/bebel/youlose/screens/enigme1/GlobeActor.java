@@ -1,14 +1,13 @@
 package com.bebel.youlose.screens.enigme1;
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.utils.Pools;
+import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.event.ClickCatcher;
 import com.bebel.youlose.components.refound.shape.CircleShape;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.LOOP;
@@ -17,7 +16,7 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 /**
  * Acteur constituant le globe central
  */
-public class GlobeActor extends AbstractGroup {
+public class GlobeActor extends AbstractGroup implements Startable {
     private final Enigme1 parent;
     private AnimatedActor globe;
 
@@ -49,23 +48,19 @@ public class GlobeActor extends AbstractGroup {
             cassures.get(1).setVisible(false);
             globe.setVisible(false);
         });
-
-       currentCassure = 0;
-
         setHitbox(new CircleShape(406, 365, 143));
+    }
 
+    @Override
+    public void start() {
+        globe.setVisible(true);
+        for (final AnimatedActor cassure : cassures) {
+            cassure.stop();
+        }
+        currentCassure = 0;
         refresh(getColor());
     }
 
-    private AnimatedActor addCassure(final int index, final float fps, boolean debug) {
-        final AnimatedActor cassure = addCassure(index, fps);
-        if (debug) {
-            addDebug(cassure);
-            cassure.setVisible(true);
-            cassure.play();
-        }
-        return cassure;
-    }
     private AnimatedActor addCassure(final int index, final float fps) {
         final AnimatedActor cassure = new AnimatedActor("cassures/" + index + "/", NORMAL, fps);
         cassure.setVisible(false);
@@ -75,8 +70,7 @@ public class GlobeActor extends AbstractGroup {
     }
 
     @Override
-    public void makeEvents() {
-        super.makeEvents();
+    public void makeSpecificEvents() {
         ClickCatcher.onClick(this, (x, y, pointer, button) -> {
             if (currentCassure >= cassures.size()) return;
             cassures.get(currentCassure).setVisible(true);

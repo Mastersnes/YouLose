@@ -55,4 +55,8 @@ public class SlideTextActor extends AbstractGroup {
         label.refresh(color);
         label.setX(label.centerX());
     }
+
+    @Override
+    public void makeSpecificEvents() {
+    }
 }

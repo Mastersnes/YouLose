@@ -134,11 +134,13 @@ public class AssetsManager extends AssetManager {
      * Permet de tout decharger
      */
     public synchronized void unloadAll() {
-        for (final String context : loaded.keySet()) {
+        final ArrayList<String> contextes = new ArrayList<>(loaded.keySet());
+        for (final String context : contextes) {
             unloadContext(context);
         }
     }
     public synchronized void unloadContext(final String context) {
+        if (!loaded.containsKey(context)) return;
         for (final String fileName : loaded.get(context)) {
             if (isLoaded(fileName)) {
                 super.unload(fileName);

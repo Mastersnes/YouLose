@@ -59,7 +59,9 @@ public abstract class AbstractGroup extends Group implements Refreshable, Eventa
             if (actor instanceof Eventable)
                 ((Eventable) actor).makeEvents();
         }
+        makeSpecificEvents();
     }
+    public abstract void makeSpecificEvents();
 
     @Override
     public void act(float delta) {

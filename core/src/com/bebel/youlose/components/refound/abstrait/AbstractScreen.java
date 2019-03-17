@@ -2,7 +2,6 @@ package com.bebel.youlose.components.refound.abstrait;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.interfaces.Eventable;
 import com.bebel.youlose.components.interfaces.Refreshable;
+import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.manager.resources.AssetsManager;
 
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 /**
  * Template d'ecran
  */
-public abstract class AbstractScreen extends Stage implements Screen, Eventable {
+public abstract class AbstractScreen extends Stage implements Screen, Eventable, Startable {
     protected final LaunchGame parent;
     protected final AssetsManager manager;
 
@@ -36,7 +36,7 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable 
     public void createStage() {
         manager.finishLoading(context());
         create();
-        makeEvents();
+        makeScreenEvents();
         for (final String nextScreen : nextScreens()) {
             manager.loadContext(nextScreen);
         }
@@ -55,18 +55,29 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable 
         }
     }
 
-    @Override
-    public void makeEvents() {
+    public void makeScreenEvents() {
         for (final Actor actor : getActors()) {
             if (actor instanceof Eventable)
                 ((Eventable) actor).makeEvents();
         }
+        makeEvents();
     }
 
     //--Screen
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
+        startScreen();
+    }
+
+    /**
+     * Permer de (re)demarrer l'ecran
+     */
+    public void startScreen() {
+        start();
+        for (final Actor actor : getRoot().getChildren()) {
+            if (actor instanceof Startable) ((Startable) actor).start();
+        }
     }
 
     @Override
@@ -89,6 +100,10 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable 
 
     @Override
     public void resume() {
+    }
+
+    public void restart() {
+        startScreen();
     }
 
     @Override

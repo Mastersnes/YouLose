@@ -38,8 +38,6 @@ public class ScreensManager {
      * @param screenType
      */
     public void switchTo(final Class<? extends AbstractScreen> screenType) {
-        if (parent.getScreen() != null) parent.getScreen().dispose();
-
         AbstractScreen screen = screens.get(screenType);
         if (screen == null) {
             try {
@@ -56,5 +54,11 @@ public class ScreensManager {
         Class<? extends AbstractScreen> screenType = types.get(screenName);
         if (screenType == null) screenType = Enigme1.class;
         switchTo(screenType);
+    }
+
+    public void dispose() {
+        for (final AbstractScreen screen : screens.values()) {
+            screen.dispose();
+        }
     }
 }

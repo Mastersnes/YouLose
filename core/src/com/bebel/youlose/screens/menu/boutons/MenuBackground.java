@@ -8,37 +8,50 @@ import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
+import com.bebel.youlose.screens.menu.MenuScreen;
+import com.bebel.youlose.screens.menu.MenuSubscreen;
 import com.bebel.youlose.utils.IActor;
 
 import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 import static com.badlogic.gdx.math.Interpolation.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+import static com.badlogic.gdx.utils.Align.bottomLeft;
+import static com.badlogic.gdx.utils.Align.topLeft;
 import static com.bebel.youlose.components.actions.Actions.*;
 
 /**
  * Fond du menu composé des deux portions de la porte
  */
-public class MenuBackground extends AbstractGroup {
-    private final AnimatedActor animationCote;
-    private final AnimatedActor animationCentre;
+public class MenuBackground extends MenuSubscreen {
+    private AnimatedActor animationCote;
+    private AnimatedActor animationCentre;
 
     private ImageActor haut;
     private ImageActor bas;
     private boolean close;
 
-    public MenuBackground() {
-        super();
+    public MenuBackground(final MenuScreen parent) {
+        super(parent);
+    }
+
+    @Override
+    public void create() {
         setTouchable(Touchable.disabled);
         bas = putActor(new ImageActor("background/atlas:porte_bas"));
+        haut = putActor(new ImageActor("background/atlas:porte_haut"));
 
-        haut = putActor(new ImageActor("background/atlas:porte_haut"))
-                .move(0, 0);
+        putActor(animationCote = new AnimatedActor("cote/", NORMAL, 24f));
+        putActor(animationCentre = new AnimatedActor("centre/", NORMAL, 24f));
+    }
 
-        putActor(animationCote = new AnimatedActor("cote/", NORMAL, 24f))
-                .move(0, 0);
-        putActor(animationCentre = new AnimatedActor("centre/", NORMAL, 24f))
-                .move(0, 0);
+
+    @Override
+    public void startSubscreen() {
         close = true;
+        bas.move(0, 0, bottomLeft);
+        haut.move(0, 0, topLeft);
+        animationCote.move(0, 0, topLeft);
+        animationCentre.move(0, 0, topLeft);
     }
 
     /**
@@ -106,5 +119,9 @@ public class MenuBackground extends AbstractGroup {
 
     public boolean isClose() {
         return close;
+    }
+
+    @Override
+    public void makeSpecificEvents() {
     }
 }

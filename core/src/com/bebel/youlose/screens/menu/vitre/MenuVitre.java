@@ -7,6 +7,7 @@ import com.bebel.youlose.components.actions.FinishRunnableAction;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.screens.menu.MenuScreen;
+import com.bebel.youlose.screens.menu.MenuSubscreen;
 
 import static com.badlogic.gdx.math.Interpolation.elastic;
 import static com.badlogic.gdx.math.Interpolation.linear;
@@ -16,37 +17,41 @@ import static com.bebel.youlose.components.actions.Actions.finishRun;
 /**
  * Ecran titre composé d'une vitre, du nom du jeu et d'un scan
  */
-public class MenuVitre extends AbstractGroup {
-    private final MenuScreen parent;
-
-    private final ImageActor led;
-    private final ImageActor vitre;
-    private final ImageActor texte;
-    private final MenuScan carre;
+public class MenuVitre extends MenuSubscreen {
+    private ImageActor led;
+    private ImageActor vitre;
+    private ImageActor texte;
+    private MenuScan carre;
 
     private FinishRunnable clignotteAction;
     private int delayClignottement;
     private boolean stopClignotte;
 
     public MenuVitre(final MenuScreen parent) {
-        super();
-        this.parent = parent;
-        setVisible(false);
+        super(parent);
+    }
 
+    @Override
+    public void create() {
         putActor(led = new ImageActor("vitre/atlas:led"));
+        putActor(vitre = new ImageActor("vitre/atlas:vitre"));
+        putActor(texte = new ImageActor("vitre/atlas:youlose"));
+        putActor(carre = new MenuScan(parent));
+    }
+
+    @Override
+    public void startSubscreen() {
+        setVisible(false);
         led.move(led.centerX(), 206);
         led.setAlpha(0);
 
-        putActor(vitre = new ImageActor("vitre/atlas:vitre"));
         vitre.move(vitre.centerX(), 0);
 
-        putActor(texte = new ImageActor("vitre/atlas:youlose"));
         texte.setPosition(led.getX(), led.getY());
         texte.setAlpha(0);
 
-        putActor(carre = new MenuScan(parent))
-        .move(588, 427);
         carre.setAlpha(0);
+        carre.move(588, 427);
 
         setY(getHeight());
         refresh(getColor());
@@ -173,5 +178,9 @@ public class MenuVitre extends AbstractGroup {
                 );
             }
         });
+    }
+
+    @Override
+    public void makeSpecificEvents() {
     }
 }
