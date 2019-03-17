@@ -33,7 +33,7 @@ public class MenuOptions extends MenuSubscreen {
 
         addActor(new ImageActor("options/other:fond"));
 
-        langues = putActor(new MenuOptionsLangues(parent));
+        langues = putActor(new MenuOptionsLangues(screen));
         musiques = putActor(new SlideTextActor(font, "musiques",
                 "options/other:slide", "options/other:pointer"));
 
@@ -72,7 +72,7 @@ public class MenuOptions extends MenuSubscreen {
 
         valider.onClick((x, y, button, pointer) -> {
             manager.conf.save();
-            parent.switchTo(MenuScreen.Screens.MENU);
+            screen.switchTo(MenuScreen.Screens.MENU);
         });
     }
 

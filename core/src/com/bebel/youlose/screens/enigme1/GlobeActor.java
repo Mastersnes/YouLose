@@ -1,5 +1,6 @@
 package com.bebel.youlose.screens.enigme1;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;

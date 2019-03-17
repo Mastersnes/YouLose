@@ -28,7 +28,8 @@ import static com.bebel.youlose.manager.save.SaveManager.SaveEnum.DROITE;
  * Acteur representant un slot
  */
 public class SlotActor extends AbstractGroup implements Startable {
-    private final MenuScreen parent;
+    private final MenuScreen menuScreen;
+    private final MenuSlots menuSlots;
     private final SaveInstance save;
 
     private final ImageActor slot;
@@ -40,8 +41,9 @@ public class SlotActor extends AbstractGroup implements Startable {
     private boolean open;
 
 
-    public SlotActor(final MenuScreen parent, final String image, final SaveInstance save) {
-        this.parent = parent;
+    public SlotActor(final MenuSlots parent, final String image, final SaveInstance save) {
+        this.menuScreen = parent.getScreen();
+        this.menuSlots = parent;
 
         this.save = save;
         setName(image);
@@ -76,7 +78,6 @@ public class SlotActor extends AbstractGroup implements Startable {
     public ImageActor getGrille() {
         if (grille == null)
             grille = new ImageActor("slots/slots:grille");
-        grille.debug();
         return grille;
     }
     public ImageActor getNoir() {
@@ -100,14 +101,14 @@ public class SlotActor extends AbstractGroup implements Startable {
         slot.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                AnimatedActor animation = parent.getBackground().getAnimationCote();
+                AnimatedActor animation = menuScreen.getBackground().getAnimationCote();
                 if (save.getType() == CENTRE)
-                    animation = parent.getBackground().getAnimationCentre();
+                    animation = menuScreen.getBackground().getAnimationCentre();
 
-                addBlockedActions(
+                menuSlots.addBlockedActions(
                         open(),
-                        parent.getBackground().play(animation, save.getType() == DROITE),
-                        run(() -> parent.launchGame(save))
+                        menuScreen.getBackground().play(animation, save.getType() == DROITE),
+                        run(() -> menuScreen.launchGame(save))
                 );
                 return super.touchDown(event, x, y, pointer, button);
             }

@@ -74,6 +74,7 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable,
      * Permer de (re)demarrer l'ecran
      */
     public void startScreen() {
+        manager.finishLoading(context());
         start();
         for (final Actor actor : getRoot().getChildren()) {
             if (actor instanceof Startable) ((Startable) actor).start();

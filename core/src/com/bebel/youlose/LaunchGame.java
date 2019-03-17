@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Logger;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.manager.resources.ScreensManager;
 import com.bebel.youlose.screens.enigme1.Enigme1;
+import com.bebel.youlose.screens.menu.MenuScreen;
 
 /**
  * Main
@@ -21,7 +22,7 @@ public class LaunchGame extends Game {
 		batch = new SpriteBatch();
 		manager = AssetsManager.getInstance();
 		ScreensManager.init(this);
-		ScreensManager.getInstance().switchTo(Enigme1.class);
+		ScreensManager.getInstance().switchTo(MenuScreen.class);
 	}
 
 	@Override

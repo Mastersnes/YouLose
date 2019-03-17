@@ -36,7 +36,7 @@ public class MenuVitre extends MenuSubscreen {
         putActor(led = new ImageActor("vitre/atlas:led"));
         putActor(vitre = new ImageActor("vitre/atlas:vitre"));
         putActor(texte = new ImageActor("vitre/atlas:youlose"));
-        putActor(carre = new MenuScan(parent));
+        putActor(carre = new MenuScan(screen));
     }
 
     @Override

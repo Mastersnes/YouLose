@@ -100,16 +100,16 @@ public class MenuButtons extends MenuSubscreen {
     public void makeSpecificEvents() {
         play.onClick((x, y, pointer, button) -> {
             options.stop(); credits.stop();
-            parent.switchTo(MenuScreen.Screens.PLAY);
+            screen.switchTo(MenuScreen.Screens.PLAY);
         });
         options.onClick((x, y, pointer, button) -> {
             play.stop(); credits.stop();
-            parent.switchTo(MenuScreen.Screens.OPTIONS);
+            screen.switchTo(MenuScreen.Screens.OPTIONS);
         });
         credits.onClick((x, y, pointer, button) -> {
             play.stop(); options.stop();
-            parent.switchTo(MenuScreen.Screens.PLAY);
-            parent.switchTo(MenuScreen.Screens.SLOT);
+            screen.switchTo(MenuScreen.Screens.PLAY);
+            screen.switchTo(MenuScreen.Screens.SLOT);
         });
     }
 }

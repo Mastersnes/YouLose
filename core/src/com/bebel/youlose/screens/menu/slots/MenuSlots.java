@@ -1,5 +1,7 @@
 package com.bebel.youlose.screens.menu.slots;
 
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.manager.save.SaveManager;
 import com.bebel.youlose.screens.menu.MenuScreen;
@@ -21,9 +23,9 @@ public class MenuSlots extends MenuSubscreen {
     public void create() {
         setVisible(false);
 
-        slotGauche = new SlotActor(parent, "slots/slots:slot_gauche", SaveManager.getInstance().getGauche());
-        slotCentre = new SlotActor(parent, "slots/slots:slot_milieu", SaveManager.getInstance().getCentre());
-        slotDroite = new SlotActor(parent, "slots/slots:slot_droite", SaveManager.getInstance().getDroite());
+        slotGauche = new SlotActor(this, "slots/slots:slot_gauche", SaveManager.getInstance().getGauche());
+        slotCentre = new SlotActor(this, "slots/slots:slot_milieu", SaveManager.getInstance().getCentre());
+        slotDroite = new SlotActor(this, "slots/slots:slot_droite", SaveManager.getInstance().getDroite());
 
         addActor(slotGauche.getNoir());
         addActor(slotGauche.getGrille());
@@ -60,5 +62,13 @@ public class MenuSlots extends MenuSubscreen {
 
     @Override
     public void makeSpecificEvents() {
+    }
+
+    @Override
+    public void setTouchable(Touchable touchable) {
+        super.setTouchable(touchable);
+        if (slotGauche != null) slotGauche.setTouchable(touchable);
+        if (slotCentre != null) slotCentre.setTouchable(touchable);
+        if (slotDroite != null) slotDroite.setTouchable(touchable);
     }
 }

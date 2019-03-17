@@ -8,10 +8,10 @@ import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
  * Sous écran du menu
  */
 public abstract class MenuSubscreen extends AbstractGroup implements Startable {
-    protected final MenuScreen parent;
+    protected final MenuScreen screen;
 
-    public MenuSubscreen(final MenuScreen parent) {
-        this.parent = parent;
+    public MenuSubscreen(final MenuScreen screen) {
+        this.screen = screen;
         create();
     }
 
@@ -27,4 +27,8 @@ public abstract class MenuSubscreen extends AbstractGroup implements Startable {
         }
     }
     public abstract void startSubscreen();
+
+    public MenuScreen getScreen() {
+        return screen;
+    }
 }
