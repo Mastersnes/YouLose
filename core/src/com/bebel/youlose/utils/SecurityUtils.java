@@ -40,21 +40,21 @@ public class SecurityUtils {
         } catch (Exception e) {
             Gdx.app.error("SecurityUtils", "Erreur lors du cryptage", e);
         }
-        Gdx.app.debug("SecurityUtils", "encrypt : " + text + " to : " + encrypt);
+//        Gdx.app.debug("SecurityUtils", "encrypt : " + text + " to : " + encrypt);
         return encrypt;
     }
 
-    public synchronized static String decrypt(final String text) {
-        if (text == null || text.isEmpty()) return "";
+    public synchronized static String decrypt(final String text, final String defVal) {
+        if (text == null || text.isEmpty()) return defVal;
 
-        String decrypt = "";
+        String decrypt = defVal;
         try {
             final byte[] dec = BASE64DecoderStream.decode(text.getBytes());
             decrypt = new String(dcipher.doFinal(dec), UTF_8);
         } catch (Exception e) {
-            Gdx.app.error("SecurityUtils", "Erreur lors du cryptage", e);
+            Gdx.app.error("SecurityUtils", "Erreur lors du decryptage", e);
         }
-        Gdx.app.debug("SecurityUtils", "decrypt : " + text + " to : " + decrypt);
+//        Gdx.app.debug("SecurityUtils", "decrypt : " + text + " to : " + decrypt);
         return decrypt;
     }
 }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.bebel.youlose.components.composition.SlideTextActor;
 import com.bebel.youlose.components.refound.FontParameter;
-import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.components.refound.actors.ui.CheckActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
@@ -34,13 +33,13 @@ public class MenuOptions extends MenuSubscreen {
         addActor(new ImageActor("options/other:fond"));
 
         langues = putActor(new MenuOptionsLangues(screen));
-        musiques = putActor(new SlideTextActor(font, "musiques",
+        musiques = putActor(new SlideTextActor(font, "option.musiques",
                 "options/other:slide", "options/other:pointer"));
 
-        sounds = putActor(new SlideTextActor(font, "sounds",
+        sounds = putActor(new SlideTextActor(font, "option.sounds",
                 "options/other:slide", "options/other:pointer"));
 
-        fullscreen = putActor(new CheckActor(font, "fullscreen",
+        fullscreen = putActor(new CheckActor(font, "option.fullscreen",
                 "options/other:case", "options/other:case_coche"));
 
         valider = putActor(new ButtonActor("options/buttons:valider"));

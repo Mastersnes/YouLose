@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.utils.I18NBundle;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 
 /**
  * Manager de langue
@@ -41,7 +42,11 @@ public class LanguageManager {
      * @return
      */
     public String get(final String key) {
-        return getI18n().get(key);
+        try {
+            return getI18n().get(key);
+        } catch (final MissingResourceException e) {
+            return key;
+        }
     }
     public I18NBundle getI18n() {
         return parent.get("i18n/i18n", I18NBundle.class);

@@ -38,16 +38,13 @@ public class ScreensManager {
      * @param screenType
      */
     public void switchTo(final Class<? extends AbstractScreen> screenType) {
-        AbstractScreen screen = screens.get(screenType);
-        if (screen == null) {
-            try {
-                screen = screenType.getDeclaredConstructor(LaunchGame.class).newInstance(parent);
-                screens.put(screenType, screen);
-            } catch (final Exception e) {
-                Gdx.app.error("ScreensManager", "Impossible d'instancier le screen : " + screenType, e);
-            }
+        try {
+            final AbstractScreen screen = screenType.getDeclaredConstructor(LaunchGame.class).newInstance(parent);
+            screens.put(screenType, screen);
+            parent.setScreen(screen);
+        } catch (final Exception e) {
+            Gdx.app.error("ScreensManager", "Impossible d'instancier le screen : " + screenType, e);
         }
-        parent.setScreen(screen);
     }
 
     public void switchTo(final String screenName) {

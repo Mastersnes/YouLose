@@ -53,6 +53,12 @@ public class AnimatedActor extends AbstractActor {
         stateTime = 0f;
         working = false; finish = true;
         flipH = false; flipV = false;
+        for (final OneTimeRunnable run : runByFrame.values()) run.restart();
+    }
+
+    public void finish() {
+        stateTime = animation.getKeyFrames().length * animation.getFrameDuration();
+        working = true;
     }
 
     @Override

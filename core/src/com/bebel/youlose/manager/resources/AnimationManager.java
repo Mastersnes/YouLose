@@ -56,7 +56,7 @@ public class AnimationManager extends AbstractSubManager<TextureAtlas> {
      * @param folderName
      * @return
      */
-    private Array<TextureRegion> list(final String folderName) {
+    private TextureRegion[] list(final String folderName) {
         final String language = parent.conf.getLanguage();
         String context = parent.context;
         if (folderName.contains(GENERAL_PATH)) context = null;
@@ -75,7 +75,7 @@ public class AnimationManager extends AbstractSubManager<TextureAtlas> {
                 frames.addAll(atlas.getRegions());
             }
         }
-        return frames;
+        return frames.toArray(TextureRegion.class);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class AnimationManager extends AbstractSubManager<TextureAtlas> {
         Animation<TextureRegion> animation = animations.get(key);
 
         if (animation == null) {
-            final Array<TextureRegion> frames = list(key);
+            final TextureRegion[] frames = list(key);
             animation = new Animation<>(1f / fps, frames);
             animations.put(key, animation);
         }

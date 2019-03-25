@@ -14,7 +14,7 @@ import com.bebel.youlose.utils.IActor;
  * Specification de l'acteur Label
  */
 public class TextActor extends Label implements Refreshable, IActor {
-    private final AssetsManager manager;
+    protected final AssetsManager manager;
 
     public TextActor(final String key, final BitmapFont font) {
         super(key, new LabelStyle(font, null));
@@ -29,6 +29,12 @@ public class TextActor extends Label implements Refreshable, IActor {
         setText(manager.langue.get(getName()));
         setSize(getPrefWidth(), getPrefHeight());
         setBounds(getX(), getY(), getPrefWidth(), getPrefHeight());
+    }
+
+    @Override
+    public void setText(CharSequence newText) {
+        super.setText(newText);
+        setName(String.valueOf(newText));
     }
 
     @Override

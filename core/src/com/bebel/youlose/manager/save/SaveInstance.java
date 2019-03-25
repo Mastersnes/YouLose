@@ -1,64 +1,70 @@
 package com.bebel.youlose.manager.save;
 
-import com.bebel.youlose.manager.resources.ScreensManager;
 import com.bebel.youlose.screens.enigme1.Enigme1;
-
-import java.util.Properties;
-
-import static com.bebel.youlose.utils.SecurityUtils.decrypt;
-import static com.bebel.youlose.utils.SecurityUtils.encrypt;
+import com.bebel.youlose.utils.SmartProperties;
 
 /**
  * Instance de sauvegarde
  */
-public class SaveInstance {
-    public static final String USED = "used";
-    public static final String EMPLACEMENT = "emplacement";
+public class SaveInstance implements ISave {
+    private final String USED = "used";
+    private final String EMPLACEMENT = "emplacement";
 
     private final SaveManager.SaveEnum type;
-    private boolean used = false;
-    private String emplacement = Enigme1.NAME;
+    private boolean used;
+    private String emplacement;
+    private Enigme1Save enigme1 = new Enigme1Save();
 
-    public void setUsed(final boolean used) {
-        this.used = used;
+    public SaveInstance(final SaveManager.SaveEnum type) {
+        this.type = type;
     }
+
+    @Override
+    public void init() {
+        used = true;
+        emplacement = Enigme1.NAME;
+        enigme1.init();
+        save();
+    }
+
     public boolean isUsed() {
         return used;
     }
+    public void setUsed(final boolean used) {
+        this.used = used;
+    }
 
+    public String getEmplacement() {
+        return emplacement;
+    }
     public void setEmplacement(final String emplacement) {
         this.emplacement = emplacement;
     }
-    public String getEmplacement() {
-        return emplacement;
+
+    public Enigme1Save getEnigme1() {
+        return enigme1;
     }
 
     public SaveManager.SaveEnum getType() {
         return type;
     }
 
-    public SaveInstance(final SaveManager.SaveEnum type) {
-        this.type = type;
-    }
-
+    // CRUD
     public SaveInstance save() {
         return SaveManager.getInstance().save(this);
     }
-
     public void delete() {
         used = false;
         save();
     }
-
-    public void loadData(final Properties prop) {
-        setUsed(Boolean.valueOf(prop.getProperty(USED, Boolean.FALSE.toString())));
-        if (isUsed()) {
-            setEmplacement(decrypt(prop.getProperty(EMPLACEMENT, "")));
-        }
+    public void loadData(final SmartProperties prop) {
+        used = prop.get(USED, false);
+        emplacement = prop.get(EMPLACEMENT, Enigme1.NAME);
+        enigme1.loadData(prop);
     }
-
-    public void saveData(final Properties prop) {
-        prop.setProperty(USED, String.valueOf(isUsed()));
-        prop.setProperty(EMPLACEMENT, encrypt(getEmplacement()));
+    public void saveData(final SmartProperties prop) {
+        prop.set(USED, isUsed());
+        prop.set(EMPLACEMENT, getEmplacement());
+        enigme1.saveData(prop);
     }
 }

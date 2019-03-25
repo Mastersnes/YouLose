@@ -49,13 +49,6 @@ public class MenuButtons extends MenuSubscreen {
         refresh(getColor());
     }
 
-    @Override
-    public void refresh(final Color color) {
-        play.refresh(color);
-        options.refresh(color);
-        credits.refresh(color);
-    }
-
     /**
      * Fait apparaitre es boutons
      *

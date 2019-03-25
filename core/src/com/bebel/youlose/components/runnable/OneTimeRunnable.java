@@ -23,6 +23,10 @@ public class OneTimeRunnable implements Runnable, Pool.Poolable {
         alreadyCall = false;
     }
 
+    public void restart() {
+        alreadyCall = false;
+    }
+
     @Override
     public void reset() {
         runnable = null;

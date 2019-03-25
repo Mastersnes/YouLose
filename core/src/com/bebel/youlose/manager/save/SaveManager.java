@@ -3,12 +3,12 @@ package com.bebel.youlose.manager.save;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.bebel.youlose.utils.SmartProperties;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Manager de sauvegarde
@@ -83,7 +83,7 @@ public class SaveManager {
         final SaveInstance saveInstance = new SaveInstance(type);
         final FileHandle file = Gdx.files.external("/youlose/save/" + type + ".save");
         try {
-            final Properties prop = new Properties();
+            final SmartProperties prop = new SmartProperties();
             prop.load(file.read());
             saveInstance.loadData(prop);
         } catch (final IOException e) {
@@ -98,7 +98,7 @@ public class SaveManager {
 
         final FileHandle file = Gdx.files.external("/youlose/save/" + type + ".save");
         try (final OutputStreamWriter out = (OutputStreamWriter) file.writer(false)) {
-            final Properties prop = new Properties();
+            final SmartProperties prop = new SmartProperties();
             saveInstance.saveData(prop);
             prop.store(out, null);
         } catch (IOException e) {

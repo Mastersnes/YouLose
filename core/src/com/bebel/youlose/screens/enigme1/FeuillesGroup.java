@@ -4,10 +4,12 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.actions.Actions;
+import com.bebel.youlose.components.interfaces.Playable;
 import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.components.refound.event.ClickCatcher;
+import com.bebel.youlose.manager.save.Enigme1Save;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +21,11 @@ import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 /**
  * Groupe composé d'un ensemble de feuilles
  */
-public class FeuillesGroup extends AbstractGroup implements Startable {
+public class FeuillesGroup extends AbstractGroup implements Startable, Playable {
     private final Enigme1 parent;
     private Actor ref;
     private final List<ImageActor> feuilles = new ArrayList<>();
+    private Enigme1Save save;
 
     public FeuillesGroup(final Enigme1 parent) {
         super();
@@ -32,6 +35,7 @@ public class FeuillesGroup extends AbstractGroup implements Startable {
     }
 
     public void create(final Actor ref) {
+        this.save = parent.getSave().getEnigme1();
         this.ref = ref;
 
         for (int i=0; i<13; i++) {
@@ -43,19 +47,20 @@ public class FeuillesGroup extends AbstractGroup implements Startable {
     }
 
     private ImageActor addFeuille() {
+        int index = feuilles.size();
         final ImageActor feuille = putActor(new ImageActor("atlas:feuille"));
         feuilles.add(feuille);
 
         ClickCatcher.onClick(feuille, (mx, my, pointer, button) -> {
+            save.getFeuilles().add(index);
             feuille.setTouchable(Touchable.disabled);
             float rand = MathUtils.random(1f, 4f);
             feuille.addActions(
                     Actions.moveBy(rand * -100, -WORLD_HEIGHT, 5f, fastSlow),
                     Actions.hide(),
-                    run(() -> {
-                        feuille.setVisible(false);
-                    })
+                    run(() -> feuille.setVisible(false))
             );
+            if (lose()) parent.lose(Enigme1.LoseType.FEUILLE);
         });
 
         return feuille;
@@ -63,6 +68,7 @@ public class FeuillesGroup extends AbstractGroup implements Startable {
 
     @Override
     public void start() {
+        this.save = parent.getSave().getEnigme1();
         setBounds(ref.getX(), ref.getY(), ref.getWidth(), ref.getHeight());
 
         int i=0;
@@ -112,19 +118,37 @@ public class FeuillesGroup extends AbstractGroup implements Startable {
         setFeuille(i++, 351, 365, -66); // Feuille du haut
         setFeuille(i++, 347, 372, -116); // Feuille du bas
         setFeuille(i++, 355, 366, -96); // Feuille du centre
+
+        if (lose()) parent.lose(Enigme1.LoseType.FEUILLE);
     }
 
     private void setFeuille(int index, float x, float y, float rotation) {
         if (index >= feuilles.size()) return;
         final ImageActor feuille = feuilles.get(index);
         if (feuille == null) return;
-        feuille.setVisible(true);
-        feuille.move(x, y);
-        feuille.setRotation(rotation);
-        feuille.stop();
+
+        if (save.getFeuilles().contains(index)) {
+            feuille.setVisible(false);
+        }else {
+            feuille.setVisible(true);
+            feuille.setTouchable(Touchable.enabled);
+            feuille.move(x, y);
+            feuille.setRotation(rotation);
+            feuille.stop();
+        }
     }
 
     @Override
     public void makeSpecificEvents() {
+    }
+
+    @Override
+    public boolean lose() {
+        return save.getFeuilles().size() >= 25;
+    }
+
+    @Override
+    public boolean win() {
+        return false;
     }
 }

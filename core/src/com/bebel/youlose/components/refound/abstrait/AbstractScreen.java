@@ -5,15 +5,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.interfaces.Eventable;
+import com.bebel.youlose.components.interfaces.Playable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.manager.resources.AssetsManager;
+import com.bebel.youlose.manager.save.SaveInstance;
+import com.bebel.youlose.manager.save.SaveManager;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
@@ -24,10 +30,12 @@ import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
 public abstract class AbstractScreen extends Stage implements Screen, Eventable, Startable {
     protected final LaunchGame parent;
     protected final AssetsManager manager;
+    private long saveDelay;
 
     public AbstractScreen(final LaunchGame parent) {
         super(new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, new OrthographicCamera(WORLD_WIDTH, WORLD_HEIGHT)), parent.batch);
         getRoot().setBounds(0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+        getRoot().setTouchable(Touchable.childrenOnly);
         this.manager = parent.manager;
         this.parent = parent;
         createStage();
@@ -91,6 +99,26 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable,
     }
 
     @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        final long elapsedTime = System.currentTimeMillis() - saveDelay;
+        boolean actionDone = false;
+
+        if (elapsedTime > 1000) {everySec(); actionDone = true;}
+        if (elapsedTime > 5000) {every5Sec(); actionDone = true;}
+
+        if (actionDone) saveDelay = System.currentTimeMillis();
+    }
+
+    public void everySec() {
+    }
+    public void every5Sec() {
+        final SaveInstance save = SaveManager.getInstance().getCurrent();
+        if (save != null) save.save();
+    }
+
+    @Override
     public void resize(final int width, final int height) {
         getViewport().update(width, height, true);
     }
@@ -101,10 +129,6 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable,
 
     @Override
     public void resume() {
-    }
-
-    public void restart() {
-        startScreen();
     }
 
     @Override

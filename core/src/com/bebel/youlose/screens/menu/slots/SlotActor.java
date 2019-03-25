@@ -55,7 +55,7 @@ public class SlotActor extends AbstractGroup implements Startable {
         putActor(slot);
 
         final BitmapFont font = manager.getFont("sector.ttf", new FontParameter(15, Color.valueOf("#AEA19A")));
-        putActor(texte = new TextActor("delete", font));
+        putActor(texte = new TextActor("label.delete", font));
     }
 
     public void start() {

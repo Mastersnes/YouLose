@@ -43,11 +43,6 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void create() {
-        final List<SaveInstance> saves = SaveManager.getInstance().getSaves();
-        for (final SaveInstance save : saves) {
-            manager.loadContext(save.getEmplacement());
-        }
-
         putActor(options = new MenuOptions(this));
         putActor(slots = new MenuSlots(this));
         putActor(background = new MenuBackground(this));
@@ -55,6 +50,17 @@ public class MenuScreen extends AbstractScreen {
         putActor(vitre = new MenuVitre(this));
 
         putActor(quitter = new ButtonActor("general/quitter.png"));
+        refresh();
+    }
+
+    @Override
+    public void refresh() {
+        final List<SaveInstance> saves = SaveManager.getInstance().getSaves();
+        for (final SaveInstance save : saves) {
+            manager.loadContext(save.getEmplacement());
+        }
+
+        super.refresh();
     }
 
     @Override
@@ -65,6 +71,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void start() {
+        SaveManager.getInstance().setCurrent(null);
         quitter.move(10, 10, bottomRight);
     }
 
@@ -120,12 +127,7 @@ public class MenuScreen extends AbstractScreen {
 
     public void launchGame(final SaveInstance save) {
         SaveManager.getInstance().setCurrent(save);
-
-        if (!save.isUsed()) {
-            save.setEmplacement(Enigme1.NAME);
-            save.setUsed(true);
-            save.save();
-        }
+        if (!save.isUsed()) save.init();
         ScreensManager.getInstance().switchTo(save.getEmplacement());
     }
 
