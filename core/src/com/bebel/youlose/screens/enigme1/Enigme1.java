@@ -6,14 +6,11 @@ import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.manager.resources.ScreensManager;
-import com.bebel.youlose.manager.save.Enigme1Save;
 import com.bebel.youlose.manager.save.SaveInstance;
 import com.bebel.youlose.manager.save.SaveManager;
-import com.bebel.youlose.screens.enigme2.Enigme2;
 import com.bebel.youlose.screens.menu.MenuScreen;
 
 import static com.badlogic.gdx.utils.Align.bottomRight;
-import static com.bebel.youlose.components.refound.event.ClickCatcher.onClick;
 
 /**
  * Ecran de la premiere enigme
@@ -26,6 +23,8 @@ public class Enigme1 extends AbstractScreen {
     private ImageActor cadre;
     private GlobeActor globe;
     private ZoneText zoneText;
+
+    private ImageActor titre;
 
     private SaveInstance save;
     private int victoire;
@@ -46,6 +45,9 @@ public class Enigme1 extends AbstractScreen {
 
         putActor(globe = new GlobeActor(this));
 
+        putActor(titre = new ImageActor("button.png"))
+                .setTouchable(Touchable.disabled);
+
         putActor(zoneText = new ZoneText(this));
 
         putActor(quitter = new ButtonActor("general/quitter.png"))
@@ -59,6 +61,8 @@ public class Enigme1 extends AbstractScreen {
         cadre.move(220, 49);
         globe.move(114, -75);
         quitter.move(10, 10, bottomRight);
+        titre.move(titre.centerX(), 198);
+
         setDisable(false);
     }
 
@@ -71,10 +75,6 @@ public class Enigme1 extends AbstractScreen {
     @Override
     public void makeEvents() {
         quitter.onClick((x, y, button, pointer) -> ScreensManager.getInstance().switchTo(MenuScreen.class));
-        onClick(zoneText, (x, y, button, pointer) -> {
-            if (victoire < 0) restart();
-            else if (victoire > 0) ScreensManager.getInstance().switchTo(Enigme2.NAME);
-        });
     }
 
     @Override
@@ -90,10 +90,12 @@ public class Enigme1 extends AbstractScreen {
         victoire = type.type;
         switch (type) {
             case FEUILLE:
-                zoneText.setTexte("enigme1.feuilles", false);
+                zoneText.clear();
+                zoneText.add("enigme1.feuilles");
                 break;
             case CASSURE:
-                zoneText.setTexte("enigme1.cassure", false);
+                zoneText.clear();
+                zoneText.add("enigme1.cassure");
                 break;
         }
         setDisable(true);
@@ -110,10 +112,12 @@ public class Enigme1 extends AbstractScreen {
             quitter.setTouchable(Touchable.disabled);
             feuilles.setTouchable(Touchable.disabled);
             globe.setTouchable(Touchable.disabled);
+            zoneText.setTouchable(Touchable.enabled);
         }else {
             quitter.setTouchable(Touchable.enabled);
             feuilles.setTouchable(Touchable.childrenOnly);
             globe.setTouchable(Touchable.enabled);
+            zoneText.setTouchable(Touchable.childrenOnly);
         }
     }
 
@@ -124,5 +128,9 @@ public class Enigme1 extends AbstractScreen {
         LoseType(final int type) {
             this.type = type;
         }
+    }
+
+    public int getVictoire() {
+        return victoire;
     }
 }

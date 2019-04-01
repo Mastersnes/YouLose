@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.bebel.youlose.components.interfaces.Refreshable;
+import com.bebel.youlose.components.refound.FontParameter;
 import com.bebel.youlose.manager.resources.AssetsManager;
 import com.bebel.youlose.utils.ActorUtils;
 import com.bebel.youlose.utils.IActor;
@@ -15,10 +16,16 @@ import com.bebel.youlose.utils.IActor;
  */
 public class TextActor extends Label implements Refreshable, IActor {
     protected final AssetsManager manager;
+    protected boolean endOfLine;
 
     public TextActor(final String key, final BitmapFont font) {
-        super(key, new LabelStyle(font, null));
+        super(key, new LabelStyle(new BitmapFont(), null));
         this.manager = AssetsManager.getInstance();
+
+        BitmapFont fontStyle = font;
+        if (fontStyle == null) fontStyle = manager.getFont("general/arial.ttf", new FontParameter(20, Color.valueOf("#ced9ad")));
+        setStyle(new LabelStyle(fontStyle, null));
+
         setName(key);
         refresh(getColor());
     }
@@ -26,15 +33,26 @@ public class TextActor extends Label implements Refreshable, IActor {
     @Override
     public void refresh(final Color color) {
         setColor(color);
-        setText(manager.langue.get(getName()));
+        super.setText(manager.langue.get(getName()));
         setSize(getPrefWidth(), getPrefHeight());
         setBounds(getX(), getY(), getPrefWidth(), getPrefHeight());
     }
 
     @Override
-    public void setText(CharSequence newText) {
+    public void setText(final CharSequence newText) {
+        setText(newText, false);
+    }
+    public void setText(final CharSequence newText, final boolean changeName) {
         super.setText(newText);
-        setName(String.valueOf(newText));
+        if (changeName) setName(String.valueOf(newText));
+    }
+
+    public void endLine() {
+        this.endOfLine = true;
+    }
+
+    public boolean isEndOfLine() {
+        return endOfLine;
     }
 
     @Override

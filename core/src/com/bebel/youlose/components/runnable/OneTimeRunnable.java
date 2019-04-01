@@ -1,12 +1,9 @@
 package com.bebel.youlose.components.runnable;
 
-import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.Pools;
-
 /**
- * Runnable ne pouvqnt etre qppelé qu'une fois
+ * Runnable ne pouvant etre appelé qu'une fois
  */
-public class OneTimeRunnable implements Runnable, Pool.Poolable {
+public class OneTimeRunnable implements Runnable {
     protected boolean alreadyCall = false;
     protected Runnable runnable;
 
@@ -14,7 +11,6 @@ public class OneTimeRunnable implements Runnable, Pool.Poolable {
     public void run() {
         if (runnable != null && !alreadyCall) {
             runnable.run();
-            Pools.free(this);
         }
     }
 
@@ -24,12 +20,6 @@ public class OneTimeRunnable implements Runnable, Pool.Poolable {
     }
 
     public void restart() {
-        alreadyCall = false;
-    }
-
-    @Override
-    public void reset() {
-        runnable = null;
         alreadyCall = false;
     }
 }

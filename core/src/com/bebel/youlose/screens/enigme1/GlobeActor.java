@@ -22,7 +22,6 @@ import static com.badlogic.gdx.graphics.g2d.Animation.PlayMode.NORMAL;
 public class GlobeActor extends AbstractGroup implements Startable, Playable {
     private final Enigme1 parent;
     private AnimatedActor globe;
-    private ImageActor button;
 
     private List<AnimatedActor> cassures = new ArrayList<>();
     private int currentCassure;
@@ -49,10 +48,6 @@ public class GlobeActor extends AbstractGroup implements Startable, Playable {
 
         cassures.get(2).onFrame(8, () -> afterExplode());
         setHitbox(new CircleShape(406, 365, 143));
-
-        putActor(button = new ImageActor("button.png"))
-            .move(208, 275)
-            .setTouchable(Touchable.disabled);
     }
 
     @Override

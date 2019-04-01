@@ -2,7 +2,6 @@ package com.bebel.youlose.manager.resources;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.bebel.youlose.components.plugin.typinglabel.TypingConfig;
 import com.bebel.youlose.components.refound.FontParameter;
 
 import java.util.HashMap;

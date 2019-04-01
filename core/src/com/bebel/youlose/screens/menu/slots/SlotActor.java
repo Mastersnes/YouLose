@@ -6,14 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.bebel.youlose.components.interfaces.Startable;
-import com.bebel.youlose.components.runnable.FinishRunnable;
 import com.bebel.youlose.components.actions.FinishRunnableAction;
+import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.refound.FontParameter;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.components.refound.actors.ui.TextActor;
+import com.bebel.youlose.components.runnable.FinishRunnable;
 import com.bebel.youlose.manager.save.SaveInstance;
 import com.bebel.youlose.screens.menu.MenuScreen;
 
