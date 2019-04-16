@@ -2,15 +2,16 @@ package com.bebel.youlose.screens.enigme2;
 
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
-import com.bebel.youlose.manager.save.SaveInstance;
+import com.bebel.youlose.manager.save.GameSave;
 import com.bebel.youlose.manager.save.SaveManager;
+
+import static com.bebel.youloseClient.enums.Emplacement.ENIGME2;
 
 /**
  * Ecran de la premiere enigme
  */
 public class Enigme2 extends AbstractScreen {
-    public static final String NAME = "enigme2";
-    private SaveInstance save;
+    private GameSave save;
     public Enigme2(final LaunchGame parent) {super(parent);}
 
     @Override
@@ -33,10 +34,6 @@ public class Enigme2 extends AbstractScreen {
 
     @Override
     protected String context() {
-        return NAME;
-    }
-
-    public SaveInstance getSave() {
-        return save;
+        return ENIGME2;
     }
 }

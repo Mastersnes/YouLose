@@ -14,15 +14,15 @@ import com.bebel.youlose.components.refound.actors.AnimatedActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.components.refound.actors.ui.TextActor;
 import com.bebel.youlose.components.runnable.FinishRunnable;
-import com.bebel.youlose.manager.save.SaveInstance;
+import com.bebel.youlose.manager.save.GameSave;
 import com.bebel.youlose.screens.menu.MenuScreen;
 
 import static com.badlogic.gdx.math.Interpolation.linear;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.bebel.youlose.components.actions.Actions.emptyRun;
 import static com.bebel.youlose.components.actions.Actions.finishRun;
-import static com.bebel.youlose.manager.save.SaveManager.SaveEnum.CENTRE;
-import static com.bebel.youlose.manager.save.SaveManager.SaveEnum.DROITE;
+import static com.bebel.youloseClient.enums.SaveType.CENTRE;
+import static com.bebel.youloseClient.enums.SaveType.DROITE;
 
 /**
  * Acteur representant un slot
@@ -30,7 +30,7 @@ import static com.bebel.youlose.manager.save.SaveManager.SaveEnum.DROITE;
 public class SlotActor extends AbstractGroup implements Startable {
     private final MenuScreen menuScreen;
     private final MenuSlots menuSlots;
-    private final SaveInstance save;
+    private final GameSave save;
 
     private final ImageActor slot;
     private ImageActor noir;
@@ -41,7 +41,7 @@ public class SlotActor extends AbstractGroup implements Startable {
     private boolean open;
 
 
-    public SlotActor(final MenuSlots parent, final String image, final SaveInstance save) {
+    public SlotActor(final MenuSlots parent, final String image, final GameSave save) {
         this.menuScreen = parent.getScreen();
         this.menuSlots = parent;
 

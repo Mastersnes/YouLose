@@ -5,11 +5,10 @@ import com.bebel.youlose.components.composition.ZoneTextActor;
 import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.refound.actors.ui.TypingActor;
 import com.bebel.youlose.manager.resources.ScreensManager;
-import com.bebel.youlose.screens.enigme2.Enigme2;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.utils.Align.bottomLeft;
 import static com.bebel.youlose.components.refound.event.ClickCatcher.onClick;
+import static com.bebel.youloseClient.enums.Emplacement.ENIGME2;
 
 /**
  * Acteur constituant la zone de texte sous le globe
@@ -47,7 +46,7 @@ public class ZoneText extends ZoneTextActor implements Startable {
             if (!isFinish()) finish();
             else {
                 if (parent.getVictoire() < 0) parent.restart();
-                else if (parent.getVictoire() > 0) ScreensManager.getInstance().switchTo(Enigme2.NAME);
+                else if (parent.getVictoire() > 0) ScreensManager.getInstance().switchTo(ENIGME2);
             }
         });
     }

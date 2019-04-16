@@ -7,9 +7,8 @@ import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.manager.resources.ScreensManager;
-import com.bebel.youlose.manager.save.SaveInstance;
+import com.bebel.youlose.manager.save.GameSave;
 import com.bebel.youlose.manager.save.SaveManager;
-import com.bebel.youlose.screens.enigme1.Enigme1;
 import com.bebel.youlose.screens.menu.boutons.MenuBackground;
 import com.bebel.youlose.screens.menu.boutons.MenuButtons;
 import com.bebel.youlose.screens.menu.options.MenuOptions;
@@ -22,13 +21,12 @@ import java.util.List;
 
 import static com.badlogic.gdx.utils.Align.bottomRight;
 import static com.bebel.youlose.utils.ActorUtils.addActions;
+import static com.bebel.youloseClient.enums.Emplacement.MENU;
 
 /**
  * Ecran de menu permettant de switcher vers les differents sous ecrans
  */
 public class MenuScreen extends AbstractScreen {
-    public static final String NAME = "menu";
-
     private MenuBackground background;
     private MenuOptions options;
     private MenuButtons buttons;
@@ -55,8 +53,8 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void refresh() {
-        final List<SaveInstance> saves = SaveManager.getInstance().getSaves();
-        for (final SaveInstance save : saves) {
+        final List<GameSave> saves = SaveManager.getInstance().getSaves();
+        for (final GameSave save : saves) {
             manager.loadContext(save.getEmplacement());
         }
 
@@ -125,9 +123,9 @@ public class MenuScreen extends AbstractScreen {
         return true;
     }
 
-    public void launchGame(final SaveInstance save) {
+    public void launchGame(final GameSave save) {
         SaveManager.getInstance().setCurrent(save);
-        if (!save.isUsed()) save.init();
+        if (!save.isUsed()) save.reset();
         ScreensManager.getInstance().switchTo(save.getEmplacement());
     }
 
@@ -137,7 +135,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected String context() {
-        return NAME;
+        return MENU;
     }
     @Override
     protected List<String> nextScreens() {

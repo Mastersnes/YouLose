@@ -1,11 +1,13 @@
 package com.bebel.youlose.screens.menu.slots;
 
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.manager.save.SaveManager;
 import com.bebel.youlose.screens.menu.MenuScreen;
 import com.bebel.youlose.screens.menu.MenuSubscreen;
+import com.bebel.youloseClient.enums.SaveType;
+
+import static com.bebel.youloseClient.enums.SaveType.*;
 
 /**
  * Ecran des slots
@@ -23,9 +25,9 @@ public class MenuSlots extends MenuSubscreen {
     public void create() {
         setVisible(false);
 
-        slotGauche = new SlotActor(this, "slots/slots:slot_gauche", SaveManager.getInstance().getGauche());
-        slotCentre = new SlotActor(this, "slots/slots:slot_milieu", SaveManager.getInstance().getCentre());
-        slotDroite = new SlotActor(this, "slots/slots:slot_droite", SaveManager.getInstance().getDroite());
+        slotGauche = new SlotActor(this, "slots/slots:slot_gauche", SaveManager.getInstance().get(GAUCHE));
+        slotCentre = new SlotActor(this, "slots/slots:slot_milieu", SaveManager.getInstance().get(CENTRE));
+        slotDroite = new SlotActor(this, "slots/slots:slot_droite", SaveManager.getInstance().get(DROITE));
 
         addActor(slotGauche.getNoir());
         addActor(slotGauche.getGrille());

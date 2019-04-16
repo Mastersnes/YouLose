@@ -6,18 +6,17 @@ import com.bebel.youlose.components.refound.abstrait.AbstractScreen;
 import com.bebel.youlose.components.refound.actors.ui.ButtonActor;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.manager.resources.ScreensManager;
-import com.bebel.youlose.manager.save.SaveInstance;
+import com.bebel.youlose.manager.save.GameSave;
 import com.bebel.youlose.manager.save.SaveManager;
 import com.bebel.youlose.screens.menu.MenuScreen;
 
 import static com.badlogic.gdx.utils.Align.bottomRight;
+import static com.bebel.youloseClient.enums.Emplacement.ENIGME1;
 
 /**
  * Ecran de la premiere enigme
  */
 public class Enigme1 extends AbstractScreen {
-    public static final String NAME = "enigme1";
-
     private ButtonActor quitter;
     private FeuillesGroup feuilles;
     private ImageActor cadre;
@@ -26,7 +25,7 @@ public class Enigme1 extends AbstractScreen {
 
     private ImageActor titre;
 
-    private SaveInstance save;
+    private GameSave save;
     private int victoire;
 
     public Enigme1(final LaunchGame parent) {super(parent);}
@@ -67,7 +66,7 @@ public class Enigme1 extends AbstractScreen {
     }
 
     public void restart() {
-        save.getEnigme1().init();
+        save.getEnigme1().reset();
         save.save();
         startScreen();
     }
@@ -79,10 +78,10 @@ public class Enigme1 extends AbstractScreen {
 
     @Override
     protected String context() {
-        return NAME;
+        return ENIGME1;
     }
 
-    public SaveInstance getSave() {
+    public GameSave getSave() {
         return save;
     }
 

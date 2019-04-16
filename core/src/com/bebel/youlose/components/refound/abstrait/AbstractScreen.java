@@ -9,17 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.bebel.youlose.LaunchGame;
 import com.bebel.youlose.components.interfaces.Eventable;
-import com.bebel.youlose.components.interfaces.Playable;
 import com.bebel.youlose.components.interfaces.Refreshable;
 import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.manager.resources.AssetsManager;
-import com.bebel.youlose.manager.save.SaveInstance;
+import com.bebel.youlose.manager.save.GameSave;
 import com.bebel.youlose.manager.save.SaveManager;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.bebel.youlose.utils.Constantes.WORLD_HEIGHT;
 import static com.bebel.youlose.utils.Constantes.WORLD_WIDTH;
@@ -114,7 +111,7 @@ public abstract class AbstractScreen extends Stage implements Screen, Eventable,
     public void everySec() {
     }
     public void every5Sec() {
-        final SaveInstance save = SaveManager.getInstance().getCurrent();
+        final GameSave save = SaveManager.getInstance().getCurrent();
         if (save != null) save.save();
     }
 

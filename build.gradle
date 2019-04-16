@@ -2,7 +2,7 @@ buildscript {
     
 
     repositories {
-//        mavenLocal()
+        mavenLocal()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -28,7 +28,7 @@ allprojects {
     }
 
     repositories {
-//        mavenLocal()
+        mavenLocal()
         mavenCentral()
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -107,6 +107,8 @@ project(":core") {
         implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+        implementation "com.bebel:youlose-client:2.2.0-SNAPSHOT"
     }
 }
 

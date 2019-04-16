@@ -9,7 +9,7 @@ import com.bebel.youlose.components.interfaces.Startable;
 import com.bebel.youlose.components.refound.abstrait.AbstractGroup;
 import com.bebel.youlose.components.refound.actors.ui.ImageActor;
 import com.bebel.youlose.components.refound.event.ClickCatcher;
-import com.bebel.youlose.manager.save.Enigme1Save;
+import com.bebel.youloseClient.bean.Enigme1Data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class FeuillesGroup extends AbstractGroup implements Startable, Playable 
     private final Enigme1 parent;
     private Actor ref;
     private final List<ImageActor> feuilles = new ArrayList<>();
-    private Enigme1Save save;
+    private Enigme1Data save;
 
     public FeuillesGroup(final Enigme1 parent) {
         super();

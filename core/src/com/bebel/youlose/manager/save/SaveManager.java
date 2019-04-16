@@ -1,31 +1,24 @@
 package com.bebel.youlose.manager.save;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.bebel.youlose.utils.SmartProperties;
+import com.bebel.youlose.utils.Constantes;
+import com.bebel.youloseClient.enums.SaveType;
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Manager de sauvegarde
  */
 public class SaveManager {
     private static SaveManager instance;
-
-    private SaveInstance current;
-
-    private SaveInstance gauche;
-    private SaveInstance centre;
-    private SaveInstance droite;
+    private GameSave current;
+    private Map<SaveType, GameSave> saves = new HashMap<>();
 
     private SaveManager() {
-        gauche = loadOrCreate(SaveEnum.GAUCHE);
-        centre = loadOrCreate(SaveEnum.CENTRE);
-        droite = loadOrCreate(SaveEnum.DROITE);
+        loadAll();
     }
 
     public static synchronized SaveManager getInstance() {
@@ -35,75 +28,49 @@ public class SaveManager {
         return instance;
     }
 
-    public SaveInstance getGauche() {
-        return gauche;
-    }
-
-    public SaveInstance getCentre() {
-        return centre;
-    }
-
-    public SaveInstance getDroite() {
-        return droite;
-    }
-
-    public void setCurrent(SaveInstance current) {
+    public void setCurrent(final GameSave current) {
         this.current = current;
     }
-
-    public SaveInstance getCurrent() {
+    public GameSave getCurrent() {
         return current;
     }
 
-    public List<SaveInstance> getSaves() {
-        return Arrays.asList(gauche, centre, droite);
+    public List<GameSave> getSaves() {
+        return new ArrayList<>(saves.values());
+    }
+    public GameSave get(final SaveType type) {
+        return saves.get(type);
     }
 
-    public enum SaveEnum {
-        GAUCHE, CENTRE, DROITE;
-
-        @Override
-        public String toString() {
-            return name().toLowerCase();
+    public void loadAll()  {
+        for (final SaveType saveTypes : SaveType.values()) {
+            saves.put(saveTypes, loadOrCreate(saveTypes));
         }
     }
 
-    public SaveInstance loadOrCreate(final SaveEnum type) {
-        try {
-            return load(type);
-        } catch (final GdxRuntimeException e) {
-            Gdx.app.log("SaveManager", "La sauvegarde " + type + " n'existe pas.");
-            return save(new SaveInstance(type));
-        }
+    public GameSave loadOrCreate(final SaveType type) {
+            Gdx.app.log("SaveManager", "Chargement de la sauvegarde " + type);
+
+            GameSave saveInstance = null;
+            if (Constantes.LOCATION_URL != null && Constantes.LOCATION_URL.contains("/kongregate/")) {
+                saveInstance = SaveUtils.getInstance().loadFromCloud(type);
+            }
+
+            if (saveInstance == null) saveInstance = SaveUtils.getInstance().loadFromFile(type);
+            if (saveInstance == null) saveInstance = save(new GameSave(type));
+
+            return saveInstance;
     }
 
-    public SaveInstance load(final SaveEnum type) throws GdxRuntimeException {
-        Gdx.app.log("SaveManager", "Chargement de la sauvegarde " + type);
-
-        final SaveInstance saveInstance = new SaveInstance(type);
-        final FileHandle file = Gdx.files.external("/youlose/save/" + type + ".save");
-        try {
-            final SmartProperties prop = new SmartProperties();
-            prop.load(file.read());
-            saveInstance.loadData(prop);
-        } catch (final IOException e) {
-            Gdx.app.error("SaveManager", "Erreur lors du chargement de la sauvegarde " + type, e);
-        }
-        return saveInstance;
-    }
-
-    public SaveInstance save(final SaveInstance saveInstance) {
-        final SaveEnum type = saveInstance.getType();
+    public GameSave save(final GameSave saveInstance) {
+        final SaveType type = saveInstance.getType();
         Gdx.app.log("SaveManager", "Creation de la sauvegarde " + type);
 
-        final FileHandle file = Gdx.files.external("/youlose/save/" + type + ".save");
-        try (final OutputStreamWriter out = (OutputStreamWriter) file.writer(false)) {
-            final SmartProperties prop = new SmartProperties();
-            saveInstance.saveData(prop);
-            prop.store(out, null);
-        } catch (IOException e) {
-            Gdx.app.error("SaveManager", "Erreur lors de la création de la sauvegarde " + type, e);
+        if (Constantes.LOCATION_URL != null && Constantes.LOCATION_URL.contains("/kongregate/")) {
+            SaveUtils.getInstance().saveOnCloud(saveInstance);
         }
+        SaveUtils.getInstance().saveOnFile(saveInstance);
+
         return saveInstance;
     }
 }

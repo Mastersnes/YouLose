@@ -7,8 +7,10 @@ import com.badlogic.gdx.backends.gwt.preloader.Preloader;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.bebel.youlose.LaunchGame;
+import com.bebel.youlose.utils.Constantes;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.core.client.GWT;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -65,6 +67,8 @@ public class HtmlLauncher extends GwtApplication {
                 context.setTextAlign(Context2d.TextAlign.CENTER);
                 context.setTextBaseline(Context2d.TextBaseline.MIDDLE);
                 context.setFont("18pt Calibri");
+
+                Constantes.LOCATION_URL = GWT.getHostPageBaseURL();
 
                 return new Preloader.PreloaderCallback() {
                         @Override

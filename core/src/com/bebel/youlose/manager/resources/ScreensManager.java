@@ -9,6 +9,9 @@ import com.bebel.youlose.screens.menu.MenuScreen;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.bebel.youloseClient.enums.Emplacement.ENIGME1;
+import static com.bebel.youloseClient.enums.Emplacement.MENU;
+
 /**
  * Manager des ecrans
  */
@@ -19,8 +22,8 @@ public class ScreensManager {
     private Map<String, Class<? extends AbstractScreen>> types = new HashMap<>();
 
     private ScreensManager() {
-        types.put(MenuScreen.NAME, MenuScreen.class);
-        types.put(Enigme1.NAME, Enigme1.class);
+        types.put(MENU, MenuScreen.class);
+        types.put(ENIGME1, Enigme1.class);
     }
 
     public static void init(final LaunchGame parent) {
